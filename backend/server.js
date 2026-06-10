@@ -17,18 +17,25 @@ require("dotenv").config();
 // Middleware to parse JSON bodies
 app.use(express.json());
 
+
 // CORS middleware to allow requests from the frontend
 const corsOptions = {
-    origin: "http://localhost:5173", // Adjust this to match your frontend's URL and port
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
 };
 
 app.use(cors(corsOptions));
 
+// Connect to MongoDB
+connectDB();
+
+// Routes
 app.use("/api/auth", AuthRoutes);
 
-connectDB();
+app.get("/api/test", (req, res) => {
+    res.json({ message: "API is working!" });
+});
 
 // Start the server
 app.listen(PORT, () => {
