@@ -1,8 +1,16 @@
+
+const AuthRoutes = require("./routes/authRoutes");
+
+// Create Express app
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+//Mongoose and DB connection
 const mongoose = require("mongoose");
 const connectDB = require("./config/db");
+
+// middleware 
 const cors = require("cors");
 require("dotenv").config();
 
@@ -10,22 +18,15 @@ require("dotenv").config();
 app.use(express.json());
 
 // CORS middleware to allow requests from the frontend
-cors({
+const corsOptions = {
     origin: "http://localhost:5173", // Adjust this to match your frontend's URL and port
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
-})
+};
 
-app.use(cors());
+app.use(cors(corsOptions));
 
-// Basic GET route
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
-app.get("/api/test", (req, res) => {
-  res.json({ message: "Test API is working!" });
-});
+app.use("/api/auth", AuthRoutes);
 
 connectDB();
 
