@@ -1,4 +1,4 @@
-
+require("dotenv").config();
 const AuthRoutes = require("./routes/authRoutes");
 
 // Create Express app
@@ -12,7 +12,7 @@ const connectDB = require("./config/db");
 
 // middleware 
 const cors = require("cors");
-require("dotenv").config();
+
 
 // Middleware to parse JSON bodies
 app.use(express.json());
@@ -39,5 +39,6 @@ app.get("/api/test", (req, res) => {
 
 // Start the server
 app.listen(PORT, () => {
+  console.log(process.env.JWT_SECRET);
   console.log(`Server is running on port ${PORT}`);
 });

@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
+const generateToken = require("../utils/generateToken");
 
 const registerUser = async (req, res) => {
   let { username, email, password, role } = req.body;
@@ -73,9 +74,16 @@ const loginUser = async (req, res) => {
     // Generate a token (e.g., JWT) here
     // const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
     // res.json({ token });
+    
+    const token = generateToken(user._id);
+    console.log("Token :",token);
+    if(!token){
+      return res.status(400).json({ message: "Empty token" });
+    }
     res.json({
       success: true,
       message: "User logged in successfully",
+      token
     });
   } catch (error) {
     console.error("Error logging in user:", error);
