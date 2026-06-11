@@ -1,30 +1,28 @@
 
-
-import { Children } from "react";
 import { createContext, useContext, useState } from "react";
 
-const authContext = createContext();
+const AuthContext = createContext();
 
-export const authProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(localStorage.getItem("token") || null);
     const [user, setUser] = useState(() => {
+        const savedUser = localStorage.getItem("user");
         try {
-            return user ? localStorage.setItem("user", user) : null
-        }
-        catch {
-            return null;
+            return savedUser ? JSON.parse(savedUser) : null
+        } catch {
+            return null
         }
     });
 
-    const login = (token) => {
+    const login = (token, user) => {
         if (!token || !user) {
             return null
         }
         setToken(token);
         setUser(user);
         localStorage.setItem("token", token);
-        localStorage.setItem("user", user);
-        console.log("Successfully logged in.")
+        localStorage.setItem("user", JSON.stringify(user));
+        console.log("Successfully logged in and saved to localStorage.");
     }
 
     const logout = () => {
@@ -35,14 +33,13 @@ export const authProvider = ({ children }) => {
         console.log("Successfully logged out.")
     }
     return (
-        <authContext.Provider value={{
-            token, user, login, logout
-        }}>
+        <AuthContext.Provider
+            value={{ token, user, login, logout }}>
             {children}
-        </authContext.Provider>
+        </AuthContext.Provider>
     )
 }
 
 export const useAuth = () => {
-    return useContext(authContext);
+    return useContext(AuthContext);
 }

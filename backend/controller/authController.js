@@ -60,22 +60,19 @@ const loginUser = async (req, res) => {
       .json({ message: "Invalid email format, must include @" });
   }
   try {
-    const user = await User.findOne({ email: email.toLowerCase() });
-    console.log("Found user:", user);
+    const userData = await User.findOne({ email: email.toLowerCase() });
+    console.log("Found user:", userData);
 
-    if (!user) {
+    if (!userData) {
       return res.status(400).json({ message: "Invalid email or password" });
     }
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, userData.password);
 
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid email or password" });
     }
-    // Generate a token (e.g., JWT) here
-    // const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-    // res.json({ token });
     
-    const token = generateToken(user._id);
+    const token = generateToken(userData._id);
     console.log("Token :",token);
     if(!token){
       return res.status(400).json({ message: "Empty token" });
@@ -83,6 +80,11 @@ const loginUser = async (req, res) => {
     res.json({
       success: true,
       message: "User logged in successfully",
+      user: {
+        id: userData._id,
+        username: userData.username,
+        email: userData.email,
+      },
       token
     });
   } catch (error) {

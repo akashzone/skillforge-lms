@@ -1,12 +1,14 @@
 import React from 'react'
 import { useState } from 'react';
 import api from '../api/api';
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
     const [formData, setFormData] = useState({
             email: '',
             password: '',
         });
+    const { login } = useAuth();
     
         async function handleSubmit(e) {
             e.preventDefault();
@@ -24,7 +26,8 @@ const Login = () => {
                 const { email, password } = formData;
                 console.log("Submitting form with data:", { email, password});
                 const response = await api.post("/auth/login", { email, password });
-                console.log(response.data);
+                login(response.data.token,response.data.user);
+                console.log(response.data.token);
             } catch (error) {
                 console.log(error.response.data);
             }
