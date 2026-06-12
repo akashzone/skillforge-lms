@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import api from '../api/api';
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -9,7 +10,7 @@ const Register = () => {
         password: '',
         role: "student",
     });
-
+    const navigate = useNavigate();
     async function handleSubmit(e) {
         e.preventDefault();
         // console.log(formData);
@@ -27,6 +28,8 @@ const Register = () => {
             console.log("Submitting form with data:", { username, email, password, role });
             const response = await api.post("/auth/register", { username, email, password, role });
             console.log(response.data);
+            role == "student" ?
+                navigate("/") : navigate("/dashboard")
         } catch (error) {
             console.log(error.response.data);
         }

@@ -31,11 +31,16 @@ const Login = () => {
             console.log("Submitting form with data:", { email, password });
             const response = await api.post("/auth/login", { email, password });
             login(response.data.token, response.data.user);
-            console.log(response.data);
+            console.log("Role:", response.data.user.role);
+
+            if (response.data.user.role === "student") {
+                navigate("/");
+            } else {
+                navigate("/dashboard");
+            }
         } catch (error) {
             console.log(error.response.data);
         }
-        navigate("/")
     }
     return (
         <div className='card p-4 rounded-lg shadow-md w-full max-w-md mx-auto mt-10'>
