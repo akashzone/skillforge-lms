@@ -2,38 +2,43 @@ import React from 'react'
 import { useState } from 'react';
 import api from '../api/api';
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+
+
 
 const Login = () => {
     const [formData, setFormData] = useState({
-            email: '',
-            password: '',
-        });
+        email: '',
+        password: '',
+    });
+    const navigate = useNavigate();
     const { login } = useAuth();
-    
-        async function handleSubmit(e) {
-            e.preventDefault();
-            // console.log(formData);
-            const {email, password } = formData;
-            if (!email || !password) {
-                alert("All fields are required");
-                return;
-            }
-            if (!email.includes("@")) {
-                alert("Invalid email format, must include @");
-                return;
-            }
-            try {
-                const { email, password } = formData;
-                console.log("Submitting form with data:", { email, password});
-                const response = await api.post("/auth/login", { email, password });
-                login(response.data.token,response.data.user);
-                console.log(response.data.token);
-            } catch (error) {
-                console.log(error.response.data);
-            }
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+        // console.log(formData);
+        const { email, password } = formData;
+        if (!email || !password) {
+            alert("All fields are required");
+            return;
         }
-  return (
-    <div className='card p-4 rounded-lg shadow-md w-full max-w-md mx-auto mt-10'>
+        if (!email.includes("@")) {
+            alert("Invalid email format, must include @");
+            return;
+        }
+        try {
+            const { email, password } = formData;
+            console.log("Submitting form with data:", { email, password });
+            const response = await api.post("/auth/login", { email, password });
+            login(response.data.token, response.data.user);
+            console.log(response.data);
+        } catch (error) {
+            console.log(error.response.data);
+        }
+        navigate("/")
+    }
+    return (
+        <div className='card p-4 rounded-lg shadow-md w-full max-w-md mx-auto mt-10'>
             <h1 className='font-semibold text-center'>Sign In</h1>
             <form className='flex flex-col gap-4 mt-4 *:bg-gray-100 p-4 rounded-lg shadow-md' onSubmit={handleSubmit}>
 
@@ -54,7 +59,7 @@ const Login = () => {
                 </button>
             </form>
         </div>
-  )
+    )
 }
 
 export default Login

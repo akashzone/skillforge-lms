@@ -62,6 +62,7 @@ const loginUser = async (req, res) => {
   try {
     const userData = await User.findOne({ email: email.toLowerCase() });
     console.log("Found user:", userData);
+    console.log("User role:",userData.role);
 
     if (!userData) {
       return res.status(400).json({ message: "Invalid email or password" });
@@ -69,7 +70,7 @@ const loginUser = async (req, res) => {
     const isMatch = await bcrypt.compare(password, userData.password);
 
     if (!isMatch) {
-      return res.status(400).json({ message: "Invalid email or password" });
+      return res.status(400).json({ message: "Incorrect password" });
     }
     
     const token = generateToken(userData._id);
@@ -84,6 +85,7 @@ const loginUser = async (req, res) => {
         id: userData._id,
         username: userData.username,
         email: userData.email,
+        role: userData.role
       },
       token
     });
