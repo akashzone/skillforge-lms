@@ -39,7 +39,7 @@ const registerUser = async (req, res) => {
     await newUser.save();
     res.status(201).json({
       success: true,
-      message: "User registered successfully",
+      message: "User registered successfully"
     });
   } catch (error) {
     console.error("Error registering user:", error);
@@ -73,7 +73,7 @@ const loginUser = async (req, res) => {
       return res.status(400).json({ message: "Incorrect password" });
     }
     
-    const token = generateToken(userData._id);
+    const token = generateToken(userData._id,userData.role);
     console.log("Token :",token);
     if(!token){
       return res.status(400).json({ message: "Empty token" });

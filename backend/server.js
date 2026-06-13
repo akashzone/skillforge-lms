@@ -1,5 +1,7 @@
 require("dotenv").config();
 const AuthRoutes = require("./routes/authRoutes");
+const CourseRoutes = require("./routes/courseRoutes");
+
 const AuthMiddleware = require("./middleware/authMiddleware.js");
 
 // Create Express app
@@ -31,6 +33,7 @@ connectDB();
 
 // Routes
 app.use("/api/auth", AuthRoutes);
+app.use("/api/instructor",CourseRoutes);
 
 app.get("/api/test", AuthMiddleware, (req, res) => {
   res.json({ message: "API is working!" });

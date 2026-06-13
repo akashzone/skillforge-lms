@@ -28,8 +28,6 @@ const Register = () => {
             console.log("Submitting form with data:", { username, email, password, role });
             const response = await api.post("/auth/register", { username, email, password, role });
             console.log(response.data);
-            role == "student" ?
-                navigate("/") : navigate("/dashboard")
         } catch (error) {
             console.log(error.response.data);
         }

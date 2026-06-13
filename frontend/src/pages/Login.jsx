@@ -12,7 +12,7 @@ const Login = () => {
         password: '',
     });
     const navigate = useNavigate();
-    const { login } = useAuth();
+    const { login,token } = useAuth();
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -34,9 +34,9 @@ const Login = () => {
             console.log("Role:", response.data.user.role);
 
             if (response.data.user.role === "student") {
-                navigate("/");
+                navigate("/student");
             } else {
-                navigate("/dashboard");
+                navigate("/instructor");
             }
         } catch (error) {
             console.log(error.response.data);
