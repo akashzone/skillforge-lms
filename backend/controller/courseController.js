@@ -59,8 +59,8 @@ const getCourses = async (req, res) => {
   }
 };
 
-const getCourseById = async (req,res) => {
-  console.log("ID of instructor :",req.params.id);
+const getCourseById = async (req, res) => {
+  // console.log("ID of instructor :",req.params.id);
   if (!req.params.id) {
     return res.status(401).json({
       status: false,
@@ -73,12 +73,23 @@ const getCourseById = async (req,res) => {
       console.error("Error id is not valid :) so can't find the course.");
       res.status(500).json({ message: "Error id is not valid :)" });
     }
+    const courseInstructor = course.instructor;
+    console.log("Course instrcutor :", courseInstructor);
+    console.log("req.user.UserId :", req.user.id);
+
+    //Here I'm implementing Ownership - bcz other instructor (Instructor B),
+    // shouldn't make any changes in courses of (Instructor A).
+    if (courseInstructor !== req.user.id) {
+      return res.status(401).json({
+        status: false,
+        message: "Course cannot be accessed by another instructor",
+      });
+    }
     res.status(201).json({
       courses: course,
       success: true,
       message: "Course fetched successfully by ID",
     });
-
   } catch (error) {
     console.error("Error :", error);
     res.status(500).json({ message: "Server error" });

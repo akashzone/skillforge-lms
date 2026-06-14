@@ -26,13 +26,12 @@ const AuthMiddleware = async (req, res, next) => {
       });
     }
     const decode = jwt.verify(token, JWT_SECRET);
-    console.log("Decoded :", decode);
+    // console.log("Decoded :", decode);
     req.user = {
       id: decode.id,
       role: decode.role,
-    };
-
-    console.log("req.user",req.user)
+    }
+    // console.log("req.user",req.user)
 
     next();
   } catch {
