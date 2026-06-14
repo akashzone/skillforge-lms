@@ -1,8 +1,9 @@
 const Course = require("../models/Course.js");
 
-const createCourse =  async (req, res) => {
+const createCourse = async (req, res) => {
   const { title, description, price, level, category } = req.body;
   const { id } = req.user;
+  // console.log("id from createCourse of instrcutor: ", id);
   if (!title) {
     return res.status(401).json({
       status: false,
@@ -16,29 +17,46 @@ const createCourse =  async (req, res) => {
     });
   }
   try {
-  const course = new Course({
-    title,
-    description,
-    price,
-    level,
-    category,
-  });
-
-  await newCourse.save();
-  res.status(201).json({
-      success: true,
-      message: "Course created successfully"
+    const newCourse = new Course({
+      title,
+      description,
+      price,
+      level,
+      category,
+      instructor: id,
     });
-}
-catch(error){
-  console.error("Error in storing course in DB:", error);
+
+    await newCourse.save();
+    console.log("Course created");
+    res.status(201).json({
+      success: true,
+      message: "Course created successfully",
+    });
+  } catch (error) {
+    console.error("Error in storing course in DB:", error);
     res.status(500).json({ message: "Server error" });
-}
-  console.log("Course created");
-  res.status(201).json({
-    success: true,
-    message: "Course created successfully",
-  });
+  }
 };
 
-module.exports = { createCourse };
+const getCourses = async (req, res) => {
+  try {
+    const allCourses = await Course.find();
+    console.log("allCourses :", allCourses);
+    if (!allCourses) {
+      return res.status(401).json({
+        status: false,
+        message: "Courses collection is empty, allCourse is null",
+      });
+    }
+     res.status(201).json({
+      courses: allCourses,
+      success: true,
+      message: "All courses fetched successfully",
+    });
+  } catch (err) {
+    console.error("Error in storing course in DB:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+module.exports = { createCourse, getCourses };

@@ -33,7 +33,7 @@ connectDB();
 
 // Routes
 app.use("/api/auth", AuthRoutes);
-app.use("/api/instructor",CourseRoutes);
+app.use("/api/courses",CourseRoutes);
 
 app.get("/api/test", AuthMiddleware, (req, res) => {
   res.json({ message: "API is working!" });
