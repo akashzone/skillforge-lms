@@ -6,7 +6,7 @@ const router = express.Router();
 
 
 router.post(
-    "/create",
+    "/courses",
     AuthMiddleware,
     RoleMiddleware("instructor"),
     createCourse

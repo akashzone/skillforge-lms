@@ -23,7 +23,7 @@ const courseSchema = new mongoose.Schema({
     },
     thumbnail:{
         type: String,
-        required: true
+        default: "Hello"      
     },
     instructor:{
         type: mongoose.Schema.Types.ObjectId,
@@ -31,3 +31,7 @@ const courseSchema = new mongoose.Schema({
     }
 
 },{timestamps: true});
+
+const Course = mongoose.model("Course",courseSchema);
+
+module.exports = Course;
