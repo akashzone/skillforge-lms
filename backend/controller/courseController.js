@@ -74,12 +74,12 @@ const getCourseById = async (req, res) => {
       res.status(500).json({ message: "Error id is not valid :)" });
     }
     const courseInstructor = course.instructor;
-    console.log("Course instrcutor :", courseInstructor);
-    console.log("req.user.UserId :", req.user.id);
+    // console.log("Course instrcutor :", courseInstructor);
+    // console.log("req.user.UserId :", req.user.id);
 
     //Here I'm implementing Ownership - bcz other instructor (Instructor B),
     // shouldn't make any changes in courses of (Instructor A).
-    if (courseInstructor !== req.user.id) {
+    if (courseInstructor.toString() !== req.user.id) {
       return res.status(401).json({
         status: false,
         message: "Course cannot be accessed by another instructor",
@@ -96,4 +96,43 @@ const getCourseById = async (req, res) => {
   }
 };
 
-module.exports = { createCourse, getCourses, getCourseById };
+const updateCourseById = async (req, res) => {
+  const id = req.params.id;
+  const instructorId = req.user.id;
+  if (!id) {
+    return res.status(401).json({
+      status: false,
+      message: "ID not found",
+    });
+  }
+  try {
+    const courseExist = await Course.findById(id);
+    if (!courseExist) {
+      console.error("Error id is not valid :) so can't find the course.");
+      res.status(500).json({ message: "Error id is not valid :)" });
+    }
+    const courseInstructor = courseExist.instructor;
+    // console.log("Course instrcutor :", courseInstructor);
+    if (courseInstructor.toString() !== req.user.id) {
+      return res.status(401).json({
+        status: false,
+        message: "Course cannot be accessed by another instructor",
+      });
+    }
+    const updateCourse = await Course.findByIdAndUpdate(
+      id,
+      req.body,
+      { returnDocument: "after" }
+    );
+    res.status(201).json({
+      updateCourse,
+      success: true,
+      message: "Course updated successfully by ID",
+    });
+  } catch (error) {
+    console.error("Error :", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+module.exports = { createCourse, getCourses, getCourseById, updateCourseById };

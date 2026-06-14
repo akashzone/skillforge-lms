@@ -61,8 +61,8 @@ const loginUser = async (req, res) => {
   }
   try {
     const userData = await User.findOne({ email: email.toLowerCase() });
-    console.log("Found user:", userData);
-    console.log("User role:",userData.role);
+    // console.log("Found user:", userData);
+    // console.log("User role:",userData.role);
 
     if (!userData) {
       return res.status(400).json({ message: "Invalid email or password" });
