@@ -48,7 +48,7 @@ const getCourses = async (req, res) => {
         message: "Courses collection is empty, allCourse is null",
       });
     }
-     res.status(201).json({
+    res.status(201).json({
       courses: allCourses,
       success: true,
       message: "All courses fetched successfully",
@@ -59,4 +59,30 @@ const getCourses = async (req, res) => {
   }
 };
 
-module.exports = { createCourse, getCourses };
+const getCourseById = async (req,res) => {
+  console.log("ID of instructor :",req.params.id);
+  if (!req.params.id) {
+    return res.status(401).json({
+      status: false,
+      message: "ID not found",
+    });
+  }
+  try {
+    const course = await Course.findById(req.params.id);
+    if (!course) {
+      console.error("Error id is not valid :) so can't find the course.");
+      res.status(500).json({ message: "Error id is not valid :)" });
+    }
+    res.status(201).json({
+      courses: course,
+      success: true,
+      message: "Course fetched successfully by ID",
+    });
+
+  } catch (error) {
+    console.error("Error :", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+module.exports = { createCourse, getCourses, getCourseById };
