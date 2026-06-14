@@ -1,5 +1,5 @@
 const express = require("express");
-const { createCourse,getCourses, getCourseById,updateCourseById } = require("../controller/courseController");
+const { createCourse,getCourses, getCourseById,updateCourseById,deleteCourseById } = require("../controller/courseController");
 const AuthMiddleware = require("../middleware/authMiddleware.js");
 const RoleMiddleware = require("../middleware/roleMiddleware.js");
 const router = express.Router();
@@ -31,6 +31,13 @@ router.put(
     AuthMiddleware,
     RoleMiddleware("instructor"),
     updateCourseById
+)
+
+router.delete(
+    "/:id",
+    AuthMiddleware,
+    RoleMiddleware("instructor"),
+    deleteCourseById
 )
 
 module.exports = router;

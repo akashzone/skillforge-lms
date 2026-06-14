@@ -119,11 +119,9 @@ const updateCourseById = async (req, res) => {
         message: "Course cannot be accessed by another instructor",
       });
     }
-    const updateCourse = await Course.findByIdAndUpdate(
-      id,
-      req.body,
-      { returnDocument: "after" }
-    );
+    const updateCourse = await Course.findByIdAndUpdate(id, req.body, {
+      returnDocument: "after",
+    });
     res.status(201).json({
       updateCourse,
       success: true,
@@ -135,4 +133,45 @@ const updateCourseById = async (req, res) => {
   }
 };
 
-module.exports = { createCourse, getCourses, getCourseById, updateCourseById };
+const deleteCourseById = async (req, res) => {
+  const id = req.params.id;
+  const instructorId = req.user.id;
+  if (!id) {
+    return res.status(401).json({
+      status: false,
+      message: "ID not found",
+    });
+  }
+  try {
+    const courseExist = await Course.findById(id);
+    if (!courseExist) {
+      console.error("Error id is not valid :) so can't find the course.");
+      res.status(500).json({ message: "Error id is not valid :)" });
+    }
+    const courseInstructor = courseExist.instructor;
+    // console.log("Course instrcutor :", courseInstructor);
+    if (courseInstructor.toString() !== req.user.id) {
+      return res.status(401).json({
+        status: false,
+        message: "Course cannot be accessed by another instructor",
+      });
+    }
+    const deleteCourse = await Course.findByIdAndDelete(id);
+    res.status(201).json({
+      deleteCourse,
+      success: true,
+      message: "Course deleted successfully by ID",
+    });
+  } catch (error) {
+    console.error("Error :", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+module.exports = {
+  createCourse,
+  getCourses,
+  getCourseById,
+  updateCourseById,
+  deleteCourseById,
+};
