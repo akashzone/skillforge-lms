@@ -1,11 +1,11 @@
 
 import './App.css'
 import api from './api/api';
-import Register from './pages/Register';
-import Login from './pages/Login';
+import Register from './pages/auth/Register';
+import Login from './pages/auth/Login';
 import About from './pages/About';
-import InstructorDashboard from './pages/InstructorDashboard';
-import StudentDashboard from './pages/StudentDashboard';
+import InstructorDashboard from './pages/instructor/InstructorDashboard';
+import StudentDashboard from './pages/student/StudentDashboard';
 import Courses from './pages/Courses';
 import ProtectedRoute from './routes/ProtectedRoute';
 import UnauthorizedRoute from './routes/UnauthorizedRoute';
@@ -29,13 +29,16 @@ function App() {
           <Route path="/login" element={<Login />} />
         </Route>
         <Route element={<ProtectedRoute />}>
+          
           // can access if logged or sign up.
           <Route path="/about" element={<About />} />
           <Route path="/courses" element={<Courses />} />
+
           // if created acc on role = "student"
           <Route element={< StudentRoute />}>
             <Route path="/student" element={<StudentDashboard />} />
           </Route>
+          
           // if created acc on role = "instructor"
           <Route element={< InstructorRoute />}>
             <Route path="/instructor" element={<InstructorDashboard />}>

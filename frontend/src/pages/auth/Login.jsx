@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
-import api from '../api/api';
-import { useAuth } from "../context/AuthContext";
+import api from '../../api/api';
+import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 
