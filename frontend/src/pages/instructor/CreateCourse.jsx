@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useAuth } from "../../context/AuthContext";
 import api from '../../api/api';
+import { useNavigate } from "react-router-dom";
 
 const CreateCourse = (req, res) => {
     const { token } = useAuth();
@@ -13,7 +14,7 @@ const CreateCourse = (req, res) => {
         category: "",
         level: "",
     })
-
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
         const { title, description, price, level, category } = formData;
@@ -38,10 +39,15 @@ const CreateCourse = (req, res) => {
                 })
             console.log("Response :", response);
             console.log("Create Course Working !!")
+            navigate("/instructor");
         }
         catch (error) {
             console.log("Error :", error.response.data);
         }
+    }
+
+    function handleCancel(){
+        navigate("/instructor");
     }
     return (
         <>
@@ -93,6 +99,7 @@ const CreateCourse = (req, res) => {
                     />
                     <button type='submit'>Create</button>
                 </form>
+                <button onClick={handleCancel}>Cancel</button>
             </div>
         </>
     )

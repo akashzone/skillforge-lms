@@ -17,6 +17,7 @@ import { useAuth } from "./context/AuthContext"
 import StudentRoute from './routes/StudentRoutes';
 import InstructorRoute from './routes/InstructorRoutes';
 import CreateCourse from './pages/instructor/CreateCourse';
+import MyCourses from './pages/instructor/MyCourses';
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
           <Route element={< InstructorRoute />}>
             <Route path="/instructor" element={<InstructorDashboard />}></Route>
             <Route path="/instructor/create-course" element={< CreateCourse/> }></Route>
+            <Route path="/instructor/my-courses" element={< MyCourses/> }></Route>
           </Route>
         </Route>
       </Routes>

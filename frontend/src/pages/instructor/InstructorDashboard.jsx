@@ -1,8 +1,19 @@
 import React from 'react'
+import { useNavigate } from "react-router-dom";
 
-const InstructorDashboard  = () => {
+const InstructorDashboard = () => {
+  const navigate = useNavigate();
+  function handleClick() {
+    navigate("/instructor/create-course");
+  }
   return (
-    <div>Instuctor Page </div>
+    <>
+      <h1>Welcome, Akash 👋</h1>
+
+      <button onClick={handleClick}>Create Course</button>
+
+      
+    </>
   )
 }
 

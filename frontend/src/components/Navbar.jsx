@@ -86,10 +86,10 @@ function Navbar() {
                   Dashboard
                 </Link>
                 <Link
-                  to="/instructor/create-course"
+                  to="/instructor/my-courses"
                   className="text-gray-700 hover:text-blue-600 transition"
                 >
-                  Course
+                  My Course
                 </Link>
                 <a
                   href="#"
