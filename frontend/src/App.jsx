@@ -16,6 +16,7 @@ import { Routes, Route } from 'react-router-dom';
 import { useAuth } from "./context/AuthContext"
 import StudentRoute from './routes/StudentRoutes';
 import InstructorRoute from './routes/InstructorRoutes';
+import CreateCourse from './pages/instructor/CreateCourse';
 
 function App() {
   return (
@@ -41,8 +42,8 @@ function App() {
           
           // if created acc on role = "instructor"
           <Route element={< InstructorRoute />}>
-            <Route path="/instructor" element={<InstructorDashboard />}>
-            </Route>
+            <Route path="/instructor" element={<InstructorDashboard />}></Route>
+            <Route path="/instructor/create-course" element={< CreateCourse/> }></Route>
           </Route>
         </Route>
       </Routes>

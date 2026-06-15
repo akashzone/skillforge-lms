@@ -85,12 +85,12 @@ function Navbar() {
                 >
                   Dashboard
                 </Link>
-                <a
-                  href="#"
-                  className="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900"
+                <Link
+                  to="/instructor/create-course"
+                  className="text-gray-700 hover:text-blue-600 transition"
                 >
-                  Courses
-                </a>
+                  Course
+                </Link>
                 <a
                   href="#"
                   className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
