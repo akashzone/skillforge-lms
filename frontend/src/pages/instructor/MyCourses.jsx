@@ -34,19 +34,10 @@ const MyCourses = () => {
                     return <CourseCard key={course._id}
                         title={course.title}
                         price={course.price}
-                        description={course.description}
                         category={course.category}
-                        level={course.level}
                     ></CourseCard>
                 })
             }
-            <CourseCard
-                title="Advanced JavaScript Essentials"
-                price={899}
-                description="Master modern JavaScript concepts including closures, prototypes, async programming, event loop, ES6+ features, and performance optimization."
-                category="Programming"
-                level="Advanced"
-            ></CourseCard>
         </div >
     )
 }
