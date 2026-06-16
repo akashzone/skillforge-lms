@@ -1,6 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const CourseCard = ({ title, price, category }) => {
+const CourseCard = ({ id,title, price, category }) => {
+  const navigate = useNavigate();
+  function handleViewCourse(){
+    navigate(`/instructor/courses/${id}`);
+  }
+  function handleEditCourse(){
+    navigate(`/instructor/${id}/edit`);
+  }
   return (
     <div className="max-w-md rounded-xl border border-gray-200 bg-white p-6 shadow-md transition hover:shadow-lg">
       <h2 className="mb-3 text-xl font-bold text-gray-800">
@@ -17,10 +25,14 @@ const CourseCard = ({ title, price, category }) => {
         <span className="text-2xl font-bold text-gray-900">
           ₹{price}
         </span>
-
-        <button className="rounded-lg bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700">
-          View Course
+        <div className="flex items-center gap-3">
+          <button onClick={handleEditCourse} className="rounded-lg bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700">
+          Edit
         </button>
+        <button onClick={handleViewCourse} className="rounded-lg bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700">
+          View
+        </button>
+        </div>
       </div>
     </div>
   );
