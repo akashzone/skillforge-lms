@@ -8,6 +8,18 @@ const MyCourses = () => {
     const { token } = useAuth();
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    const handleDelete = async (id) => {
+        const res = await api.delete(`/courses/${id}`,{
+            headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+        });
+        console.log("Response :", res);
+        setCourses(
+            courses.filter(course => course._id !== id)
+        );
+    };
     useEffect(() => {
         const fetchCourses = async () => {
             try {
@@ -69,6 +81,7 @@ const MyCourses = () => {
                             category={course.category}
                             description={course.description}
                             level={course.level}
+                            onDelete={handleDelete}
                         />
                     ))}
                 </div>
