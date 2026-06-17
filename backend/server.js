@@ -1,6 +1,7 @@
 require("dotenv").config();
 const AuthRoutes = require("./routes/authRoutes");
 const CourseRoutes = require("./routes/courseRoutes");
+const SectionRoutes = require("./routes/sectionRoutes");
 
 const AuthMiddleware = require("./middleware/authMiddleware.js");
 
@@ -34,6 +35,7 @@ connectDB();
 // Routes
 app.use("/api/auth", AuthRoutes);
 app.use("/api/courses",CourseRoutes);
+app.use("/api/sections",SectionRoutes);
 
 app.get("/api/test", AuthMiddleware, (req, res) => {
   res.json({ message: "API is working!" });
