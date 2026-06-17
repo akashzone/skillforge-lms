@@ -1,7 +1,7 @@
 const Course = require("../models/Course.js");
 
 const createCourse = async (req, res) => {
-  const { title, description, price, level, category } = req.body;
+  const { title, description, price, level, category, learnings } = req.body;
   const { id } = req.user;
   // console.log("id from createCourse of instrcutor: ", id);
   if (!title) {
@@ -23,6 +23,7 @@ const createCourse = async (req, res) => {
       price,
       level,
       category,
+      learnings,
       instructor: id,
     });
 
@@ -41,7 +42,7 @@ const createCourse = async (req, res) => {
 const getCourses = async (req, res) => {
   try {
     const allCourses = await Course.find();
-    console.log("allCourses :", allCourses);
+    // console.log("allCourses :", allCourses);
     if (!allCourses) {
       return res.status(401).json({
         status: false,
