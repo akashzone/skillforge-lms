@@ -50,4 +50,31 @@ const createSection = async (req, res) => {
   }
 };
 
-module.exports = { createSection };
+const getAllSection = async (req, res) => {
+  const { id } = req.params;
+  console.log("Course ID :", id);
+
+  if (!req.params.id) {
+    return res.status(401).json({
+      status: false,
+      message: "ID not found",
+    });
+  }
+
+  try{
+    const getAllSection = await Section.find({
+        course: "6a32287dd13f1c3b217c9f39"
+    });
+    console.log("All sections :",getAllSection);
+    res.status(201).json({
+      sections: getAllSection,
+      success: true,
+      message: "SectionInfo fetched successfully.",
+    });
+  } catch (error) {
+    console.error("Error in fetching sectionInfo from DB:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+module.exports = { createSection, getAllSection };
