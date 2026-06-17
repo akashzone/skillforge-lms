@@ -6,7 +6,7 @@ const router = express.Router();
 const AuthMiddleware = require("../middleware/authMiddleware");
 const RoleMiddleware = require("../middleware/roleMiddleware");
 
-const { createSection, getAllSection, updateSectionById } = require("../controller/sectionController");
+const { createSection, getAllSection, updateSectionById, deleteSectionById } = require("../controller/sectionController");
 
 router.post(
     "/",
@@ -27,6 +27,13 @@ router.put(
     AuthMiddleware,
     RoleMiddleware("instructor"),
     updateSectionById
+)
+
+router.delete(
+    "/:id",
+    AuthMiddleware,
+    RoleMiddleware("instructor"),
+    deleteSectionById
 )
 
 

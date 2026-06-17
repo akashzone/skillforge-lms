@@ -144,4 +144,63 @@ const updateSectionById = async (req, res) => {
   }
 };
 
-module.exports = { createSection, getAllSection, updateSectionById };
+const deleteSectionById = async (req, res) => {
+  const { id } = req.params;
+  console.log("Section ID :", id);
+
+  if (!id) {
+    return res.status(401).json({
+      status: false,
+      message: "ID not found",
+    });
+  }
+  try {
+    const courseSection = await Section.findById(id);
+
+    if (!courseSection) {
+      return res.status(404).json({
+        success: false,
+        message: "Section not found",
+      });
+    }
+
+    const courseId = courseSection.course;
+
+    const course = await Course.findById(courseId);
+
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: "Course not found",
+      });
+    }
+
+    if (course.instructor.toString() !== req.user.id) {
+      return res.status(401).json({
+        success: false,
+        message: "Course cannot be accessed by another instructor",
+      });
+    }
+
+    const deletedSection = await Section.findByIdAndDelete(id);
+    console.log(
+      "sectionInfo is successfully updated in DB! Data - ",
+      deletedSection,
+    );
+    res.status(200).json({
+      success: true,
+      removedSection: deletedSection,
+      message: "Section deleted successfully",
+    });
+  } catch (error) {
+    console.error("Error in deleting sectionInfo in DB:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+module.exports = {
+  createSection,
+  getAllSection,
+  updateSectionById,
+  deleteSectionById,
+};
