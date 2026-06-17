@@ -6,7 +6,7 @@ const router = express.Router();
 const AuthMiddleware = require("../middleware/authMiddleware");
 const RoleMiddleware = require("../middleware/roleMiddleware");
 
-const { createSection, getAllSection } = require("../controller/sectionController");
+const { createSection, getAllSection, updateSectionById } = require("../controller/sectionController");
 
 router.post(
     "/",
@@ -21,5 +21,13 @@ router.get(
     RoleMiddleware("instructor"),
     getAllSection
 )
+
+router.put(
+    "/:id",
+    AuthMiddleware,
+    RoleMiddleware("instructor"),
+    updateSectionById
+)
+
 
 module.exports = router;
