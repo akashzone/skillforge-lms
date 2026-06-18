@@ -37,11 +37,6 @@ const createLesson = async (req, res) => {
       });
     }
     const courseInstructor = course.instructor;
-    // console.log("Course instrcutor :", courseInstructor);
-    // console.log("req.user.UserId :", req.user.id);
-
-    //Here I'm implementing Ownership - bcz other instructor (Instructor B),
-    // shouldn't make any changes in courses of (Instructor A).
     if (courseInstructor.toString() !== req.user.id) {
       return res.status(401).json({
         status: false,
@@ -68,4 +63,30 @@ const createLesson = async (req, res) => {
   }
 };
 
-module.exports = { createLesson };
+const getLessons = async (req,res) => {
+  const { id } = req.params;
+  if (!id) {
+    console.log("section ID :", id);
+    return res.status(401).json({
+      status: false,
+      message: "ID not found",
+    });
+  }
+
+  try {
+      const getAllLesson = await Lesson.find({
+        section: id,
+      });
+      console.log("All sections :", getAllLesson);
+      res.status(201).json({
+        lessons: getAllLesson,
+        success: true,
+        message: "Lessons fetched successfully.",
+      });
+    } catch (error) {
+      console.error("Error in fetching sectionInfo from DB:", error);
+      res.status(500).json({ message: "Server error" });
+    }
+};
+
+module.exports = { createLesson, getLessons };
