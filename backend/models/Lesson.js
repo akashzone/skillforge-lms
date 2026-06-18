@@ -11,9 +11,10 @@ const lessonSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    sectionId:{
+    section:{
         type:  mongoose.Schema.Types.ObjectId,
-        requied: true
+        requied: true,
+        ref: "Section"
     }
 });
 
