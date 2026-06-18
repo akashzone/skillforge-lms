@@ -2,7 +2,7 @@
 const AuthMiddleware = require("../middleware/authMiddleware.js");
 const RoleMiddleware = require("../middleware/roleMiddleware.js");
 const express = require("express");
-const { createLesson, getLessons, updateLessonById } = require("../controller/lessonController");
+const { createLesson, getLessons, updateLessonById, deleteById } = require("../controller/lessonController");
 
 const router = express.Router();
 
@@ -27,4 +27,10 @@ router.put(
     updateLessonById
 );
 
+router.delete(
+    "/:id",
+    AuthMiddleware,
+    RoleMiddleware("instructor"),
+    deleteById
+);
 module.exports = router;
