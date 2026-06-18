@@ -63,7 +63,7 @@ const createLesson = async (req, res) => {
   }
 };
 
-const getLessons = async (req,res) => {
+const getLessons = async (req, res) => {
   const { id } = req.params;
   if (!id) {
     console.log("section ID :", id);
@@ -74,19 +74,91 @@ const getLessons = async (req,res) => {
   }
 
   try {
-      const getAllLesson = await Lesson.find({
-        section: id,
-      });
-      console.log("All sections :", getAllLesson);
-      res.status(201).json({
-        lessons: getAllLesson,
-        success: true,
-        message: "Lessons fetched successfully.",
-      });
-    } catch (error) {
-      console.error("Error in fetching sectionInfo from DB:", error);
-      res.status(500).json({ message: "Server error" });
-    }
+    const getAllLesson = await Lesson.find({
+      section: id,
+    });
+    console.log("All sections :", getAllLesson);
+    res.status(201).json({
+      lessons: getAllLesson,
+      success: true,
+      message: "Lessons fetched successfully.",
+    });
+  } catch (error) {
+    console.error("Error in fetching sectionInfo from DB:", error);
+    res.status(500).json({ message: "Server error" });
+  }
 };
 
-module.exports = { createLesson, getLessons };
+const updateLessonById = async (req,res) => {
+  const { id } = req.params;
+  const data = req.body;
+//   console.log("Lesson ID :",id);
+//   console.log("DATA :",req.body);
+  if (!id) {
+    console.log("section ID :", id);
+    return res.status(401).json({
+      status: false,
+      message: "ID not found",
+    });
+  }
+   try {
+    const LessonInfo = await Lesson.findById(id);
+    if (!LessonInfo) {
+      return res.status(404).json({
+        success: false,
+        message: "Lesson not found",
+      });
+    }
+    // console.log("Lesson Info :",LessonInfo.section);
+    const sectionId = LessonInfo.section;
+    // console.log("Section ID :",sectionId)
+    if (!sectionId) {
+      return res.status(404).json({
+        success: false,
+        message: "Section id not found",
+      });
+    }
+
+    const sectionInfo = await Section.findById(sectionId);
+    // console.log("Section Data :",sectionInfo.course);
+    const courseId = sectionInfo.course;
+    // console.log("Course ID:",courseId);
+    const course = await Course.findById(courseId);
+
+    console.log("Course data :",course);
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: "Course not found",
+      });
+    }
+
+    const courseInstructor = course.instructor;
+    if (courseInstructor.toString() !== req.user.id) {
+      return res.status(401).json({
+        status: false,
+        message: "Course cannot be accessed by another instructor",
+      });
+    }
+
+
+
+    const updatedLesson = await Lesson.findByIdAndUpdate(id, data, {
+      new: true,
+    });
+    console.log(
+      "Lesson is successfully updated in DB! Data - ",
+      updatedLesson,
+    );
+    res.status(200).json({
+      success: true,
+      newLesson: updatedLesson,
+      message: "Lesson updated successfully",
+    });
+  } catch (error) {
+    console.error("Error in updating sectionInfo in DB:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+module.exports = { createLesson, getLessons, updateLessonById };
