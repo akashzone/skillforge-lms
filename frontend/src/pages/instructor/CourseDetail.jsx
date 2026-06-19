@@ -14,6 +14,25 @@ const CourseDetail = () => {
   const [courses, setCourses] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
+
+  const [sections, setSections] = useState([]);
+
+  useEffect(() => {
+    const fetchSections = async (id) => {
+      const res = await api.get(
+        `/sections/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
+      console.log("Response from section GET API - :", res.data.sections[0].title);
+      setSections(res.data.sections);
+    }
+    fetchSections(id)
+  }, [])
+
   async function handleDeleteCourse() {
     try {
       setShowModal(false);
@@ -163,37 +182,113 @@ const CourseDetail = () => {
                 </div>
               </div>
 
+              <div className="lg:col-span-2 mt-8">
+                <div className="rounded-xl bg-white shadow">
+
+                  {/* Header */}
+                  <div className="flex items-center justify-between border-b px-6 py-5">
+                    <h2 className="text-2xl font-bold text-gray-900">
+                      Course Content
+                    </h2>
+
+                    <button className="rounded-md bg-purple-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-purple-700">
+                      + Add Section
+                    </button>
+                  </div>
+
+                  {/* Sections */}
+                  <div className="divide-y">
+
+                    {sections.length === 0 ? (
+                      <div className="py-12 text-center text-gray-500">
+                        No sections added yet.
+                      </div>
+                    ) : (
+                      sections.map((section) => (
+                        <div
+                          key={section._id}
+                          className="flex items-center justify-between px-6 py-5 transition hover:bg-gray-50"
+                          >
+                          <div>
+                            <h3 className="text-lg font-semibold text-gray-800">
+                              {section.title}
+                            </h3>
+
+                            <p className="mt-1 text-sm text-gray-500">
+                              No lessons added
+                            </p>
+
+                          </div>
+
+                          <div className="flex items-center gap-2">
+
+                            <button
+                              className="rounded-full p-2 text-gray-500 transition hover:bg-gray-200 hover:text-blue-600"
+                            >
+                              <FiEdit2 size={18} />
+                            </button>
+
+                            <button
+                              className="rounded-full p-2 text-gray-500 transition hover:bg-red-100 hover:text-red-600"
+                            >
+                              <FiTrash2 size={18} />
+                            </button>
+
+                          </div>
+                        </div>
+                      ))
+                    )}
+
+                  </div>
+                </div>
+              </div>
 
 
               {/* Right Side */}
-              <div>
-                <div className="sticky top-6 rounded-lg bg-white p-6 shadow-lg">
-                  <div className="mb-6">
-                    <p className="text-4xl font-bold text-gray-900">
-                      ₹{course.price}
-                    </p>
+              <div className="sticky top-6 rounded-xl bg-white p-6 shadow-xl">
+
+                <h2 className="mb-4 text-3xl font-bold">
+                  ₹{course.price}
+                </h2>
+
+                <button className="mb-3 w-full rounded-lg bg-purple-600 py-3 font-semibold text-white hover:bg-purple-700">
+                  Publish Course
+                </button>
+
+                <button className="w-full rounded-lg border py-3 font-semibold hover:bg-gray-100">
+                  Preview Course
+                </button>
+
+                <div className="mt-8 border-t pt-6">
+
+                  <h3 className="mb-4 text-lg font-semibold">
+                    Course Details
+                  </h3>
+
+                  <div className="space-y-3 text-gray-600">
+
+                    <div className="flex justify-between">
+                      <span>Level</span>
+                      <span>{course.level}</span>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <span>Category</span>
+                      <span>{course.category}</span>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <span>Language</span>
+                      <span>English</span>
+                    </div>
+
+                    <div className="flex justify-between">
+                      <span>Certificate</span>
+                      <span>Yes</span>
+                    </div>
+
                   </div>
 
-                  <button className="mb-3 w-full rounded bg-purple-600 py-3 font-semibold text-white hover:bg-purple-700">
-                    Buy Now
-                  </button>
-
-                  <button className="w-full rounded border border-gray-400 py-3 font-semibold hover:bg-gray-100">
-                    Add to Cart
-                  </button>
-
-                  <div className="mt-6 border-t pt-4">
-                    <h3 className="mb-3 font-semibold">
-                      This Course Includes
-                    </h3>
-
-                    <ul className="space-y-2 text-sm text-gray-700">
-                      <li>✓ Full lifetime access</li>
-                      <li>✓ Certificate of completion</li>
-                      <li>✓ Mobile and desktop access</li>
-                      <li>✓ Downloadable resources</li>
-                    </ul>
-                  </div>
                 </div>
               </div>
 
