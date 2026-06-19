@@ -3,30 +3,31 @@ import { useAuth } from "../../context/AuthContext";
 import api from '../../api/api';
 import { useNavigate, useParams } from "react-router-dom";
 
-const CreateSection = (req, res) => {
+const CreateLesson = (req, res) => {
     const { token } = useAuth();
     const { id } = useParams();
-    // console.log("token :", token);
+    const sectionId = id;
+    console.log("Section id :",sectionId )
 
     const [formData, setFormData] = useState({
-        title: " ",
-        order: 1234
+        title: "",
+        description : ""
     })
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const { title,order } = formData;
-        if (!title || !order) {
+        const { title, description } = formData;
+        if (!title || !description) {
             alert("All fields are required");
             return;
         }
         try {
             const response = await api.post(
-                `/sections`,
+                `/lessons`,
                 {
                     title,
-                    order,
-                    course: id
+                    description,
+                    section: sectionId
                 },
                 {
                     headers: {
@@ -34,17 +35,16 @@ const CreateSection = (req, res) => {
                     },
                 })
             console.log("Response :", response);
-            console.log("Create section Working !!")
-            navigate(`/instructor/courses/${id}`);
+            console.log("Create lesson Working !!")
+            navigate(`/instructor/courses`);
         }
         catch (error) {
             console.log("Error :", error.response.data);
         }
     }
-
     return (
         <>
-            <div className="create-course">
+            <div className="create-lesson">
                 <form className='flex flex-col gap-4 mt-4 *:bg-gray-100 p-4 rounded-lg shadow-md' onSubmit={handleSubmit}>                    Title
                     <input
                         type="text"
@@ -57,14 +57,18 @@ const CreateSection = (req, res) => {
                         }
                         placeholder='Enter title..?'
                     />
-                    Price
                     <input
-                        type='number'
-                        value={formData.order}
+                        type="text"
+                        value={formData.description}
                         onChange={(e) =>
-                            setFormData({ ...formData, order: e.target.value })}
-                        placeholder='Enter order number..?'
+                            setFormData({
+                                ...formData,
+                                description: e.target.value,
+                            })
+                        }
+                        placeholder='Enter description..?'
                     />
+                    
                     <button type='submit'>Create</button>
                 </form>
             </div>
@@ -72,4 +76,4 @@ const CreateSection = (req, res) => {
     )
 }
 
-export default CreateSection;
+export default CreateLesson;

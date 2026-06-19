@@ -6,6 +6,9 @@ const createLesson = async (req, res) => {
   const { title, description, section } = req.body;
   //   console.log("Title :", title);
   if (!title || !description || !section) {
+    console.log("title :",title);
+    console.log("desc :",description);
+    console.log("section :",section)
     return res.status(401).json({
       success: false,
       message: "All fields are required",

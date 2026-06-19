@@ -16,22 +16,40 @@ const CourseDetail = () => {
 
 
   const [sections, setSections] = useState([]);
-
+  const [lessons, setLessons] = useState({});
   useEffect(() => {
-    const fetchSections = async (id) => {
-      const res = await api.get(
-        `/sections/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      )
-      console.log("Response from section GET API - :", res.data.sections[0].title);
-      setSections(res.data.sections);
+    const fetchSections = async () => {
+      const res = await api.get(`/sections/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const fetchedSections = res.data.sections;
+      setSections(fetchedSections);
+
+      fetchLessons(fetchedSections);
+    };
+
+    if (token) fetchSections();
+  }, [token]);
+
+  const fetchLessons = async (sections) => {
+    const lessonMap = {};
+
+    for (const section of sections) {
+      const res = await api.get(`/lessons/${section._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      lessonMap[section._id] = res.data.lessons;
     }
-    fetchSections(id)
-  }, [])
+
+    setLessons(lessonMap);
+  };
+
 
   async function handleDeleteCourse() {
     try {
@@ -73,10 +91,18 @@ const CourseDetail = () => {
     fetchCourse();
   }, [token])
 
-  const handleAddSection = ()=>{
-    navigate(`/instructor/sections/${id}/edit`)
+  const handleCreateSection = () => {
+    navigate(`/instructor/courses/${id}/create-section`);
+  };
+
+  const handleEditSection = () => {
+    navigate(`/instrcutor/section/${id}/edit`);
   }
 
+  const handleCreateLesson = (sectionId) => {
+    console.log("Section id from coursedetail:",sectionId )
+    navigate(`/instructor/lessons/${sectionId}/create-lesson`)
+  };
   return (
     <>
       {showModal && (
@@ -187,62 +213,78 @@ const CourseDetail = () => {
               </div>
 
               <div className="lg:col-span-2 mt-8">
-                <div className="rounded-xl bg-white shadow">
+
+                <div className="rounded-xl bg-white shadow-lg">
 
                   {/* Header */}
+
                   <div className="flex items-center justify-between border-b px-6 py-5">
-                    <h2 className="text-2xl font-bold text-gray-900">
+
+                    <h2 className="text-2xl font-bold">
                       Course Content
                     </h2>
 
-                    <button  onClick={ handleAddSection } className="rounded-md bg-purple-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-purple-700">
+                    <button
+                      onClick={handleCreateSection}
+                      className="rounded-lg bg-purple-600 px-4 py-2 text-white hover:bg-purple-700"
+                    >
                       + Add Section
                     </button>
+
                   </div>
 
-                  {/* Sections */}
-                  <div className="divide-y">
+                  <div className="space-y-5 p-6">
 
                     {sections.length === 0 ? (
-                      <div className="py-12 text-center text-gray-500">
+
+                      <div className="rounded-lg border-2 border-dashed border-gray-300 py-10 text-center text-gray-500">
                         No sections added yet.
                       </div>
+
                     ) : (
                       sections.map((section) => (
                         <div
                           key={section._id}
-                          className="flex items-center justify-between px-6 py-5 transition hover:bg-gray-50"
-                          >
-                          <div>
-                            <h3 className="text-lg font-semibold text-gray-800">
+                          className="rounded-xl border bg-white"
+                        >
+                          {/* Section Header */}
+                          <div className="flex items-center justify-between border-b px-6 py-4">
+                            <h3 className="text-lg font-semibold">
                               {section.title}
                             </h3>
 
-                            <p className="mt-1 text-sm text-gray-500">
-                              No lessons added
-                            </p>
-
+                            <button
+                              onClick={() => handleCreateLesson(section._id)}
+                              className="rounded bg-purple-600 px-3 py-2 text-sm text-white"
+                            >
+                              + Add Lesson
+                            </button>
                           </div>
 
-                          <div className="flex items-center gap-2">
+                          {/* Lessons */}
+                          <div className="space-y-2 p-5">
+                            {(lessons[section._id] || []).length === 0 ? (
+                              <p className="text-gray-500">
+                                No lessons yet.
+                              </p>
+                            ) : (
+                              lessons[section._id].map((lesson) => (
+                                <div
+                                  key={lesson._id}
+                                  className="flex justify-between rounded-md bg-gray-50 px-4 py-3"
+                                >
+                                  <span>{lesson.title}</span>
 
-                            <button
-                              className="rounded-full p-2 text-gray-500 transition hover:bg-gray-200 hover:text-blue-600"
-                            >
-                              <FiEdit2 size={18} />
-                            </button>
-
-                            <button
-                              className="rounded-full p-2 text-gray-500 transition hover:bg-red-100 hover:text-red-600"
-                            >
-                              <FiTrash2 size={18} />
-                            </button>
-
+                                  <button className="text-purple-600">
+                                    Edit
+                                  </button>
+                                </div>
+                              ))
+                            )}
                           </div>
                         </div>
                       ))
                     )}
-
                   </div>
                 </div>
               </div>
