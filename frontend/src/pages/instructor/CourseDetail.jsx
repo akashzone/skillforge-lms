@@ -73,6 +73,10 @@ const CourseDetail = () => {
     fetchCourse();
   }, [token])
 
+  const handleAddSection = ()=>{
+    navigate(`/instructor/sections/${id}/edit`)
+  }
+
   return (
     <>
       {showModal && (
@@ -191,7 +195,7 @@ const CourseDetail = () => {
                       Course Content
                     </h2>
 
-                    <button className="rounded-md bg-purple-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-purple-700">
+                    <button  onClick={ handleAddSection } className="rounded-md bg-purple-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-purple-700">
                       + Add Section
                     </button>
                   </div>

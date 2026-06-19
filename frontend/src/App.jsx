@@ -20,6 +20,7 @@ import CreateCourse from './pages/instructor/CreateCourse';
 import MyCourses from './pages/instructor/MyCourses';
 import CourseDetail from './pages/instructor/CourseDetail';
 import EditCourse from './pages/instructor/EditCourse';
+import CreateSection from './pages/instructor/CreateSection';
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
             <Route path="/instructor/my-courses" element={< MyCourses/> }></Route>
             <Route path="/instructor/courses/:id" element={< CourseDetail/> }></Route>
             <Route path="/instructor/:id/edit" element={< EditCourse/> }></Route>
+            <Route path="/instructor/sections/:id/edit" element={< CreateSection/> }></Route>
           </Route>
         </Route>
       </Routes>
