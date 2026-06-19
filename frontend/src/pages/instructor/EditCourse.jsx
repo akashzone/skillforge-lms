@@ -68,7 +68,7 @@ const EditCourse = () => {
             )
             console.log("Response :", updateCourse);
             console.log(" Course updated route Working !!")
-            navigate("/instructor");
+            navigate("/instructor/my-courses");
             console.log("Submitted!")
         } catch (error) {
             console.error(error);

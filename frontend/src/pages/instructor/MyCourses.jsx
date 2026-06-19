@@ -8,7 +8,6 @@ const MyCourses = () => {
     const { token } = useAuth();
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
-
     const handleDelete = async (id) => {
         const res = await api.delete(`/courses/${id}`,{
             headers: {
@@ -39,7 +38,7 @@ const MyCourses = () => {
         if (token) {
             fetchCourses();
         }
-    }, [token]);
+    }, []);
     if (loading) {
         return (
             <div className="flex min-h-screen items-center justify-center">
