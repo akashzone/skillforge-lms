@@ -75,70 +75,155 @@ const EditCourse = () => {
         }
     }
     return (
-        <>
-            <h2> -- Edit Course Page --</h2>
-            <div className="edit-form">
+        <div className="min-h-screen bg-gray-100 py-10 px-6">
+            <div className="mx-auto max-w-3xl rounded-xl bg-white p-8 shadow-lg">
+                <h1 className="text-3xl font-bold text-gray-900">
+                    Edit Course
+                </h1>
+
+                <p className="mt-2 text-gray-600">
+                    Update your course information below.
+                </p>
+
                 {!course ? (
-                    <div className="rounded-xl border border-dashed border-gray-300 bg-white p-10 text-center">
-                        <h2 className="mb-2 text-xl font-semibold text-gray-700">
-                            No Courses Found
+                    <div className="mt-8 rounded-xl border border-dashed border-gray-300 bg-gray-50 p-10 text-center">
+                        <h2 className="text-xl font-semibold text-gray-700">
+                            Course Not Found
                         </h2>
-                        <p className="text-gray-500">
-                            Create your first course to get started.
+
+                        <p className="mt-2 text-gray-500">
+                            The course you're trying to edit doesn't exist.
                         </p>
                     </div>
-                ) :
-                    <form className='flex flex-col gap-4 mt-4 *:bg-gray-100 p-4 rounded-lg shadow-md' onSubmit={handleSubmit}>                    Title
-                        <input
-                            type="text"
-                            value={formData.title}
-                            onChange={(e) =>
-                                setFormData({
-                                    ...formData,
-                                    title: e.target.value,
-                                })
-                            }
-                            placeholder='Enter title..?'
-                        />
-                        Description
-                        <input
-                            type='text'
-                            value={formData.description}
-                            onChange={(e) =>
-                                setFormData({
-                                    ...formData,
-                                    description: e.target.value,
-                                })}
-                            placeholder='Enter description..?'
-                        />
-                        Price
-                        <input
-                            type='number'
-                            value={formData.price}
-                            onChange={(e) =>
-                                setFormData({ ...formData, price: e.target.value })}
-                            placeholder='Enter price..?'
-                        />
-                        Level
-                        <select value={formData.level} onChange={e => setFormData({ ...formData, level: e.target.value })}>
-                            <option value="" >Select Level</option>
-                            <option value="Beginner">Beginner</option>
-                            <option value="Intermediate">Intermediate</option>
-                            <option value="Advanced">Advanced</option>
-                        </select>
-                        Category
-                        <input
-                            type="text"
-                            value={formData.category}
-                            placeholder='eg. Web Development'
-                            onChange={(e) =>
-                                setFormData({ ...formData, category: e.target.value })}
-                        />
-                        <button type='submit'>Create</button>
-                    </form>}
+                ) : (
+                    <form
+                        onSubmit={handleSubmit}
+                        className="mt-8 space-y-6"
+                    >
+                        {/* Title */}
+                        <div>
+                            <label className="mb-2 block text-sm font-medium text-gray-700">
+                                Course Title
+                            </label>
+
+                            <input
+                                type="text"
+                                value={formData.title}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        title: e.target.value,
+                                    })
+                                }
+                                placeholder="Enter course title"
+                                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-purple-600 focus:ring-2 focus:ring-purple-200"
+                            />
+                        </div>
+
+                        {/* Description */}
+                        <div>
+                            <label className="mb-2 block text-sm font-medium text-gray-700">
+                                Description
+                            </label>
+
+                            <textarea
+                                rows={5}
+                                value={formData.description}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        description: e.target.value,
+                                    })
+                                }
+                                placeholder="Enter course description"
+                                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-purple-600 focus:ring-2 focus:ring-purple-200"
+                            />
+                        </div>
+
+                        {/* Price */}
+                        <div>
+                            <label className="mb-2 block text-sm font-medium text-gray-700">
+                                Price (₹)
+                            </label>
+
+                            <input
+                                type="number"
+                                value={formData.price}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        price: e.target.value,
+                                    })
+                                }
+                                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-purple-600 focus:ring-2 focus:ring-purple-200"
+                            />
+                        </div>
+
+                        {/* Level */}
+                        <div>
+                            <label className="mb-2 block text-sm font-medium text-gray-700">
+                                Level
+                            </label>
+
+                            <select
+                                value={formData.level}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        level: e.target.value,
+                                    })
+                                }
+                                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 outline-none transition focus:border-purple-600 focus:ring-2 focus:ring-purple-200"
+                            >
+                                <option value="">Select Level</option>
+                                <option value="Beginner">Beginner</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                            </select>
+                        </div>
+
+                        {/* Category */}
+                        <div>
+                            <label className="mb-2 block text-sm font-medium text-gray-700">
+                                Category
+                            </label>
+
+                            <input
+                                type="text"
+                                value={formData.category}
+                                placeholder="e.g. Web Development"
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        category: e.target.value,
+                                    })
+                                }
+                                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-purple-600 focus:ring-2 focus:ring-purple-200"
+                            />
+                        </div>
+
+                        {/* Buttons */}
+                        <div className="flex justify-end gap-3 pt-4">
+                            <button
+                                type="button"
+                                onClick={() => navigate("/instructor/my-courses")}
+                                className="rounded-lg border border-gray-300 px-6 py-3 font-medium text-gray-700 transition hover:bg-gray-100"
+                            >
+                                Cancel
+                            </button>
+
+                            <button
+                                type="submit"
+                                className="rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-purple-700"
+                            >
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
+                )}
             </div>
-        </>
-    )
+        </div>
+    );
 }
 
 export default EditCourse
