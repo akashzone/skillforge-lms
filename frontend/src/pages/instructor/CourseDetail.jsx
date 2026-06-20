@@ -10,13 +10,29 @@ const CourseDetail = () => {
   const { token } = useAuth();
   const { id } = useParams();
   const navigate = useNavigate();
-  console.log("Here is the ID:", id);
+  // console.log("Here is the ID:", id);
   const [courses, setCourses] = useState([]);
   const [showModal, setShowModal] = useState(false);
+
+  const [course, setCourse] = useState({});
+  useEffect(() => {
+    const fetchCourse = async () => {
+      // console.log("Token:", token);
+      const res = await api.get(`/courses/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      // console.log("Response from - /GET courses :", res.data.courses);
+      setCourse(res.data.courses);
+    }
+    if (token) fetchCourse();
+  }, [token, id])
 
 
   const [sections, setSections] = useState([]);
   const [lessons, setLessons] = useState({});
+
   useEffect(() => {
     const fetchSections = async () => {
       const res = await api.get(`/sections/${id}`, {
@@ -66,7 +82,7 @@ const CourseDetail = () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log("Response :", res);
+    // console.log("Response :", res);
     setCourses(
       courses.filter(course => course._id !== id)
     );
@@ -77,30 +93,16 @@ const CourseDetail = () => {
     navigate(`/instructor/${id}/edit`);
   }
 
-  const [course, setCourse] = useState({});
-  useEffect(() => {
-    const fetchCourse = async () => {
-      const res = await api.get(`/courses/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      console.log("Response from - /GET courses :", res.data.courses);
-      setCourse(res.data.courses);
-    }
-    fetchCourse();
-  }, [token])
-
   const handleCreateSection = () => {
     navigate(`/instructor/courses/${id}/create-section`);
   };
 
   const handleEditSection = () => {
-    navigate(`/instrcutor/section/${id}/edit`);
+    navigate(`/instructor/section/${id}/edit`);
   }
 
   const handleCreateLesson = (sectionId) => {
-    console.log("Section id from coursedetail:",sectionId )
+    // console.log("Section id from coursedetail:",sectionId )
     navigate(`/instructor/lessons/${sectionId}/create-lesson`)
   };
   return (

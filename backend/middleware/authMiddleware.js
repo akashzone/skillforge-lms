@@ -30,14 +30,16 @@ const AuthMiddleware = async (req, res, next) => {
     req.user = {
       id: decode.id,
       role: decode.role,
-    }
+    };
     // console.log("req.user",req.user)
 
     next();
-  } catch {
+  } catch (err) {
+    console.log("JWT Error:", err);
+
     return res.status(401).json({
       success: false,
-      message: "Invalid or expired token.",
+      message: err.message,
     });
   }
 };

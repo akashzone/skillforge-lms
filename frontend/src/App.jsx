@@ -52,7 +52,7 @@ function App() {
             <Route path="/instructor/my-courses" element={< MyCourses/> }></Route>
             <Route path="/instructor/courses/:id" element={< CourseDetail/> }></Route>
             <Route path="/instructor/:id/edit" element={< EditCourse/> }></Route>
-            <Route path="/instructor/sections/:id/edit" element={< CreateSection/> }></Route>
+            <Route path="/instructor/courses/:id/create-section" element={< CreateSection/> }></Route>
             <Route path="/instructor/lessons/:id/create-lesson" element={< CreateLesson/> }></Route>
           </Route>
         </Route>

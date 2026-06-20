@@ -17,6 +17,7 @@ const connectDB = require("./config/db");
 
 // middleware
 const cors = require("cors");
+const path = require("path");
 
 // Middleware to parse JSON bodies
 app.use(express.json());
@@ -35,9 +36,9 @@ connectDB();
 
 // Routes
 app.use("/api/auth", AuthRoutes);
-app.use("/api/courses",CourseRoutes);
-app.use("/api/sections",SectionRoutes);
-app.use("/api/lessons",LessonRoutes)
+app.use("/api/courses", CourseRoutes);
+app.use("/api/sections", SectionRoutes);
+app.use("/api/lessons", LessonRoutes);
 
 app.get("/api/test", AuthMiddleware, (req, res) => {
   res.json({ message: "API is working!" });

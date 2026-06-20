@@ -34,9 +34,9 @@ const CreateLesson = (req, res) => {
                         Authorization: `Bearer ${token}`,
                     },
                 })
-            console.log("Response :", response);
-            console.log("Create lesson Working !!")
-            navigate(`/instructor/courses`);
+            // console.log("Response :", response);
+            // console.log("Create lesson Working !!")
+            navigate(`/instructor/courses/${sectionId}`);
         }
         catch (error) {
             console.log("Error :", error.response.data);
