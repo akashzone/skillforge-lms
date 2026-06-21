@@ -93,6 +93,10 @@ const CourseDetail = () => {
     navigate(`/instructor/lessons/${sectionId}/create-lesson`);
   };
 
+  const handleVideoUpload = (lessonId) => {
+    navigate(`/instructor/lessons/${lessonId}/uploads`);
+  };
+
   return (
     <>
       {showModal && (
@@ -206,7 +210,7 @@ const CourseDetail = () => {
                               lessons[section._id].map((lesson) => (
                                 <div key={lesson._id} className="flex justify-between rounded-md bg-gray-50 px-4 py-3">
                                   <span>{lesson.title}</span>
-                                  <button className="text-purple-600">Edit</button>
+                                  <button onClick={() => handleVideoUpload(lesson._id)} className="text-purple-600">Upload</button>
                                 </div>
                               ))
                             )}

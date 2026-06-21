@@ -22,6 +22,7 @@ import CourseDetail from './pages/instructor/CourseDetail';
 import EditCourse from './pages/instructor/EditCourse';
 import CreateSection from './pages/instructor/CreateSection';
 import CreateLesson from './pages/instructor/CreateLesson';
+import UploadLecture from './pages/instructor/UploadLecture';
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
             <Route path="/instructor/:id/edit" element={< EditCourse/> }></Route>
             <Route path="/instructor/courses/:id/create-section" element={< CreateSection/> }></Route>
             <Route path="/instructor/lessons/:id/create-lesson" element={< CreateLesson/> }></Route>
+            <Route path="/instructor/lessons/:id/uploads" element={< UploadLecture/> }></Route>
           </Route>
         </Route>
       </Routes>

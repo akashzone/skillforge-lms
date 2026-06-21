@@ -6,6 +6,7 @@ const AuthRoutes = require("./routes/authRoutes");
 const CourseRoutes = require("./routes/courseRoutes");
 const SectionRoutes = require("./routes/sectionRoutes");
 const LessonRoutes = require("./routes/lessonRoutes.js");
+const UploadRoutes = require("./routes/uploadRoutes.js");
 
 //AuthMiddleware
 const AuthMiddleware = require("./middleware/authMiddleware.js");
@@ -39,6 +40,7 @@ app.use("/api/auth", AuthRoutes);
 app.use("/api/courses", CourseRoutes);
 app.use("/api/sections", SectionRoutes);
 app.use("/api/lessons", LessonRoutes);
+app.use("/api/uploads", UploadRoutes);
 
 app.get("/api/test", AuthMiddleware, (req, res) => {
   res.json({ message: "API is working!" });
