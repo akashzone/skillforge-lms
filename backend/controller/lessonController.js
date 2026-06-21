@@ -222,4 +222,10 @@ const deleteById = async (req,res) => {
   }
 };
 
-module.exports = { createLesson, getLessons, updateLessonById, deleteById};
+const uploadLesson = async (req,res)=>{
+  res.json({
+    message : "API working !!"
+  })
+}
+
+module.exports = { createLesson, getLessons, updateLessonById, deleteById, uploadLesson};

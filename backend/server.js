@@ -1,28 +1,30 @@
 require("dotenv").config();
+
+
+//Routes
 const AuthRoutes = require("./routes/authRoutes");
 const CourseRoutes = require("./routes/courseRoutes");
 const SectionRoutes = require("./routes/sectionRoutes");
 const LessonRoutes = require("./routes/lessonRoutes.js");
 
+//AuthMiddleware
 const AuthMiddleware = require("./middleware/authMiddleware.js");
 
-// Create Express app
+//Express
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-//Mongoose and DB connection
+//Mongoose
 const mongoose = require("mongoose");
 const connectDB = require("./config/db");
 
-// middleware
+//middlewares
 const cors = require("cors");
 const path = require("path");
 
-// Middleware to parse JSON bodies
 app.use(express.json());
 
-// CORS middleware to allow requests from the frontend
 const corsOptions = {
   origin: "http://localhost:5173",
   methods: ["GET", "POST", "PUT", "DELETE"],
@@ -31,10 +33,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// Connect to MongoDB
 connectDB();
 
-// Routes
 app.use("/api/auth", AuthRoutes);
 app.use("/api/courses", CourseRoutes);
 app.use("/api/sections", SectionRoutes);
@@ -44,7 +44,6 @@ app.get("/api/test", AuthMiddleware, (req, res) => {
   res.json({ message: "API is working!" });
 });
 
-// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

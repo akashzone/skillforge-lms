@@ -4,7 +4,7 @@ const Course = require("../models/Course");
 const createSection = async (req, res) => {
   const { title, course, order } = req.body;
   const courseId = course;
-  // console.log("Title :", title);
+
   if (!title || !course || !order) {
     return res.status(401).json({
       status: false,
@@ -12,17 +12,12 @@ const createSection = async (req, res) => {
     });
   }
   try {
-    const course = await Course.findById(courseId);
-    if (!course) {
-      console.error("Error id is not valid :) so can't find the course.");
-      res.status(500).json({ message: "Error id is not valid :)" });
+    const courseData = await Course.findById(courseId);
+    if (!courseData) {
+      return res.status(500).json({ message: "Error id is not valid :)" });
     }
-    const courseInstructor = course.instructor;
-    // console.log("Course instrcutor :", courseInstructor);
-    // console.log("req.user.UserId :", req.user.id);
+    const courseInstructor = courseData.instructor;
 
-    //Here I'm implementing Ownership - bcz other instructor (Instructor B),
-    // shouldn't make any changes in courses of (Instructor A).
     if (courseInstructor.toString() !== req.user.id) {
       return res.status(401).json({
         status: false,
@@ -35,10 +30,6 @@ const createSection = async (req, res) => {
       order,
     });
     await sectionInfo.save();
-    // console.log(
-    //   "sectionInfo is successfully saved in DB! Data - ",
-    //   sectionInfo,
-    // );
     res.status(201).json({
       section: sectionInfo,
       success: true,
@@ -52,9 +43,8 @@ const createSection = async (req, res) => {
 
 const getAllSection = async (req, res) => {
   const { id } = req.params;
-  console.log("Course ID :", id);
 
-  if (!req.params.id) {
+  if (!id) {
     return res.status(401).json({
       status: false,
       message: "ID not found",
@@ -63,10 +53,9 @@ const getAllSection = async (req, res) => {
 
   try {
     const getAllSection = await Section.find({
-      course: "6a32287dd13f1c3b217c9f39",
+      course: id,
     });
-    // console.log("All sections :", getAllSection);
-    res.status(201).json({
+    res.status(200).json({
       sections: getAllSection,
       success: true,
       message: "SectionInfo fetched successfully.",
@@ -80,8 +69,6 @@ const getAllSection = async (req, res) => {
 const updateSectionById = async (req, res) => {
   const { id } = req.params;
   const data = req.body;
-  // console.log("Section ID :", id);
-  // console.log("Data sent through req.body :", data.title);
 
   if (!id) {
     return res.status(401).json({
@@ -99,7 +86,6 @@ const updateSectionById = async (req, res) => {
       });
     }
     const courseId = courseSection.course;
-    // console.log("Course sections :",courseSection.course);
     if (!courseId) {
       return res.status(404).json({
         success: false,
@@ -114,11 +100,7 @@ const updateSectionById = async (req, res) => {
       });
     }
     const courseInstructor = course.instructor;
-    // console.log("Course instrcutor :", courseInstructor);
-    // console.log("req.user.UserId :", req.user.id);
 
-    //Here I'm implementing Ownership - bcz other instructor (Instructor B),
-    // shouldn't make any changes in courses of (Instructor A).
     if (courseInstructor.toString() !== req.user.id) {
       return res.status(401).json({
         status: false,
@@ -126,13 +108,9 @@ const updateSectionById = async (req, res) => {
       });
     }
 
-    const updatedSection = await Section.findByIdAndUpdate(id, req.body, {
+    const updatedSection = await Section.findByIdAndUpdate(id, data, {
       new: true,
     });
-    // console.log(
-    //   "sectionInfo is successfully updated in DB! Data - ",
-    //   updatedSection,
-    // );
     res.status(200).json({
       success: true,
       newSection: updatedSection,
@@ -146,7 +124,6 @@ const updateSectionById = async (req, res) => {
 
 const deleteSectionById = async (req, res) => {
   const { id } = req.params;
-  // console.log("Section ID :", id);
 
   if (!id) {
     return res.status(401).json({
@@ -165,7 +142,6 @@ const deleteSectionById = async (req, res) => {
     }
 
     const courseId = courseSection.course;
-
     const course = await Course.findById(courseId);
 
     if (!course) {
@@ -183,10 +159,6 @@ const deleteSectionById = async (req, res) => {
     }
 
     const deletedSection = await Section.findByIdAndDelete(id);
-    // console.log(
-    //   "sectionInfo is successfully updated in DB! Data - ",
-    //   deletedSection,
-    // );
     res.status(200).json({
       success: true,
       removedSection: deletedSection,
