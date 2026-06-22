@@ -14,6 +14,7 @@ const UploadLecture = () => {
     const handleUpload = async (e) => {
         e.preventDefault();
         
+        console.log("Hii, working!")
         if (!video) {
             alert("Please select a video file first!");
             return;
@@ -24,6 +25,8 @@ const UploadLecture = () => {
         formData.append("description", description);
         formData.append("lecture", video); 
         formData.append("lessonId", id);
+
+        console.log("formData title:", formData.get("title"));
 
         try {
             const result = await api.post(
@@ -38,7 +41,6 @@ const UploadLecture = () => {
             );
             console.log("Success:", result.data);
             alert("Uploaded successfully!");
-            navigate(-1);
         } catch (error) {
             console.error("Upload error response:", error.response?.data || error.message);
         }
@@ -77,7 +79,6 @@ const UploadLecture = () => {
                     <label className="block text-sm font-medium mb-1">Video File</label>
                     <input
                         type="file"
-                        accept="video/*"
                         onChange={(e) => {
                             if (e.target.files && e.target.files.length > 0) {
                                 const selectedFile = e.target.files[0];
@@ -92,7 +93,7 @@ const UploadLecture = () => {
 
                 <button 
                     type='submit' 
-                    className="w-full bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-700 transition"
+                    className="cursor-pointer w-full bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-700 transition"
                 >
                     Submit
                 </button>

@@ -210,7 +210,7 @@ const CourseDetail = () => {
                               lessons[section._id].map((lesson) => (
                                 <div key={lesson._id} className="flex justify-between rounded-md bg-gray-50 px-4 py-3">
                                   <span>{lesson.title}</span>
-                                  <button onClick={() => handleVideoUpload(lesson._id)} className="text-purple-600">Upload</button>
+                                  <button onClick={() => handleVideoUpload(lesson._id)} className="cursor-pointer text-purple-600">Upload</button>
                                 </div>
                               ))
                             )}

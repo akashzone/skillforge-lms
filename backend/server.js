@@ -1,6 +1,5 @@
 require("dotenv").config();
 
-
 //Routes
 const AuthRoutes = require("./routes/authRoutes");
 const CourseRoutes = require("./routes/courseRoutes");

@@ -80,7 +80,7 @@ const getLessons = async (req, res) => {
     const getAllLesson = await Lesson.find({
       section: id,
     });
-    console.log("All sections :", getAllLesson);
+    // console.log("All sections :", getAllLesson);
     res.status(201).json({
       lessons: getAllLesson,
       success: true,
