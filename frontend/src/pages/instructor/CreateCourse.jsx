@@ -16,7 +16,7 @@ const CreateCourse = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const { title, description, price, level, category } = formData;
+        const { title, description, price, level, learnings , category } = formData;
         const trimmedTitle = title.trim();
 
         if (!price || !trimmedTitle || !level || !category || !description) {
@@ -31,6 +31,7 @@ const CreateCourse = () => {
                     description,
                     price,
                     level,
+                    learnings,
                     category
                 },
                 {
@@ -110,6 +111,20 @@ const CreateCourse = () => {
                             placeholder="e.g. Web Development"
                             onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                             className="w-full rounded-lg border border-gray-300 px-4 py-3 transition focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                        />
+                    </div>
+
+                     <div>
+                        <label className="mb-2 block text-sm font-medium text-gray-700">
+                            What students will learn (separate with commas)
+                        </label>
+
+                        <textarea
+                            rows={4}
+                            value={formData.learnings}
+                            onChange={(e) => setFormData({...formData,learnings: e.target.value})}
+                            placeholder="e.g. Basics of Node.js, REST API design, MongoDB CRUD"
+                            className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-purple-600 focus:ring-2 focus:ring-purple-200"
                         />
                     </div>
 

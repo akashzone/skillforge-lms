@@ -11,6 +11,9 @@ const CourseDetail = () => {
   const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [showModalLesson, setShowModalLesson] = useState(false);
+  const [selectedLessonId, setSelectedLessonId] = useState(null);
+  const [selectedSectionId, setSelectedSectionId] = useState(null);
   const [course, setCourse] = useState({});
   const [sections, setSections] = useState([]);
   const [lessons, setLessons] = useState({});
@@ -101,6 +104,29 @@ const CourseDetail = () => {
     });
   };
 
+  const handleDeleteLesson = async () => {
+    setShowModalLesson(false);
+    deleteLesson(selectedLessonId);
+    setLessons(prev => ({
+      ...prev,
+      [selectedSectionId]: prev[selectedSectionId].filter(
+        lesson => lesson._id !== selectedLessonId
+      ),
+    }));
+  }
+  async function deleteLesson(id) {
+    try {
+      await api.delete(`/lessons/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    }
+    catch (err) {
+      console.log("Error :", err);
+    }
+  }
+
   return (
     <>
       {showModal && (
@@ -119,6 +145,31 @@ const CourseDetail = () => {
               </button>
               <button
                 onClick={() => setShowModal(false)}
+                className="w-1/2 rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showModalLesson && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50">
+          <div className="w-[400px] h-[150px] bg-white p-5 rounded-lg flex flex-col justify-between shadow-lg">
+            <div>
+              <h3 className="text-lg font-semibold">Delete Lesson?</h3>
+              <p className="text-gray-600 mt-2">Are you sure you want to delete this Lesson?</p>
+            </div>
+            <div className="flex justify-between gap-2">
+              <button
+                onClick={handleDeleteLesson}
+                className="w-1/2 rounded-lg bg-red-600 px-4 py-2 text-white hover:bg-red-700 transition"
+              >
+                Delete
+              </button>
+              <button
+                onClick={() => setShowModalLesson(false)}
                 className="w-1/2 rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition"
               >
                 Cancel
@@ -229,12 +280,21 @@ const CourseDetail = () => {
                                         Preview
                                       </button>
                                     )}
-
                                     <button
                                       onClick={() => handleVideoUpload(lesson._id)}
                                       className="rounded-md border border-purple-600 px-4 py-2 text-sm font-medium text-purple-600 transition hover:bg-purple-600 hover:text-white"
                                     >
                                       {lesson.videoUrl ? "Replace" : "Upload"}
+                                    </button>
+
+                                    <button
+                                      onClick={() => {
+                                        setShowModalLesson(true)
+                                        setSelectedLessonId(lesson._id)
+                                        setSelectedSectionId(section._id);
+                                      }}
+                                      className="rounded-md border border-purple-600 px-4 py-2 text-sm font-medium text-red-600 transition hover:bg-red-600 hover:text-white">
+                                      Delete
                                     </button>
                                   </div>
                                 </div>

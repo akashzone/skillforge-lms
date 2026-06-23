@@ -9,7 +9,7 @@ const CreateLesson = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         title: "",
-        description: ""
+        description: "",
     });
 
     const handleSubmit = async (e) => {
@@ -68,8 +68,8 @@ const CreateLesson = () => {
                             placeholder="Briefly describe what students will learn in this lesson..."
                             className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-purple-600 focus:ring-2 focus:ring-purple-200"
                         />
-                    </div>
 
+                    </div>
                     <div className="flex justify-end gap-3 pt-4">
                         <button
                             type="button"

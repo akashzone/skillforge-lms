@@ -15,6 +15,11 @@ const createCourse = async (req, res) => {
       message: "ID not found",
     });
   }
+
+  const learningsArray = learnings
+    .split(",")
+    .map(item => item.trim())
+    .filter(Boolean);
   try {
     const newCourse = new Course({
       title,
@@ -22,7 +27,7 @@ const createCourse = async (req, res) => {
       price,
       level,
       category,
-      learnings,
+      learnings : learningsArray,
       instructor: id,
     });
 
