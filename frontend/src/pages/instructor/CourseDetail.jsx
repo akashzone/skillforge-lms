@@ -33,18 +33,19 @@ const CourseDetail = () => {
   useEffect(() => {
     const fetchSections = async () => {
       const res = await api.get(`/sections/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
-      const fetchedSections = res.data.sections;
-      setSections(fetchedSections);
-      fetchLessons(fetchedSections);
+      setSections(res.data.sections);
     };
-    console.log("Running!");
     if (token && id) fetchSections();
-  }, []);
+  }, [token, id]);
+
+  useEffect(() => {
+    if (!sections || sections.length === 0) return;
+
+    fetchLessons(sections);
+  }, [sections]);
 
   const fetchLessons = async (sectionsList) => {
     try {
@@ -52,21 +53,18 @@ const CourseDetail = () => {
 
       for (const section of sectionsList) {
         const res = await api.get(`/lessons/${section._id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
-        console.log("Response from GET - lessons :", res.data)
+
         lessonMap[section._id] = res.data.lessons;
       }
 
       setLessons(lessonMap);
-
     } catch (err) {
       console.log(err);
     }
   };
-
+  
   async function handleDeleteCourse() {
     try {
       setShowModal(false);
