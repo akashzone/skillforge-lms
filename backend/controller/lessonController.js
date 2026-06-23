@@ -66,6 +66,30 @@ const createLesson = async (req, res) => {
   }
 };
 
+const getLessonById = async (req, res) => {
+  const { id } = req.params;
+  if (!id) {
+    console.log("lesson ID :", id);
+    return res.status(401).json({
+      status: false,
+      message: "ID not found",
+    });
+  }
+
+  try {
+    const getLesson = await Lesson.findById(id);
+    console.log("LessonInfo :", getLesson);
+    res.status(201).json({
+      lesson: getLesson,
+      success: true,
+      message: "Lesson fetched successfully.",
+    });
+  } catch (error) {
+    console.error("Error in fetching sectionInfo from DB:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 const getLessons = async (req, res) => {
   const { id } = req.params;
   if (!id) {
@@ -228,4 +252,4 @@ const uploadLesson = async (req,res)=>{
   })
 }
 
-module.exports = { createLesson, getLessons, updateLessonById, deleteById, uploadLesson};
+module.exports = { createLesson, getLessonById, getLessons, updateLessonById, deleteById, uploadLesson};

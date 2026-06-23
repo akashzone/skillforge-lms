@@ -23,6 +23,7 @@ import EditCourse from './pages/instructor/EditCourse';
 import CreateSection from './pages/instructor/CreateSection';
 import CreateLesson from './pages/instructor/CreateLesson';
 import UploadLecture from './pages/instructor/UploadLecture';
+import PreviewLecture from './pages/instructor/PreviewLecture';
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
             <Route path="/instructor/courses/:id/create-section" element={< CreateSection/> }></Route>
             <Route path="/instructor/lessons/:id/create-lesson" element={< CreateLesson/> }></Route>
             <Route path="/instructor/lessons/:id/uploads" element={< UploadLecture/> }></Route>
+            <Route path="/instructor/lessons/:id/preview-lesson" element={< PreviewLecture/> }></Route>
           </Route>
         </Route>
       </Routes>

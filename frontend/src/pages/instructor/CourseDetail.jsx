@@ -52,19 +52,18 @@ const CourseDetail = () => {
       const lessonMap = {};
 
       for (const section of sectionsList) {
-        const res = await api.get(`/lessons/${section._id}`, {
+        const res = await api.get(`/sections/${section._id}/lessons`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
         lessonMap[section._id] = res.data.lessons;
       }
-
       setLessons(lessonMap);
     } catch (err) {
       console.log(err);
     }
   };
-  
+
   async function handleDeleteCourse() {
     try {
       setShowModal(false);
@@ -123,6 +122,11 @@ const CourseDetail = () => {
     catch (err) {
       console.log("Error :", err);
     }
+  }
+
+
+  const handlePreview = async (id)=>{
+    navigate(`/instructor/lessons/${id}/preview-lesson`);
   }
 
   return (
