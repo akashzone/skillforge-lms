@@ -11,9 +11,9 @@ const UploadLecture = () => {
     const [video, setVideo] = useState(null);
     const { token } = useAuth();
 
-    const handleUpload = async (e) => {
+    const handleUpload = async (e,req,res) => {
         e.preventDefault();
-        
+
         console.log("Hii, working!")
         if (!video) {
             alert("Please select a video file first!");
@@ -23,10 +23,10 @@ const UploadLecture = () => {
         const formData = new FormData();
         formData.append("title", title);
         formData.append("description", description);
-        formData.append("lecture", video); 
+        formData.append("lecture", video);
         formData.append("lessonId", id);
 
-        console.log("formData title:", formData.get("title"));
+        // console.log("formData title:", formData.get("title"));
 
         try {
             const result = await api.post(
@@ -40,7 +40,7 @@ const UploadLecture = () => {
                 }
             );
             console.log("Success:", result.data);
-            alert("Uploaded successfully!");
+            navigate(-1);
         } catch (error) {
             console.error("Upload error response:", error.response?.data || error.message);
         }
@@ -50,7 +50,7 @@ const UploadLecture = () => {
         <div className="p-6 bg-white min-h-screen">
             <form onSubmit={handleUpload} className="max-w-xl mx-auto space-y-4 border p-6 rounded-xl shadow">
                 <h2 className="text-2xl font-bold">Upload Lecture Video</h2>
-                
+
                 <div>
                     <label className="block text-sm font-medium mb-1">Title</label>
                     <input
@@ -91,8 +91,8 @@ const UploadLecture = () => {
                     />
                 </div>
 
-                <button 
-                    type='submit' 
+                <button
+                    type='submit'
                     className="cursor-pointer w-full bg-blue-600 text-white px-4 py-2 rounded font-semibold hover:bg-blue-700 transition"
                 >
                     Submit

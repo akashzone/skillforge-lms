@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import api from '../../api/api';
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 
+
 const CourseDetail = () => {
   const { token } = useAuth();
   const { id } = useParams();
@@ -38,9 +39,9 @@ const CourseDetail = () => {
       setSections(fetchedSections);
       fetchLessons(fetchedSections);
     };
-
+    console.log("Running!");
     if (token && id) fetchSections();
-  }, [token, id]);
+  }, []);
 
   const fetchLessons = async (sectionsList) => {
     try {
@@ -52,11 +53,12 @@ const CourseDetail = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-
+        console.log("Response from GET - lessons :", res.data)
         lessonMap[section._id] = res.data.lessons;
       }
 
       setLessons(lessonMap);
+
     } catch (err) {
       console.log(err);
     }
@@ -94,7 +96,9 @@ const CourseDetail = () => {
   };
 
   const handleVideoUpload = (lessonId) => {
-    navigate(`/instructor/lessons/${lessonId}/uploads`);
+    navigate(`/instructor/lessons/${lessonId}/uploads`, {
+      state: { id }
+    });
   };
 
   return (
@@ -208,9 +212,31 @@ const CourseDetail = () => {
                               <p className="text-gray-500">No lessons yet.</p>
                             ) : (
                               lessons[section._id].map((lesson) => (
-                                <div key={lesson._id} className="flex justify-between rounded-md bg-gray-50 px-4 py-3">
-                                  <span>{lesson.title}</span>
-                                  <button onClick={() => handleVideoUpload(lesson._id)} className="cursor-pointer text-purple-600">Upload</button>
+                                <div
+                                  key={lesson._id}
+                                  className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3 hover:bg-gray-50 transition"
+                                >
+                                  <span className="text-sm font-medium text-gray-800">
+                                    {lesson.title}
+                                  </span>
+
+                                  <div className="flex items-center gap-3">
+                                    {lesson.videoUrl && (
+                                      <button
+                                        onClick={() => handlePreview(lesson._id)}
+                                        className="rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-green-700"
+                                      >
+                                        Preview
+                                      </button>
+                                    )}
+
+                                    <button
+                                      onClick={() => handleVideoUpload(lesson._id)}
+                                      className="rounded-md border border-purple-600 px-4 py-2 text-sm font-medium text-purple-600 transition hover:bg-purple-600 hover:text-white"
+                                    >
+                                      {lesson.videoUrl ? "Replace" : "Upload"}
+                                    </button>
+                                  </div>
                                 </div>
                               ))
                             )}

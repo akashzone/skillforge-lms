@@ -32,7 +32,7 @@ const uploadVideo = async (req, res) => {
         // Find and update lesson if lessonId is provided
         const { lessonId } = req.body;
         if (lessonId) {
-            await Lesson.findByIdAndUpdate(lessonId, {
+            const lessonInfo = await Lesson.findByIdAndUpdate(lessonId, {
                 videoUrl: result.secure_url,
                 duration: result.duration ? Math.round(result.duration) : undefined
             });
