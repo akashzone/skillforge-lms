@@ -23,6 +23,34 @@ const getCourses = async (req,res) => {
   }
 };
 
+
+const getCourseById = async (req, res) => {
+  if (!req.params.id) {
+    return res.status(401).json({
+      status: false,
+      message: "ID not found",
+    });
+  }
+  try {
+    const course = await Course.findById(req.params.id);
+
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: "Course not found",
+      });
+    }
+    res.status(201).json({
+      course,
+      success: true,
+      message: "Course fetched successfully by ID",
+    });
+  } catch (error) {
+    console.error("Error :", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 // -- Instructor --
 
 const createCourse = async (req, res) => {
@@ -192,6 +220,7 @@ module.exports = {
   createCourse,
   getInstructorCourses,
   getCourses,
+  getCourseById,
   getInstructorCourseById,
   updateCourseById,
   deleteCourseById,

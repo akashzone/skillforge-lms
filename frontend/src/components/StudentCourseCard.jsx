@@ -1,8 +1,13 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const StudentCourseCard = ({
-    title, category, price
-}) => {
+    title, category, price, id
+    }) => {
+    const navigate = useNavigate();
+    const handleViewCourse = (courseId)=>{
+        navigate(`/course/${courseId}`);
+    }
     return (
         <>
             <div className="w-80 rounded-xl overflow-hidden bg-white shadow-md hover:shadow-xl transition duration-300">
@@ -35,11 +40,16 @@ const StudentCourseCard = ({
                     {/* Price */}
                     <div className="flex justify-between items-center mt-5">
 
-                        <h3 className="text-2xl font-bold text-green-600">
+                        <div className='flex justify-between items-center gap-2'>
+                            <h3 className="text-2xl font-medium text-black">
                             ₹{price}
                         </h3>
+                        <strike> ₹5999</strike>
+                        </div>
 
-                        <button className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
+                        <button 
+                        onClick={() => handleViewCourse(id)}
+                        className=" cursor-pointer bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
                             View
                         </button>
 

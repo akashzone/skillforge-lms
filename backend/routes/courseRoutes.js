@@ -2,13 +2,14 @@
 const express = require("express");
 const router = express.Router();
 
-const { createCourse, getInstructorCourses, getCourses, getInstructorCourseById , updateCourseById, deleteCourseById } = require("../controller/courseController");
+const { createCourse, getInstructorCourses, getCourses, getCourseById , getInstructorCourseById , updateCourseById, deleteCourseById } = require("../controller/courseController");
 const AuthMiddleware = require("../middleware/authMiddleware.js");
 const RoleMiddleware = require("../middleware/roleMiddleware.js");
 
 // -- used by student
 
 router.get("/",AuthMiddleware,RoleMiddleware("student"), getCourses);
+router.get("/:id", AuthMiddleware, RoleMiddleware("student"), getCourseById);
 
 // -- used by instructor 
 router.get("/instructor/my-courses/:id", AuthMiddleware, RoleMiddleware("instructor"), getInstructorCourseById);

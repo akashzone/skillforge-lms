@@ -6,6 +6,7 @@ import Login from './pages/auth/Login';
 import About from './pages/About';
 import InstructorDashboard from './pages/instructor/InstructorDashboard';
 import StudentDashboard from './pages/student/StudentDashboard';
+import StudentCourseDetail from './pages/student/StudentCourseDetail';
 import Courses from './pages/Courses';
 import ProtectedRoute from './routes/ProtectedRoute';
 import UnauthorizedRoute from './routes/UnauthorizedRoute';
@@ -45,6 +46,7 @@ function App() {
           // if created acc on role = "student"
           <Route element={< StudentRoute />}>
             <Route path="/student" element={<StudentDashboard />} />
+            <Route path="/course/:id" element={<StudentCourseDetail />} />
           </Route>
           
           // if created acc on role = "instructor"

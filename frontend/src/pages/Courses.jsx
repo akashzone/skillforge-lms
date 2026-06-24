@@ -45,7 +45,7 @@ const Courses = () => {
       </section>
 
       {/* Courses */}
-      <section className="max-w-7xl mx-auto px-6 py-10">
+      <section className="max-w-7xl mx-auto px-6 py-1">
 
         {courses.length === 0 ? (
           <div className="flex justify-center items-center py-20">
