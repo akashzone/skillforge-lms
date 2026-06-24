@@ -2,13 +2,20 @@
 const express = require("express");
 const router = express.Router();
 
-const { createCourse, getCourses, getCourseById, updateCourseById, deleteCourseById } = require("../controller/courseController");
+const { createCourse, getInstructorCourses, getCourses, getInstructorCourseById , updateCourseById, deleteCourseById } = require("../controller/courseController");
 const AuthMiddleware = require("../middleware/authMiddleware.js");
 const RoleMiddleware = require("../middleware/roleMiddleware.js");
 
+// -- used by student
+
+router.get("/student",AuthMiddleware,RoleMiddleware("student"), getCourses);
+
+// -- used by instructor 
+router.get("/instructor/my-courses/:id", AuthMiddleware, RoleMiddleware("instructor"), getInstructorCourseById);
+router.get("/instructor/my-courses", AuthMiddleware, RoleMiddleware("instructor"), getInstructorCourses);
+
+// -- used by instructor for edit/update/create
 router.post("/", AuthMiddleware, RoleMiddleware("instructor"), createCourse);
-router.get("/", AuthMiddleware, RoleMiddleware("instructor"), getCourses);
-router.get("/:id", AuthMiddleware, RoleMiddleware("instructor"), getCourseById);
 router.put("/:id", AuthMiddleware, RoleMiddleware("instructor"), updateCourseById);
 router.delete("/:id", AuthMiddleware, RoleMiddleware("instructor"), deleteCourseById);
 

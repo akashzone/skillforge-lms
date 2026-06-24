@@ -22,7 +22,7 @@ const MyCourses = () => {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const res = await api.get("/courses", {
+                const res = await api.get("/courses/instructor/my-courses", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

@@ -1,5 +1,30 @@
 const Course = require("../models/Course.js");
 
+
+// -- Student --
+
+const getCourses = async (req,res) => {
+  try {
+    const allCourses = await Course.find();
+    if (!allCourses) {
+      return res.status(401).json({
+        status: false,
+        message: "Courses collection is empty, allCourse is null",
+      });
+    }
+    res.status(201).json({
+      courses: allCourses,
+      success: true,
+      message: "All courses fetched successfully by student",
+    });
+  } catch (err) {
+    console.error("Error in storing course in DB:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// -- Instructor --
+
 const createCourse = async (req, res) => {
   const { title, description, price, level, category, learnings } = req.body;
   const { id } = req.user;
@@ -18,7 +43,7 @@ const createCourse = async (req, res) => {
 
   const learningsArray = learnings
     .split(",")
-    .map(item => item.trim())
+    .map((item) => item.trim())
     .filter(Boolean);
   try {
     const newCourse = new Course({
@@ -27,7 +52,7 @@ const createCourse = async (req, res) => {
       price,
       level,
       category,
-      learnings : learningsArray,
+      learnings: learningsArray,
       instructor: id,
     });
 
@@ -42,7 +67,7 @@ const createCourse = async (req, res) => {
   }
 };
 
-const getCourses = async (req, res) => {
+const getInstructorCourses = async (req, res) => {
   try {
     const allCourses = await Course.find();
     if (!allCourses) {
@@ -62,7 +87,7 @@ const getCourses = async (req, res) => {
   }
 };
 
-const getCourseById = async (req, res) => {
+const getInstructorCourseById = async (req, res) => {
   if (!req.params.id) {
     return res.status(401).json({
       status: false,
@@ -165,8 +190,9 @@ const deleteCourseById = async (req, res) => {
 
 module.exports = {
   createCourse,
+  getInstructorCourses,
   getCourses,
-  getCourseById,
+  getInstructorCourseById,
   updateCourseById,
   deleteCourseById,
 };
