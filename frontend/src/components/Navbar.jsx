@@ -21,112 +21,125 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-white shadow-md">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
+      <div className="mx-auto flex h-18 max-w-[1400px] items-center gap-6 px-6">
 
         {/* Logo */}
-        <h1 className="text-2xl font-bold text-blue-600">
+        <Link
+          to="/"
+          className="text-3xl font-extrabold tracking-tight mx-10 text-purple-700"
+        >
           SkillForge
-        </h1>
+        </Link>
 
-        {/* Navigation Links */}
-        {token && (
+        {/* Student Navbar */}
+        {token && user?.role === "student" && (
           <>
-            {user?.role === "student" && (<>
-              <form
-                onSubmit={handleSearch}
-                className="hidden md:flex relative flex-1 max-w-md mx-8 items-center rounded-full border border-gray-200 bg-white p-1 transition-all focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100"
+            {/* Search */}
+            <form
+              onSubmit={handleSearch}
+              className="relative hidden flex-1 lg:flex"
+            >
+              <input
+                type="text"
+                placeholder="Search for anything"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full rounded-full border border-gray-700 bg-gray-50 py-3 pl-6 pr-14 text-sm outline-none transition focus:border-black"
+              />
+
+              <button
+                type="submit"
+                className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-600 hover:text-black"
               >
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="What do you want to learn?"
-                  className="w-full bg-transparent pl-4 pr-12 py-1.5 text-sm text-gray-700 placeholder-gray-400 outline-none"
-                />
-                 <button
-                    type="submit"
-                    aria-label="Search"
-                    className="absolute right-1 flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white transition-all hover:bg-blue-700 active:scale-95"
-                  >
-                    <Search className="h-4 w-4" strokeWidth={2.5} />
-                  </button>
-              </form>
-              <div className="hidden md:flex items-center gap-8">
-                <Link
-                  to="/student"
-                  className="text-gray-700 hover:text-blue-600 transition"
-                >
-                  Dashboard
-                </Link>
+                <Search size={20} />
+              </button>
+            </form>
 
-                <Link
-                  to="/courses"
-                  className="text-gray-700 hover:text-blue-600 transition"
-                >
-                  Courses
-                </Link>
+            {/* Links */}
+            <div className="hidden lg:flex items-center gap-6 text-sm font-medium">
 
-                <Link
-                  to="/about"
-                  className="text-gray-700 hover:text-blue-600 transition"
-                >
-                  About
-                </Link>
-              </div>
-            </>
-            )}
+              <Link
+                to="/student"
+                className="hover:text-purple-700 transition"
+              >
+                Dashboard
+              </Link>
 
-            {user?.role === "instructor" && (
-              <div className="hidden md:flex items-center gap-8">
-                <Link
-                  to="/instructor"
-                  className="text-gray-700 hover:text-blue-600 transition"
-                >
-                  Dashboard
-                </Link>
-                <Link
-                  to="/instructor/my-courses"
-                  className="text-gray-700 hover:text-blue-600 transition"
-                >
-                  My Course
-                </Link>
-                <a
-                  href="#"
-                  className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                >
-                  Profile
-                </a>
-              </div>
-            )}
+              <Link
+                to="/courses"
+                className="hover:text-purple-700 transition"
+              >
+                Courses
+              </Link>
+
+              <Link
+                to="/about"
+                className="hover:text-purple-700 transition"
+              >
+                About
+              </Link>
+
+            </div>
           </>
         )}
 
-        {/* Auth Buttons */}
-        {token ? (
-          <button
-            className="px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition"
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
-        ) : (
-          <div className="flex items-center gap-3">
+        {/* Instructor Navbar */}
+        {token && user?.role === "instructor" && (
+          <div className="ml-auto hidden lg:flex items-center gap-6 text-sm">
+
             <Link
-              to="/login"
-              className="px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition"
+              to="/instructor"
+              className="hover:text-purple-700 transition"
             >
-              Login
+              Dashboard
             </Link>
 
             <Link
-              to="/register"
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+              to="/instructor/my-courses"
+              className="hover:text-purple-700 transition"
             >
-              Sign Up
+              My Courses
             </Link>
+
           </div>
         )}
+
+        {/* Right Side */}
+        <div className="ml-auto flex items-center gap-3">
+
+          {token ? (
+            <>
+              <button className="border border-black px-4 py-2 text-sm font-medium hover:bg-gray-100 transition">
+                Profile
+              </button>
+
+              <button
+                onClick={handleLogout}
+                className="bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 transition"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="border border-black px-4 py-2 text-sm font-medium hover:bg-gray-100 transition"
+              >
+                Log in
+              </Link>
+
+              <Link
+                to="/register"
+                className="bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 transition"
+              >
+                Sign up
+              </Link>
+            </>
+          )}
+
+        </div>
       </div>
     </nav>
   );

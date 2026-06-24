@@ -8,7 +8,7 @@ const RoleMiddleware = require("../middleware/roleMiddleware.js");
 
 // -- used by student
 
-router.get("/student",AuthMiddleware,RoleMiddleware("student"), getCourses);
+router.get("/",AuthMiddleware,RoleMiddleware("student"), getCourses);
 
 // -- used by instructor 
 router.get("/instructor/my-courses/:id", AuthMiddleware, RoleMiddleware("instructor"), getInstructorCourseById);
