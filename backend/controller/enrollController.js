@@ -1,25 +1,51 @@
 const Enroll = require("../models/Enroll");
 
 const enrollCourse = async (req, res) => {
-  console.log("Enroll controller working .");
+  try {
+    console.log("Enroll controller working.");
 
-  const { courseId, userId } = req.body;
-  if (!userId || !courseId) {
-    return res.status(401).json({
-      status: false,
-      message: "ID not found",
-    });
-  }
-    const enroll = await Enroll.create({
+    const { courseId } = req.body;
+    const userId = req.user.id;
+
+    if (!courseId) {
+      return res.status(400).json({
+        status: false,
+        message: "Course ID not found",
+      });
+    }
+
+    const existingEnrollment = await Enroll.findOne({
       userId,
       courseId,
     });
 
-    await enroll.save();
-    console.log("Enrolled successfully.");
-    res.json({
-      message: "Yes, enroll working!",
+    if (existingEnrollment) {
+      return res.status(400).json({
+        status: false,
+        message: "Already enrolled in this course",
+      });
+    }
+
+    const enrollment = await Enroll.create({
+      userId,
+      courseId,
     });
+
+    console.log("Enrolled successfully.");
+
+    return res.status(201).json({
+      status: true,
+      message: "Enrollment successful",
+      enrollment,
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      status: false,
+      message: "Internal Server Error",
+    });
+  }
 };
 
 module.exports = { enrollCourse };

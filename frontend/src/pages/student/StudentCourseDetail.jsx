@@ -10,6 +10,7 @@ const StudentCourseDetail = () => {
   const [sections, setSections] = useState([]);
   const [lessons, setLessons] = useState({});
   const [selectedLesson, setSelectedLesson] = useState(null);
+  const [isEnrolled, setIsEnrolled] = useState(false);
 
   const handlePreview = (lesson) => {
     setSelectedLesson(lesson);
@@ -51,7 +52,7 @@ const StudentCourseDetail = () => {
       const lessonMap = {};
 
       for (const section of sectionsList) {
-        console.log("Section Id:",section._id)
+        console.log("Section Id:", section._id)
         const res = await api.get(`/sections/student/${section._id}/lessons`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -73,6 +74,30 @@ const StudentCourseDetail = () => {
       </div>
     );
   }
+
+
+  const handleEnroll = async (id) => {
+    try {
+      const result = await api.post(
+        "/enroll",
+        {
+          courseId: id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log(result.data);
+
+      setIsEnrolled(true);
+
+    } catch (err) {
+      console.log("Error:", err);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -249,7 +274,7 @@ const StudentCourseDetail = () => {
             <div className="-mt-80 top-10">
               <div className="bg-white border shadow-2xl rounded-xl overflow-hidden">
                 <img
-                  src="../../public/pic1.jpeg"
+                  src="/pic1.jpeg"
                   alt=""
                   className="w-full h-56 object-cover"
                 />
@@ -259,9 +284,22 @@ const StudentCourseDetail = () => {
                     ₹{course.price}
                   </h2>
 
-                  <button className="mt-6 w-full bg-[#a435f0] hover:bg-purple-700 text-white py-3 font-bold rounded">
-                    Enroll Now
-                  </button>
+                  {
+                    isEnrolled ? (
+                      <button
+                        className="mt-6 w-full bg-green-600 text-white py-3 font-bold rounded"
+                      >
+                        Go to Course
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleEnroll(id)}
+                        className="mt-6 w-full bg-[#a435f0] hover:bg-purple-700 text-white py-3 font-bold rounded"
+                      >
+                        Enroll Now
+                      </button>
+                    )
+                  }
 
                   <button className="mt-3 w-full border py-3 font-semibold rounded">
                     Add to Wishlist
