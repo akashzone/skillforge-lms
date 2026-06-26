@@ -5,8 +5,6 @@ import Register from './pages/auth/Register';
 import Login from './pages/auth/Login';
 import About from './pages/About';
 import InstructorDashboard from './pages/instructor/InstructorDashboard';
-import StudentDashboard from './pages/student/StudentDashboard';
-import StudentCourseDetail from './pages/student/StudentCourseDetail';
 import Courses from './pages/Courses';
 import ProtectedRoute from './routes/ProtectedRoute';
 import UnauthorizedRoute from './routes/UnauthorizedRoute';
@@ -26,6 +24,12 @@ import CreateLesson from './pages/instructor/CreateLesson';
 import UploadLecture from './pages/instructor/UploadLecture';
 import PreviewLecture from './pages/instructor/PreviewLecture';
 
+
+// -- Student --
+import StudentDashboard from './pages/student/StudentDashboard';
+import StudentCourseDetail from './pages/student/StudentCourseDetail';
+import StudentMyCourse from "./pages/student/MyCourse"
+
 function App() {
   return (
     <>
@@ -41,12 +45,13 @@ function App() {
           
           // can access if logged or sign up.
           <Route path="/about" element={<About />} />
-          <Route path="/courses" element={<Courses />} />
+          <Route path="/student/courses" element={<Courses />} />
 
           // if created acc on role = "student"
           <Route element={< StudentRoute />}>
             <Route path="/student" element={<StudentDashboard />} />
-            <Route path="/course/:id" element={<StudentCourseDetail />} />
+            <Route path="/student/course/:id" element={<StudentCourseDetail />} />
+            <Route path="/student/enrollments" element={<StudentMyCourse />} />
           </Route>
           
           // if created acc on role = "instructor"

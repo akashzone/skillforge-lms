@@ -6,7 +6,7 @@ const StudentCourseCard = ({
     }) => {
     const navigate = useNavigate();
     const handleViewCourse = (courseId)=>{
-        navigate(`/course/${courseId}`);
+        navigate(`/student/course/${courseId}`);
     }
     return (
         <>
@@ -14,7 +14,7 @@ const StudentCourseCard = ({
 
                 {/* Image */}
                 <img
-                    src="pic1.jpeg"
+                    src="/pic1.jpeg"
                     alt={title}
                     className="w-full h-44 object-cover"
                 />

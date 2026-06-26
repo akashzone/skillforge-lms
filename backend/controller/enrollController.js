@@ -48,4 +48,30 @@ const enrollCourse = async (req, res) => {
   }
 };
 
-module.exports = { enrollCourse };
+
+
+const getEnrollCourses = async (req,res)=>{
+  const {id} = req.params;
+  console.log("Course ID - ",id);
+  if (!id) {
+    console.log("lesson ID :", id);
+    return res.status(401).json({
+      status: false,
+      message: "ID not found",
+    });
+  }
+
+  try {
+    const getEnrolledCourse = await Enroll.find({courseId : id});
+    console.log("Enrolled Courses :", getEnrolledCourse);
+    res.status(201).json({
+      enrolledCourses : getEnrolledCourse,
+      success: true,
+      message: "Enrolled Courses fetched successfully.",
+    });
+  } catch (error) {
+    console.error("Error in fetching Enrolled course from DB:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+}
+module.exports = { enrollCourse, getEnrollCourses };

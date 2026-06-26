@@ -5,6 +5,8 @@ import api from "../../api/api";
 
 const StudentCourseDetail = () => {
   const { id } = useParams();
+  const courseId = id;
+  // console.log("Course Id :",courseId)
   const { token } = useAuth();
   const [course, setCourse] = useState(null);
   const [sections, setSections] = useState([]);
@@ -75,6 +77,10 @@ const StudentCourseDetail = () => {
     );
   }
 
+  
+  // useEffect(()=>{
+    
+  // },[]);
 
   const handleEnroll = async (id) => {
     try {

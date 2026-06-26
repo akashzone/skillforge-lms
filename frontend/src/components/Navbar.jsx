@@ -67,13 +67,13 @@ function Navbar() {
               </Link> */}
 
               <Link
-                to="/courses"
+                to="/student/courses"
                 className="hover:text-purple-700 transition"
               >
                 Courses
               </Link>
               <Link
-                to="/courses"
+                to="student/enrollments"
                 className="hover:text-purple-700 transition"
               >
                 My Learning
