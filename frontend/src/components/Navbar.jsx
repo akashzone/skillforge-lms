@@ -59,12 +59,12 @@ function Navbar() {
             {/* Links */}
             <div className="hidden lg:flex items-center gap-6 text-sm font-medium">
 
-              <Link
+              {/* <Link
                 to="/student"
                 className="hover:text-purple-700 transition"
               >
                 Dashboard
-              </Link>
+              </Link> */}
 
               <Link
                 to="/courses"
@@ -72,13 +72,19 @@ function Navbar() {
               >
                 Courses
               </Link>
-
               <Link
+                to="/courses"
+                className="hover:text-purple-700 transition"
+              >
+                My Learning
+              </Link>
+
+              {/* <Link
                 to="/about"
                 className="hover:text-purple-700 transition"
               >
                 About
-              </Link>
+              </Link> */}
 
             </div>
           </>
