@@ -48,10 +48,8 @@ const enrollCourse = async (req, res) => {
   }
 };
 
-
-
 const getEnrollCourses = async (req,res)=>{
-  const {id} = req.params;
+  const {id} = req.user;
   console.log("Course ID - ",id);
   if (!id) {
     console.log("lesson ID :", id);
@@ -62,7 +60,7 @@ const getEnrollCourses = async (req,res)=>{
   }
 
   try {
-    const getEnrolledCourse = await Enroll.find({courseId : id});
+    const getEnrolledCourse = await Enroll.find({userId : id}).populate("courseId");;
     console.log("Enrolled Courses :", getEnrolledCourse);
     res.status(201).json({
       enrolledCourses : getEnrolledCourse,

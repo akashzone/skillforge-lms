@@ -15,7 +15,7 @@ router.post(
 )
 
 router.get(
-    "/:id",
+    "/",
     AuthMiddleware,
     RoleMiddleware("student"),
     getEnrollCourses
