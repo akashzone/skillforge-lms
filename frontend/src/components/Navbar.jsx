@@ -112,7 +112,7 @@ function Navbar() {
         )}
 
         {/* Right Side */}
-        <div className="ml-auto flex items-center gap-3">
+        <div className="ml-auto flex items-center gap-3 mx-10">
 
           {token ? (
             <>
