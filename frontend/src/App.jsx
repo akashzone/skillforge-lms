@@ -1,3 +1,5 @@
+import { useLocation } from "react-router-dom";
+
 
 import './App.css'
 import api from './api/api';
@@ -30,12 +32,15 @@ import StudentDashboard from './pages/student/StudentDashboard';
 import StudentCourseDetail from './pages/student/StudentCourseDetail';
 import StudentMyCourse from "./pages/student/MyCourse"
 import CourseContent from './pages/student/CourseContent';
+import Footer from "./components/Footer";
 
 function App() {
+  const location = useLocation();
+
+  const hideNavbar = location.pathname.startsWith("/student/my-course/");
   return (
     <>
-      <Navbar />
-      <Routes>
+      {!hideNavbar && <Navbar />}      <Routes>
         <Route path="/" element={<HomePage />} />
         <Route element={<UnauthorizedRoute />}>
           // initial page.
@@ -43,7 +48,7 @@ function App() {
           <Route path="/login" element={<Login />} />
         </Route>
         <Route element={<ProtectedRoute />}>
-          
+
           // can access if logged or sign up.
           <Route path="/about" element={<About />} />
           <Route path="/student/courses" element={<Courses />} />
@@ -55,21 +60,22 @@ function App() {
             <Route path="/student/my-courses" element={<StudentMyCourse />} />
             <Route path="/student/my-course/:id" element={<CourseContent />} />
           </Route>
-          
+
           // if created acc on role = "instructor"
           <Route element={< InstructorRoute />}>
             <Route path="/instructor" element={<InstructorDashboard />}></Route>
-            <Route path="/instructor/create-course" element={< CreateCourse/> }></Route>
-            <Route path="/instructor/my-courses" element={< MyCourses/> }></Route>
-            <Route path="/instructor/courses/:id" element={< CourseDetail/> }></Route>
-            <Route path="/instructor/:id/edit" element={< EditCourse/> }></Route>
-            <Route path="/instructor/courses/:id/create-section" element={< CreateSection/> }></Route>
-            <Route path="/instructor/lessons/:id/create-lesson" element={< CreateLesson/> }></Route>
-            <Route path="/instructor/lessons/:id/uploads" element={< UploadLecture/> }></Route>
-            <Route path="/instructor/lessons/:id/preview-lesson" element={< PreviewLecture/> }></Route>
+            <Route path="/instructor/create-course" element={< CreateCourse />}></Route>
+            <Route path="/instructor/my-courses" element={< MyCourses />}></Route>
+            <Route path="/instructor/courses/:id" element={< CourseDetail />}></Route>
+            <Route path="/instructor/:id/edit" element={< EditCourse />}></Route>
+            <Route path="/instructor/courses/:id/create-section" element={< CreateSection />}></Route>
+            <Route path="/instructor/lessons/:id/create-lesson" element={< CreateLesson />}></Route>
+            <Route path="/instructor/lessons/:id/uploads" element={< UploadLecture />}></Route>
+            <Route path="/instructor/lessons/:id/preview-lesson" element={< PreviewLecture />}></Route>
           </Route>
         </Route>
       </Routes>
+      <Footer/>
     </>
   )
 }
