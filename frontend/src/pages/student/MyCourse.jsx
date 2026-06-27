@@ -50,12 +50,12 @@ const MyCourse = () => {
               You haven't enrolled in any courses yet.
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 ">
               {enrolledCourses.map((course) => (
                 <Link
-                  to={`/my-course/${course.courseId._id}`}
+                  to={`/student/my-course/${course.courseId._id}`}
                   key={course._id}
-                  className="group bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:border-[#5624d0]"
+                  className="group bg-white rounded-xl m-4 overflow-hidden border border-gray-200 shadow-sm cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:border-[#5624d0]"
                 >
                   <div
                     key={course._id}

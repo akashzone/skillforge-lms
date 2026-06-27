@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../../api/api";
 
 const StudentCourseDetail = () => {
@@ -13,7 +13,7 @@ const StudentCourseDetail = () => {
   const [lessons, setLessons] = useState({});
   const [selectedLesson, setSelectedLesson] = useState(null);
   const [isEnrolled, setIsEnrolled] = useState(false);
-
+  const navigate = useNavigate();
   const handlePreview = (lesson) => {
     setSelectedLesson(lesson);
   };
@@ -69,18 +69,6 @@ const StudentCourseDetail = () => {
     }
   };
 
-  if (!course) {
-    return (
-      <div className="text-center py-20 text-xl">
-        Loading...
-      </div>
-    );
-  }
-
-  
-  // useEffect(()=>{
-    
-  // },[]);
 
   const handleEnroll = async (id) => {
     try {
@@ -104,6 +92,33 @@ const StudentCourseDetail = () => {
       console.log("Error:", err);
     }
   };
+
+  const checkEnrollment = async () => {
+    const res = await api.get(`/enroll/${courseId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    setIsEnrolled(res.data.enrolled);
+  };
+
+  useEffect(() => {
+    checkEnrollment();
+  }, [courseId]);
+
+  const handleGotoCourse = (id)=>{
+    navigate(`/student/my-course/${id}`);
+  }
+  if (!course) {
+    return (
+      <div className="text-center py-20 text-xl">
+        Loading...
+      </div>
+    );
+  }
+
+
 
   return (
     <div className="min-h-screen bg-white">
@@ -293,14 +308,15 @@ const StudentCourseDetail = () => {
                   {
                     isEnrolled ? (
                       <button
-                        className="mt-6 w-full bg-green-600 text-white py-3 font-bold rounded"
+                        onClick={() => handleGotoCourse(id)}
+                        className="mt-6 w-full cursor-pointer  bg-green-600 text-white py-3 font-bold rounded"
                       >
                         Go to Course
                       </button>
                     ) : (
                       <button
                         onClick={() => handleEnroll(id)}
-                        className="mt-6 w-full bg-[#a435f0] hover:bg-purple-700 text-white py-3 font-bold rounded"
+                        className="mt-6 w-full cursor-pointer bg-[#a435f0] hover:bg-purple-700 text-white py-3 font-bold rounded"
                       >
                         Enroll Now
                       </button>

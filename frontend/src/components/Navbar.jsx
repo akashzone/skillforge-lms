@@ -73,7 +73,7 @@ function Navbar() {
                 Courses
               </Link>
               <Link
-                to="student/enrollments"
+                to="/student/my-courses"
                 className="hover:text-purple-700 transition"
               >
                 My Learning

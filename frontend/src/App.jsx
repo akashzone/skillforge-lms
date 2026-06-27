@@ -29,6 +29,7 @@ import PreviewLecture from './pages/instructor/PreviewLecture';
 import StudentDashboard from './pages/student/StudentDashboard';
 import StudentCourseDetail from './pages/student/StudentCourseDetail';
 import StudentMyCourse from "./pages/student/MyCourse"
+import CourseContent from './pages/student/CourseContent';
 
 function App() {
   return (
@@ -51,7 +52,8 @@ function App() {
           <Route element={< StudentRoute />}>
             <Route path="/student" element={<StudentDashboard />} />
             <Route path="/student/course/:id" element={<StudentCourseDetail />} />
-            <Route path="/student/enrollments" element={<StudentMyCourse />} />
+            <Route path="/student/my-courses" element={<StudentMyCourse />} />
+            <Route path="/student/my-course/:id" element={<CourseContent />} />
           </Route>
           
           // if created acc on role = "instructor"

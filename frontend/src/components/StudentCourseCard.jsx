@@ -3,15 +3,14 @@ import { useNavigate } from 'react-router-dom';
 
 const StudentCourseCard = ({
     title, category, price, id
-    }) => {
+}) => {
     const navigate = useNavigate();
-    const handleViewCourse = (courseId)=>{
+    const handleViewCourse = (courseId) => {
         navigate(`/student/course/${courseId}`);
     }
     return (
         <>
-            <div className="w-80 rounded-xl overflow-hidden bg-white shadow-md hover:shadow-xl transition duration-300">
-
+            <div className="w-full rounded-xl overflow-hidden bg-white border border-gray-200 shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
                 {/* Image */}
                 <img
                     src="/pic1.jpeg"
@@ -42,14 +41,14 @@ const StudentCourseCard = ({
 
                         <div className='flex justify-between items-center gap-2'>
                             <h3 className="text-2xl font-medium text-black">
-                            ₹{price}
-                        </h3>
-                        <strike> ₹5999</strike>
+                                ₹{price}
+                            </h3>
+                            <strike> ₹5999</strike>
                         </div>
 
-                        <button 
-                        onClick={() => handleViewCourse(id)}
-                        className=" cursor-pointer bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
+                        <button
+                            onClick={() => handleViewCourse(id)}
+                            className=" cursor-pointer bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
                             View
                         </button>
 
