@@ -3,45 +3,53 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#1c1d1f] text-gray-300">
-      <div className="max-w-7xl mx-auto px-8 py-12">
-
+    <footer className="bg-slate-900 text-slate-300">
+      <div className="mx-auto max-w-7xl px-8 py-16">
         {/* Top */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
-
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
           {/* Brand */}
           <div>
-            <h2 className="text-3xl font-bold text-purple-500">
-              SkillForge
+            <h2 className="text-3xl font-black tracking-tight text-white">
+              Skill<span className="text-emerald-400">Forge</span>
             </h2>
 
-            <p className="mt-4 text-sm leading-6 text-gray-400">
+            <p className="mt-5 text-sm leading-7 text-slate-400">
               Learn industry-ready skills through structured courses,
-              hands-on projects, and interactive lessons.
+              hands-on projects, and interactive lessons designed to
+              help you grow your career.
             </p>
           </div>
 
           {/* Explore */}
           <div>
-            <h3 className="text-white font-semibold mb-4">
+            <h3 className="mb-5 text-lg font-semibold text-white">
               Explore
             </h3>
 
             <ul className="space-y-3 text-sm">
               <li>
-                <a href="/" className="hover:text-white transition">
+                <a
+                  href="/"
+                  className="transition-colors hover:text-emerald-400"
+                >
                   Home
                 </a>
               </li>
 
               <li>
-                <a href="/student/courses" className="hover:text-white transition">
+                <a
+                  href="/student/courses"
+                  className="transition-colors hover:text-emerald-400"
+                >
                   Courses
                 </a>
               </li>
 
               <li>
-                <a href="/about" className="hover:text-white transition">
+                <a
+                  href="/about"
+                  className="transition-colors hover:text-emerald-400"
+                >
                   About
                 </a>
               </li>
@@ -50,30 +58,37 @@ const Footer = () => {
 
           {/* Resources */}
           <div>
-            <h3 className="text-white font-semibold mb-4">
+            <h3 className="mb-5 text-lg font-semibold text-white">
               Resources
             </h3>
 
             <ul className="space-y-3 text-sm">
-              <li>Help Center</li>
-              <li>Terms & Conditions</li>
-              <li>Privacy Policy</li>
+              <li className="transition-colors hover:text-emerald-400 cursor-pointer">
+                Help Center
+              </li>
+
+              <li className="transition-colors hover:text-emerald-400 cursor-pointer">
+                Terms & Conditions
+              </li>
+
+              <li className="transition-colors hover:text-emerald-400 cursor-pointer">
+                Privacy Policy
+              </li>
             </ul>
           </div>
 
           {/* Connect */}
           <div>
-            <h3 className="text-white font-semibold mb-4">
+            <h3 className="mb-5 text-lg font-semibold text-white">
               Connect
             </h3>
 
             <div className="flex gap-4">
-
               <a
                 href="https://github.com/akashzone"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-gray-800 hover:bg-purple-600 transition"
+                className="rounded-xl border border-slate-700 bg-slate-800 p-3 transition-all hover:border-emerald-500 hover:bg-emerald-500"
               >
                 <FaGithub size={22} />
               </a>
@@ -82,35 +97,34 @@ const Footer = () => {
                 href="https://www.linkedin.com/in/akashnadar-dev/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-gray-800 hover:bg-blue-600 transition"
+                className="rounded-xl border border-slate-700 bg-slate-800 p-3 transition-all hover:border-emerald-500 hover:bg-emerald-500"
               >
                 <FaLinkedin size={22} />
               </a>
-
             </div>
 
-            <p className="mt-5 text-sm text-gray-400">
+            <p className="mt-6 text-sm leading-6 text-slate-400">
               Built with React, Express, Node.js & MongoDB.
             </p>
           </div>
         </div>
 
         {/* Divider */}
-        <div className="border-t border-gray-700 my-8"></div>
+        <div className="my-10 border-t border-slate-700"></div>
 
         {/* Bottom */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-
-          <p className="text-sm text-gray-400">
+        <div className="flex flex-col items-center justify-between gap-4 text-sm md:flex-row">
+          <p className="text-slate-400">
             © {new Date().getFullYear()} SkillForge. All rights reserved.
           </p>
 
-          <p className="text-sm text-gray-500">
-            Designed & Developed by <span className="text-purple-400 font-medium">Akash Nadar</span>
+          <p className="text-slate-500">
+            Designed & Developed by{" "}
+            <span className="font-semibold text-emerald-400">
+              Akash Nadar
+            </span>
           </p>
-
         </div>
-
       </div>
     </footer>
   );

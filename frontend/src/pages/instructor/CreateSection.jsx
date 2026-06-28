@@ -42,45 +42,70 @@ const CreateSection = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 flex items-center justify-center px-6">
-            <div className="w-full max-w-xl rounded-xl bg-white p-8 shadow-lg">
-                <h1 className="text-3xl font-bold text-gray-900">Create Section</h1>
-                <p className="mt-2 text-gray-600">Add a new section to organize your course content.</p>
+        <div className="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-indigo-100 py-12 px-6">
+            <div className="mx-auto max-w-2xl overflow-hidden rounded-3xl bg-white shadow-2xl border border-slate-200">
+                {/* Header */}
+                <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-8 text-white">
+                    <h1 className="text-3xl font-bold">Create New Section</h1>
+                    <p className="mt-2 text-blue-100">
+                        Organize your course into structured sections for a better learning experience.
+                    </p>
+                </div>
 
-                <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+                {/* Form */}
+                <form onSubmit={handleSubmit} className="space-y-8 p-8">
+
+                    {/* Section Title */}
                     <div>
-                        <label className="mb-2 block text-sm font-medium text-gray-700">Section Title</label>
+                        <label className="mb-2 block text-sm font-semibold text-slate-700">
+                            Section Title
+                        </label>
                         <input
                             type="text"
                             value={formData.title}
-                            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                            onChange={(e) =>
+                                setFormData({ ...formData, title: e.target.value })
+                            }
                             placeholder="e.g. Introduction"
-                            className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-purple-600 focus:ring-2 focus:ring-purple-200"
+                            className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-800 outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100"
                         />
                     </div>
 
+                    {/* Section Order */}
                     <div>
-                        <label className="mb-2 block text-sm font-medium text-gray-700">Section Order</label>
+                        <label className="mb-2 block text-sm font-semibold text-slate-700">
+                            Section Order
+                        </label>
                         <input
                             type="number"
                             value={formData.order}
-                            onChange={(e) => setFormData({ ...formData, order: e.target.value })}
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    order: e.target.value,
+                                })
+                            }
                             placeholder="1"
-                            className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-purple-600 focus:ring-2 focus:ring-purple-200"
+                            className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-800 outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100"
                         />
+                        <p className="mt-2 text-sm text-slate-500">
+                            Determines the order in which this section appears in the course.
+                        </p>
                     </div>
 
-                    <div className="flex justify-end gap-3 pt-4">
+                    {/* Buttons */}
+                    <div className="flex items-center justify-end gap-4 border-t border-slate-200 pt-6">
                         <button
                             type="button"
                             onClick={() => navigate(`/instructor/courses/${id}`)}
-                            className="rounded-lg border px-5 py-3 font-medium text-gray-700 hover:bg-gray-100"
+                            className="rounded-xl cursor-pointer border border-slate-300 bg-white px-6 py-3 font-medium text-slate-700 transition-all duration-200 hover:border-slate-400 hover:bg-slate-100"
                         >
                             Cancel
                         </button>
+
                         <button
                             type="submit"
-                            className="rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700"
+                            className="rounded-xl cursor-pointer bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-3 font-semibold text-white shadow-lg transition-all duration-200 hover:scale-[1.02] hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl active:scale-[0.98]"
                         >
                             Create Section
                         </button>

@@ -23,182 +23,183 @@ const HomePage = () => {
     fetchCourses();
   }, []);
   return (
-    <div className="bg-gray-50 min-h-screen">
-      {/* Hero */}
-      <section className="bg-gradient-to-r from-gray-900 via-gray-800 to-purple-900 text-white">
-        <div className="max-w-7xl mx-auto px-6 py-24 flex flex-col lg:flex-row items-center justify-between gap-12">
-          {/* Left */}
-          <div className="flex-1">
-            <h1 className="text-5xl font-bold leading-tight">
-              Learn Skills That <br />
-              <span className="text-purple-400">Build Your Future.</span>
-            </h1>
+  <div className="min-h-screen bg-slate-50">
+    {/* Hero */}
+    <section className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-16 px-6 py-24 lg:flex-row">
+        {/* Left */}
+        <div className="flex-1">
+          <h1 className="mt-6 text-5xl font-black leading-tight text-white lg:text-6xl">
+            Learn Skills That
+            <br />
+            <span className="text-emerald-400">Shape Your Career.</span>
+          </h1>
 
-            <p className="mt-6 text-lg text-gray-300 max-w-xl">
-              Explore thousands of expert-led courses in Web Development,
-              Programming, AI, Data Science, Design, and much more.
-            </p>
+          <p className="mt-6 max-w-xl text-lg leading-8 text-slate-300">
+            Explore expert-led courses in Web Development, Programming,
+            Artificial Intelligence, Data Science, UI/UX, and more—all in one
+            place.
+          </p>
 
-            {/* Search */}
-            <div className="mt-8 bg-white rounded-lg flex items-center overflow-hidden max-w-xl">
-              <input
-                type="text"
-                placeholder="What do you want to learn today?"
-                className="flex-1 px-5 py-4 text-gray-800 outline-none"
-              />
+          {/* Search */}
+          <div className="mt-10 flex max-w-xl overflow-hidden rounded-2xl bg-white shadow-xl">
+            <input
+              type="text"
+              placeholder="What do you want to learn today?"
+              className="flex-1 px-6 py-4 text-slate-700 placeholder:text-slate-400 outline-none"
+            />
 
-              <button className="bg-purple-600 hover:bg-purple-700 px-6 py-4">
-                <Search className="text-white" size={22} />
-              </button>
-            </div>
-
-            <button className="mt-8 bg-purple-600 hover:bg-purple-700 px-8 py-4 rounded-lg font-semibold transition">
-              Explore Courses
+            <button className="bg-emerald-500 px-6 transition hover:bg-emerald-600">
+              <Search className="text-white" size={22} />
             </button>
           </div>
 
-          {/* Right */}
-          <div className="flex-1 flex justify-center">
+          <button className="mt-8 rounded-xl bg-emerald-500 px-8 py-4 font-semibold text-white transition hover:bg-emerald-600 hover:shadow-lg hover:shadow-emerald-500/20">
+            Explore Courses
+          </button>
+        </div>
+
+        {/* Right */}
+        <div className="flex flex-1 justify-center">
+          <img
+            src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800"
+            alt="Learning"
+            className="w-full max-w-lg rounded-3xl border border-slate-700 shadow-2xl"
+          />
+        </div>
+      </div>
+    </section>
+
+    {/* Stats */}
+    <section className="mx-auto max-w-7xl px-6 py-20">
+      <div className="grid gap-8 md:grid-cols-3">
+        <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm transition hover:-translate-y-2 hover:shadow-xl">
+          <BookOpen className="mx-auto text-emerald-500" size={42} />
+          <h2 className="mt-5 text-4xl font-bold text-slate-900">500+</h2>
+          <p className="mt-2 text-slate-500">Courses</p>
+        </div>
+
+        <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm transition hover:-translate-y-2 hover:shadow-xl">
+          <Users className="mx-auto text-emerald-500" size={42} />
+          <h2 className="mt-5 text-4xl font-bold text-slate-900">20K+</h2>
+          <p className="mt-2 text-slate-500">Students</p>
+        </div>
+
+        <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm transition hover:-translate-y-2 hover:shadow-xl">
+          <Award className="mx-auto text-emerald-500" size={42} />
+          <h2 className="mt-5 text-4xl font-bold text-slate-900">100+</h2>
+          <p className="mt-2 text-slate-500">Expert Instructors</p>
+        </div>
+      </div>
+    </section>
+
+    {/* Featured Courses */}
+    <section className="mx-auto max-w-7xl px-6 pb-24">
+      <h2 className="mb-14 text-center text-4xl font-black text-slate-900">
+        Featured Courses
+      </h2>
+
+      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {courses.map((course) => (
+          <div
+            key={course._id}
+            onClick={() => navigate(`/course/${course._id}`)}
+            className="cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:-translate-y-2 hover:shadow-xl"
+          >
             <img
-              src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800"
-              alt="Learning"
-              className="rounded-xl shadow-2xl w-full max-w-lg"
+              src={`/pic1.jpeg`}
+              alt={course.title}
+              className="h-48 w-full object-cover"
             />
+
+            <div className="p-6">
+              <h3 className="line-clamp-2 text-lg font-bold text-slate-900">
+                {course.title}
+              </h3>
+
+              <p className="mt-2 text-sm text-slate-500">
+                {`Haris Ali Khan`}
+              </p>
+
+              <p className="mt-4 line-clamp-3 text-slate-600">
+                {course.description}
+              </p>
+
+              <div className="mt-6 flex items-center justify-between">
+                <span className="text-2xl font-bold text-emerald-600">
+                  ₹{course.price}
+                </span>
+
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`/course/${course._id}`);
+                  }}
+                  className="rounded-xl bg-emerald-500 px-4 py-2 font-medium text-white transition hover:bg-emerald-600"
+                >
+                  View Course
+                </button>
+              </div>
+            </div>
           </div>
+        ))}
+      </div>
+
+      {courses.length === 0 && (
+        <div className="mt-10 text-center text-slate-500">
+          No courses available.
         </div>
-      </section>
+      )}
+    </section>
 
-      {/* Stats */}
-      <section className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="bg-white rounded-xl shadow p-8 text-center">
-            <BookOpen className="mx-auto text-purple-600" size={40} />
-            <h2 className="text-3xl font-bold mt-4">500+</h2>
-            <p className="text-gray-600 mt-2">Courses</p>
-          </div>
-
-          <div className="bg-white rounded-xl shadow p-8 text-center">
-            <Users className="mx-auto text-purple-600" size={40} />
-            <h2 className="text-3xl font-bold mt-4">20K+</h2>
-            <p className="text-gray-600 mt-2">Students</p>
-          </div>
-
-          <div className="bg-white rounded-xl shadow p-8 text-center">
-            <Award className="mx-auto text-purple-600" size={40} />
-            <h2 className="text-3xl font-bold mt-4">100+</h2>
-            <p className="text-gray-600 mt-2">Expert Instructors</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Courses */}
-      {/* Featured Courses */}
-      <section className="max-w-7xl mx-auto px-6 pb-20">
-        <h2 className="text-4xl font-bold text-center mb-12">
-          Featured Courses
+    {/* Categories */}
+    <section className="bg-white py-24">
+      <div className="mx-auto max-w-7xl px-6">
+        <h2 className="mb-14 text-center text-4xl font-black text-slate-900">
+          Browse Categories
         </h2>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {courses.map((course) => (
+        <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+          {[
+            "Web Development",
+            "JavaScript",
+            "React",
+            "Node.js",
+            "Python",
+            "AI & ML",
+            "Data Science",
+            "UI/UX",
+          ].map((cat) => (
             <div
-              key={course._id}
-              className="bg-white rounded-xl shadow hover:shadow-xl transition overflow-hidden cursor-pointer"
-              onClick={() => navigate(`/course/${course._id}`)}
+              key={cat}
+              className="cursor-pointer rounded-2xl border border-slate-200 bg-slate-50 p-8 text-center font-semibold text-slate-700 transition-all hover:border-emerald-500 hover:bg-emerald-500 hover:text-white"
             >
-              <img
-                src={`/pic1.jpeg`}
-                alt={course.title}
-                className="h-48 w-full object-cover"
-              />
-
-              <div className="p-5">
-                <h3 className="font-bold text-lg line-clamp-2">
-                  {course.title}
-                </h3>
-
-                <p className="text-sm text-gray-500 mt-2">
-                  {course.instructor}
-                </p>
-
-                <p className="text-gray-600 mt-3 line-clamp-3">
-                  {course.description}
-                </p>
-
-                <div className="flex justify-between items-center mt-5">
-                  <span className="text-purple-600 font-bold text-lg">
-                    ₹{course.price}
-                  </span>
-
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/course/${course._id}`);
-                    }}
-                    className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg"
-                  >
-                    View Course
-                  </button>
-                </div>
-              </div>
+              {cat}
             </div>
           ))}
         </div>
+      </div>
+    </section>
 
-        {courses.length === 0 && (
-          <div className="text-center text-gray-500 mt-10">
-            No courses available.
-          </div>
-        )}
-      </section>
+    {/* CTA */}
+    <section className="bg-slate-900 py-24 text-white">
+      <div className="mx-auto max-w-5xl px-6 text-center">
+        <h2 className="text-5xl font-black">
+          Start Learning Today
+        </h2>
 
-      {/* Categories */}
-      <section className="bg-white py-20">
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-4xl font-bold text-center mb-12">
-            Browse Categories
-          </h2>
+        <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-300">
+          Join thousands of learners building practical, job-ready skills with
+          SkillForge.
+        </p>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[
-              "Web Development",
-              "JavaScript",
-              "React",
-              "Node.js",
-              "Python",
-              "AI & ML",
-              "Data Science",
-              "UI/UX",
-            ].map((cat) => (
-              <div
-                key={cat}
-                className="bg-purple-50 hover:bg-purple-600 hover:text-white transition rounded-xl p-8 text-center font-semibold cursor-pointer"
-              >
-                {cat}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="bg-gradient-to-r from-purple-700 to-indigo-700 text-white py-20">
-        <div className="max-w-5xl mx-auto text-center px-6">
-          <h2 className="text-5xl font-bold">
-            Start Learning Today
-          </h2>
-
-          <p className="mt-6 text-lg text-purple-100">
-            Join thousands of students building real-world skills with
-            SkillForge.
-          </p>
-
-          <button className="mt-8 bg-white text-purple-700 px-8 py-4 rounded-lg font-bold hover:bg-gray-100 transition">
-            Get Started
-          </button>
-        </div>
-      </section>
-    </div>
-  );
+        <button className="mt-10 rounded-xl bg-emerald-500 px-8 py-4 font-semibold text-white transition hover:bg-emerald-600 hover:shadow-lg hover:shadow-emerald-500/20">
+          Get Started
+        </button>
+      </div>
+    </section>
+  </div>
+);
 };
 
 export default HomePage;

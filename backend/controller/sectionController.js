@@ -55,7 +55,6 @@ const getAllSection = async (req, res) => {
     const getAllSection = await Section.find({
       course: id,
     });
-    console.log("ALl section info :",getAllSection);
     res.status(200).json({
       sections: getAllSection,
       success: true,

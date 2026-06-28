@@ -81,6 +81,7 @@ const MyCourses = () => {
                             description={course.description}
                             level={course.level}
                             onDelete={handleDelete}
+                            showActions={true}
                         />
                     ))}
                 </div>
