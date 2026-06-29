@@ -42,8 +42,8 @@ app.use("/api/courses", CourseRoutes);
 app.use("/api/sections", SectionRoutes);
 app.use("/api/lessons", LessonRoutes);
 app.use("/api/uploads", UploadRoutes);
-app.use("/api/enroll",EnrollRoutes)
-app.use("/api/progress",ProgressRoutes)
+app.use("/api/enroll",EnrollRoutes);
+app.use("/api/progress",ProgressRoutes);
 
 app.get("/api/test", AuthMiddleware, (req, res) => {
   res.json({ message: "API is working!" });

@@ -4,61 +4,100 @@ const Section = require("../models/Section");
 const Progress = require("../models/Progress");
 
 const createProgress = async (req, res) => {
-  const { lessonId } = req.params;
-  const { id } = req.user;
+  try {
+    const { lessonId } = req.params;
+    const { id } = req.user;
 
-  if (!lessonId || !id) {
-    console.log("user ID :", id);
-    console.log("course ID:", courseId);
-    return res.status(401).json({
-      status: false,
-      message: "ID not found",
+    if (!lessonId || !id) {
+      return res.status(400).json({
+        status: false,
+        message: "User ID or Lesson ID missing",
+      });
+    }
+
+
+    const lessonInfo = await Lesson.findById(lessonId);
+    if (!lessonInfo) {
+      return res.status(404).json({
+        status: false,
+        message: "Lesson not found",
+      });
+    }
+
+
+    const fetchSection = await Section.findById(lessonInfo.section);
+    if (!fetchSection) {
+      return res.status(404).json({ status: false, message: "Section not found" });
+    }
+    const courseId = fetchSection.course;
+
+    let progress = await Progress.findOne({ userId: id, courseId });
+    if (!progress) {
+      progress = await Progress.create({
+        userId: id,
+        courseId,
+        lessonsCompleted: [],
+        progressPercentage: 0,
+      });
+    }
+
+    const alreadyExist = progress.lessonsCompleted.map(id => id.toString()).includes(lessonId.toString());
+    if (alreadyExist) {
+      return res.status(400).json({
+        success: true,
+        exist: true,
+        message: "Already completed this lesson",
+      });
+    }
+
+    const fetchAllSections = await Section.find({ course: courseId });
+    const allSectionIds = fetchAllSections.map((section) => section._id);
+    const totalLessons = await Lesson.countDocuments({
+      section: { $in: allSectionIds },
     });
-  }
 
-  const lessonInfo = await Lesson.findOne({
-    _id: lessonId,
-  });
-  if (!lessonInfo) {
-    return res.status(401).json({
-      status: false,
-      message: "lesson not found",
+    const totalLessonsCompleted = progress.lessonsCompleted.length + 1;
+    const progressPercentage = totalLessons > 0 
+      ? Math.round((totalLessonsCompleted / totalLessons) * 100) 
+      : 0;
+
+
+    const updatedProgress = await Progress.findByIdAndUpdate(
+      progress._id,
+      {
+        $push: { lessonsCompleted: lessonId },
+        $set: { progressPercentage },
+      },
+      { new: true }
+    );
+
+    return res.status(200).json({
+      success: true,
+      progress: updatedProgress,
+      message: "Lesson progress updated successfully.",
     });
-  }
-  //   console.log( "Lesson info :", lessonInfo);
-  //   res.json({
-  //     message : "LessonInfo fetched successfully.."
-  //   });
 
-  const fetchSection = await Section.findOne({
-    _id: lessonInfo.section,
-  });
-  //    console.log("Section Info :",fetchSection);
-
-  const fetchCourse = await Course.findOne({
-    _id: fetchSection.course,
-  });
-
-    //  console.log("Course Info :",fetchCourse._id);
-  const courseId = fetchCourse._id;
-  const checkProgress = await Progress.findOne({
-    userId : id,
-    courseId
-  })
-  if(!checkProgress){
-    const makeProgress = await Progress.create({
-        userId : id,
-        courseId
-    })
-    console.log("Progress info :",makeProgress);
-    let completedLesson = makeProgress.lessonsCompleted;
-    const exist = completedLesson.includes(`${lessonId}`);
-    console.log("Exist : ",exist);
-    res.status(201).json({
-        progress : makeProgress,
-        message : "Yes, created Progress successfully.."
+  } catch (error) {
+    console.error("Error creating progress:", error);
+    return res.status(500).json({
+      status: false,
+      message: "Internal server error",
     });
   }
 };
 
-module.exports = { createProgress };
+const getProgress = async (req,res) =>{
+  const { courseId } = req.params;
+  const fetchProgress = await Progress.find({
+    courseId
+  })
+  console.log("Response : ",fetchProgress);
+  return res.status(200).json({
+      success: true,
+      progress: fetchProgress,
+      message: "Lesson progress updated successfully.",
+    });
+}
+
+
+module.exports = { createProgress, getProgress };

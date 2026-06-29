@@ -3,7 +3,7 @@ const AuthMiddleware = require("../middleware/authMiddleware.js");
 const RoleMiddleware = require("../middleware/roleMiddleware.js");
 const express = require("express");
 
-const { createProgress } = require("../controller/progressController.js")
+const { createProgress, getProgress } = require("../controller/progressController.js")
 const router = express.Router();
 
 router.post(
@@ -11,6 +11,13 @@ router.post(
     AuthMiddleware,
     RoleMiddleware("student"),
     createProgress
+)
+
+router.get(
+    "/course/:courseId",
+    AuthMiddleware,
+    RoleMiddleware("student"),
+    getProgress
 )
 
 module.exports = router;

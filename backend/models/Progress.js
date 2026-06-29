@@ -11,9 +11,12 @@ const progressSchema = new mongoose.Schema(
       ref: "Course",
     },
     lessonsCompleted: {
-      type: [String],
+      type: [mongoose.Schema.Types.ObjectId],
       default: [],
     },
+    progressPercentage :{
+        type: Number
+    }
   },
   { timestamps: true },
 );
