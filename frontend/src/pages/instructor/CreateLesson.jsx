@@ -42,32 +42,39 @@ const CreateLesson = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-indigo-100 py-12 px-6">
-            <div className="mx-auto max-w-3xl overflow-hidden rounded-3xl bg-white shadow-2xl border border-slate-200">
+        <div className="min-h-screen bg-slate-50 py-12 px-6">
+            <div className="mx-auto max-w-4xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-8 text-white">
-                    <h1 className="text-3xl font-bold">Create New Lesson</h1>
-                    <p className="mt-2 text-blue-100">
-                        Add a lesson to your section and help students learn step by step.
+                <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 px-8 py-8 text-white">
+                    <h1 className="text-3xl font-black">
+                        Create New Lesson
+                    </h1>
+
+                    <p className="mt-2 text-slate-300">
+                        Add a lesson to your section and build your course one step at a
+                        time.
                     </p>
                 </div>
 
                 {/* Form */}
                 <form onSubmit={handleSubmit} className="space-y-8 p-8">
-
                     {/* Lesson Title */}
                     <div>
                         <label className="mb-2 block text-sm font-semibold text-slate-700">
                             Lesson Title
                         </label>
+
                         <input
                             type="text"
                             value={formData.title}
                             onChange={(e) =>
-                                setFormData({ ...formData, title: e.target.value })
+                                setFormData({
+                                    ...formData,
+                                    title: e.target.value,
+                                })
                             }
                             placeholder="e.g. Installing Node.js"
-                            className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-800 outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100"
+                            className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
                         />
                     </div>
 
@@ -76,6 +83,7 @@ const CreateLesson = () => {
                         <label className="mb-2 block text-sm font-semibold text-slate-700">
                             Lesson Description
                         </label>
+
                         <textarea
                             rows={6}
                             value={formData.description}
@@ -85,24 +93,31 @@ const CreateLesson = () => {
                                     description: e.target.value,
                                 })
                             }
-                            placeholder="Briefly describe what students will learn in this lesson..."
-                            className="w-full resize-none rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-800 outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100"
+                            placeholder="Describe what students will learn in this lesson..."
+                            className="w-full resize-none rounded-xl border border-slate-300 px-4 py-3 text-slate-800 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
                         />
+
+                        <div className="mt-3 rounded-xl bg-slate-50 px-4 py-3">
+                            <p className="text-sm text-slate-500">
+                                Write a short description explaining the lesson's objective and
+                                what students should know after completing it.
+                            </p>
+                        </div>
                     </div>
 
-                    {/* Action Buttons */}
-                    <div className="flex items-center justify-end gap-4 border-t border-slate-200 pt-6">
+                    {/* Buttons */}
+                    <div className="flex justify-end gap-4 border-t border-slate-200 pt-8">
                         <button
                             type="button"
                             onClick={() => navigate(-1)}
-                            className="rounded-xl  cursor-pointer border border-slate-300 bg-white px-6 py-3 font-medium text-slate-700 transition-all duration-200 hover:border-slate-400 hover:bg-slate-100"
+                            className="rounded-xl border border-slate-300 px-6 py-3 font-semibold text-slate-700 transition hover:border-emerald-500 hover:text-emerald-600"
                         >
                             Cancel
                         </button>
 
                         <button
                             type="submit"
-                            className="rounded-xl cursor-pointer bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-3 font-semibold text-white shadow-lg transition-all duration-200 hover:scale-[1.02] hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl active:scale-[0.98]"
+                            className="rounded-xl bg-emerald-500 px-8 py-3 font-semibold text-white transition-all hover:bg-emerald-600 hover:shadow-lg hover:shadow-emerald-500/20"
                         >
                             Create Lesson
                         </button>

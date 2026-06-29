@@ -22,7 +22,7 @@ const EditCourse = () => {
     }, [token])
     const fetchCourse = async () => {
         try {
-            const res = await api.get(`/courses/${id}`,
+            const res = await api.get(`/courses/instructor/my-courses/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -75,34 +75,43 @@ const EditCourse = () => {
         }
     }
     return (
-        <div className="min-h-screen bg-gray-100 py-10 px-6">
-            <div className="mx-auto max-w-3xl rounded-xl bg-white p-8 shadow-lg">
-                <h1 className="text-3xl font-bold text-gray-900">
-                    Edit Course
-                </h1>
+        <div className="min-h-screen bg-slate-50 py-12 px-6">
+            <div className="mx-auto max-w-4xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+                {/* Header */}
+                <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 px-8 py-8 text-white">
+                    <h1 className="text-3xl font-black">
+                        Edit Course
+                    </h1>
 
-                <p className="mt-2 text-gray-600">
-                    Update your course information below.
-                </p>
+                    <p className="mt-2 text-slate-300">
+                        Update your course details and keep your content up to date.
+                    </p>
+                </div>
 
                 {!course ? (
-                    <div className="mt-8 rounded-xl border border-dashed border-gray-300 bg-gray-50 p-10 text-center">
-                        <h2 className="text-xl font-semibold text-gray-700">
-                            Course Not Found
-                        </h2>
+                    <div className="p-10">
+                        <div className="rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 py-16 text-center">
+                            <h2 className="text-2xl font-bold text-slate-800">
+                                Course Not Found
+                            </h2>
 
-                        <p className="mt-2 text-gray-500">
-                            The course you're trying to edit doesn't exist.
-                        </p>
+                            <p className="mt-3 text-slate-500">
+                                The course you're trying to edit doesn't exist or has been removed.
+                            </p>
+
+                            <button
+                                onClick={() => navigate("/instructor/my-courses")}
+                                className="mt-8 rounded-xl bg-emerald-500 px-6 py-3 font-semibold text-white transition hover:bg-emerald-600"
+                            >
+                                Back to My Courses
+                            </button>
+                        </div>
                     </div>
                 ) : (
-                    <form
-                        onSubmit={handleSubmit}
-                        className="mt-8 space-y-6"
-                    >
+                    <form onSubmit={handleSubmit} className="space-y-8 p-8">
                         {/* Title */}
                         <div>
-                            <label className="mb-2 block text-sm font-medium text-gray-700">
+                            <label className="mb-2 block text-sm font-semibold text-slate-700">
                                 Course Title
                             </label>
 
@@ -116,13 +125,13 @@ const EditCourse = () => {
                                     })
                                 }
                                 placeholder="Enter course title"
-                                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-purple-600 focus:ring-2 focus:ring-purple-200"
+                                className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
                             />
                         </div>
 
                         {/* Description */}
                         <div>
-                            <label className="mb-2 block text-sm font-medium text-gray-700">
+                            <label className="mb-2 block text-sm font-semibold text-slate-700">
                                 Description
                             </label>
 
@@ -135,56 +144,58 @@ const EditCourse = () => {
                                         description: e.target.value,
                                     })
                                 }
-                                placeholder="Enter course description"
-                                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-purple-600 focus:ring-2 focus:ring-purple-200"
+                                placeholder="Describe your course..."
+                                className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
                             />
                         </div>
 
-                        {/* Price */}
-                        <div>
-                            <label className="mb-2 block text-sm font-medium text-gray-700">
-                                Price (₹)
-                            </label>
+                        <div className="grid gap-6 md:grid-cols-2">
+                            {/* Price */}
+                            <div>
+                                <label className="mb-2 block text-sm font-semibold text-slate-700">
+                                    Price (₹)
+                                </label>
 
-                            <input
-                                type="number"
-                                value={formData.price}
-                                onChange={(e) =>
-                                    setFormData({
-                                        ...formData,
-                                        price: e.target.value,
-                                    })
-                                }
-                                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-purple-600 focus:ring-2 focus:ring-purple-200"
-                            />
-                        </div>
+                                <input
+                                    type="number"
+                                    value={formData.price}
+                                    onChange={(e) =>
+                                        setFormData({
+                                            ...formData,
+                                            price: e.target.value,
+                                        })
+                                    }
+                                    className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
+                                />
+                            </div>
 
-                        {/* Level */}
-                        <div>
-                            <label className="mb-2 block text-sm font-medium text-gray-700">
-                                Level
-                            </label>
+                            {/* Level */}
+                            <div>
+                                <label className="mb-2 block text-sm font-semibold text-slate-700">
+                                    Level
+                                </label>
 
-                            <select
-                                value={formData.level}
-                                onChange={(e) =>
-                                    setFormData({
-                                        ...formData,
-                                        level: e.target.value,
-                                    })
-                                }
-                                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 outline-none transition focus:border-purple-600 focus:ring-2 focus:ring-purple-200"
-                            >
-                                <option value="">Select Level</option>
-                                <option value="Beginner">Beginner</option>
-                                <option value="Intermediate">Intermediate</option>
-                                <option value="Advanced">Advanced</option>
-                            </select>
+                                <select
+                                    value={formData.level}
+                                    onChange={(e) =>
+                                        setFormData({
+                                            ...formData,
+                                            level: e.target.value,
+                                        })
+                                    }
+                                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-800 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
+                                >
+                                    <option value="">Select Level</option>
+                                    <option value="Beginner">Beginner</option>
+                                    <option value="Intermediate">Intermediate</option>
+                                    <option value="Advanced">Advanced</option>
+                                </select>
+                            </div>
                         </div>
 
                         {/* Category */}
                         <div>
-                            <label className="mb-2 block text-sm font-medium text-gray-700">
+                            <label className="mb-2 block text-sm font-semibold text-slate-700">
                                 Category
                             </label>
 
@@ -198,23 +209,23 @@ const EditCourse = () => {
                                         category: e.target.value,
                                     })
                                 }
-                                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-purple-600 focus:ring-2 focus:ring-purple-200"
+                                className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
                             />
                         </div>
 
                         {/* Buttons */}
-                        <div className="flex justify-end gap-3 pt-4">
+                        <div className="flex justify-end gap-4 border-t border-slate-200 pt-8">
                             <button
                                 type="button"
                                 onClick={() => navigate("/instructor/my-courses")}
-                                className="rounded-lg border border-gray-300 px-6 py-3 font-medium text-gray-700 transition hover:bg-gray-100"
+                                className="rounded-xl border border-slate-300 px-6 py-3 font-semibold text-slate-700 transition hover:border-emerald-500 hover:text-emerald-600"
                             >
                                 Cancel
                             </button>
 
                             <button
                                 type="submit"
-                                className="rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-purple-700"
+                                className="rounded-xl bg-emerald-500 px-8 py-3 font-semibold text-white transition-all hover:bg-emerald-600 hover:shadow-lg hover:shadow-emerald-500/20"
                             >
                                 Save Changes
                             </button>
