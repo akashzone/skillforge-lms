@@ -198,14 +198,14 @@ const CourseDetail = () => {
             <div className="mt-8 flex gap-3">
               <button
                 onClick={() => setShowModalLesson(false)}
-                className="flex-1 rounded-xl border border-slate-200 bg-white px-5 py-3 font-semibold text-slate-700 transition-all hover:border-emerald-500 hover:text-emerald-600"
+                className="flex-1 cursor-pointer rounded-xl border border-slate-200 bg-white px-5 py-3 font-semibold text-slate-700 transition-all hover:border-emerald-500 hover:text-emerald-600"
               >
                 Cancel
               </button>
 
               <button
                 onClick={handleDeleteLesson}
-                className="flex-1 rounded-xl bg-red-500 px-5 py-3 font-semibold text-white transition-all hover:bg-red-600 hover:shadow-lg hover:shadow-red-500/20"
+                className="flex-1 cursor-pointer rounded-xl bg-red-500 px-5 py-3 font-semibold text-white transition-all hover:bg-red-600 hover:shadow-lg hover:shadow-red-500/20"
               >
                 Delete
               </button>
@@ -224,14 +224,6 @@ const CourseDetail = () => {
                   <h1 className="text-5xl font-black tracking-tight">
                     {course.title}
                   </h1>
-
-                  <button
-                    onClick={handleEditCourse}
-                    className="rounded-xl border border-slate-700 bg-slate-800 p-3 text-slate-300 transition hover:border-emerald-500 hover:bg-emerald-500 hover:text-white"
-                    title="Edit Course"
-                  >
-                    <FiEdit2 size={18} />
-                  </button>
                 </div>
 
                 <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
@@ -248,10 +240,16 @@ const CourseDetail = () => {
                   </span>
                 </div>
               </div>
-
+              <button
+                onClick={handleEditCourse}
+                className="rounded-xl border cursor-pointer border-slate-700 bg-slate-800 p-3 text-slate-300 transition hover:border-emerald-500 hover:bg-emerald-500 hover:text-white"
+                title="Edit Course"
+              >
+                <FiEdit2 size={18} />
+              </button>
               <button
                 onClick={() => setShowModal(true)}
-                className="rounded-xl border border-red-500/20 bg-red-500/10 p-3 text-red-400 transition hover:bg-red-500 hover:text-white"
+                className="rounded-xl border cursor-pointer border-red-500/20 bg-red-500/10 p-3 text-red-400 transition hover:bg-red-500 hover:text-white"
                 title="Delete Course"
               >
                 <FiTrash2 size={20} />
@@ -309,7 +307,7 @@ const CourseDetail = () => {
 
                     <button
                       onClick={handleCreateSection}
-                      className="rounded-xl bg-emerald-500 px-5 py-3 font-semibold text-white transition-all hover:bg-emerald-600 hover:shadow-lg hover:shadow-emerald-500/20"
+                      className="rounded-xl cursor-pointer bg-emerald-500 px-5 py-3 font-semibold text-white transition-all hover:bg-emerald-600 hover:shadow-lg hover:shadow-emerald-500/20"
                     >
                       + Add Section
                     </button>
@@ -347,7 +345,7 @@ const CourseDetail = () => {
 
                             <button
                               onClick={() => handleCreateLesson(section._id)}
-                              className="rounded-xl bg-emerald-500 px-4 py-2.5 font-semibold text-white transition hover:bg-emerald-600"
+                              className="rounded-xl cursor-pointer bg-emerald-500 px-4 py-2.5 font-semibold text-white transition hover:bg-emerald-600"
                             >
                               + Add Lesson
                             </button>
@@ -381,7 +379,7 @@ const CourseDetail = () => {
                                     {lesson.videoUrl && (
                                       <button
                                         onClick={() => handlePreview(lesson._id)}
-                                        className="rounded-xl border border-emerald-500 px-4 py-2 text-sm font-semibold text-emerald-600 transition hover:bg-emerald-500 hover:text-white"
+                                        className="rounded-xl border cursor-pointer border-emerald-500 px-4 py-2 text-sm font-semibold text-emerald-600 transition hover:bg-emerald-500 hover:text-white"
                                       >
                                         Preview
                                       </button>
@@ -389,7 +387,7 @@ const CourseDetail = () => {
 
                                     <button
                                       onClick={() => handleVideoUpload(lesson._id)}
-                                      className="rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-emerald-500 hover:text-emerald-600"
+                                      className="rounded-xl border cursor-pointer border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-emerald-500 hover:text-emerald-600"
                                     >
                                       {lesson.videoUrl ? "Replace" : "Upload"}
                                     </button>
@@ -400,7 +398,7 @@ const CourseDetail = () => {
                                         setSelectedLessonId(lesson._id);
                                         setSelectedSectionId(section._id);
                                       }}
-                                      className="rounded-xl border border-red-200 px-4 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-500 hover:text-white"
+                                      className="rounded-xl cursor-pointer border border-red-200 px-4 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-500 hover:text-white"
                                     >
                                       Delete
                                     </button>
@@ -430,11 +428,13 @@ const CourseDetail = () => {
 
                 {/* Actions */}
                 <div className="mt-6 space-y-3">
-                  <button className="w-full rounded-xl bg-emerald-500 py-3.5 font-semibold text-white transition-all hover:bg-emerald-600 hover:shadow-lg hover:shadow-emerald-500/20">
+                  <button onClick={() => {
+                    navigate("/instructor/my-courses")
+                  }} className="w-full rounded-xl cursor-pointer bg-emerald-500 py-3.5 font-semibold text-white transition-all hover:bg-emerald-600 hover:shadow-lg hover:shadow-emerald-500/20">
                     Publish Course
                   </button>
 
-                  <button className="w-full rounded-xl border border-slate-200 bg-white py-3.5 font-semibold text-slate-700 transition-all hover:border-emerald-500 hover:text-emerald-600">
+                  <button onClick={handleEditCourse} className="w-full rounded-xl cursor-pointer border border-slate-200 bg-white py-3.5 font-semibold text-slate-700 transition-all hover:border-emerald-500 hover:text-emerald-600">
                     Preview Course
                   </button>
                 </div>

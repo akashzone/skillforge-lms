@@ -12,14 +12,16 @@ const CreateCourse = () => {
         price: 999,
         category: "",
         level: "",
+        tutor: "",
         thumbnail: ""
     });
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const { title, description, price, level, learnings, category, thumbnail} = formData;
+        const { title, description, price, level, learnings, category, tutor, thumbnail } = formData;
         const trimmedTitle = title.trim();
+        console.log("Tutor :", tutor)
 
         if (!price || !trimmedTitle || !level || !category || !description || !thumbnail) {
             alert("All fields are required");
@@ -31,6 +33,7 @@ const CreateCourse = () => {
                 {
                     title: trimmedTitle,
                     description,
+                    tutor,
                     price,
                     level,
                     thumbnail,
@@ -86,6 +89,17 @@ const CreateCourse = () => {
                             className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 placeholder:text-slate-400 outline-none transition-all focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-100"
                         />
                     </div>
+
+                    <input
+                        type="text" // Explicitly define it as text
+                        value={formData.tutor}
+                        onChange={(e) =>
+                            setFormData({ ...formData, tutor: e.target.value })
+                        }
+                        placeholder="e.g. Akash Nadar"
+                        className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 placeholder:text-slate-400 outline-none transition-all focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-100"
+                    />
+
                     <div>
                         <label className="mb-2 block text-sm font-semibold text-slate-700">
                             Thumbnail URL
@@ -118,6 +132,7 @@ const CreateCourse = () => {
                             className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700 placeholder:text-slate-400 outline-none transition-all focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-100"
                         />
                     </div>
+
 
                     {/* Price & Level */}
                     <div className="grid gap-6 md:grid-cols-2">
@@ -194,8 +209,8 @@ const CreateCourse = () => {
                     <div className="flex justify-end gap-4 border-t border-slate-200 pt-8">
                         <button
                             type="button"
-                            onClick={() => navigate("/instructor/my-courses")}
-                            className="rounded-xl  cursor-pointer border border-slate-200 bg-white px-6 py-3 font-semibold text-slate-700 transition-all hover:border-emerald-500 hover:text-emerald-600"
+                            onClick={() => navigate(-1)}
+                            className="rounded-xl cursor-pointer border border-slate-200 bg-white px-6 py-3 font-semibold text-slate-700 transition-all hover:border-emerald-500 hover:text-emerald-600"
                         >
                             Cancel
                         </button>

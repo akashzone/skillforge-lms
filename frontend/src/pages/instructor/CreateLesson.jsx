@@ -110,14 +110,14 @@ const CreateLesson = () => {
                         <button
                             type="button"
                             onClick={() => navigate(-1)}
-                            className="rounded-xl border border-slate-300 px-6 py-3 font-semibold text-slate-700 transition hover:border-emerald-500 hover:text-emerald-600"
+                            className="rounded-xl border cursor-pointer border-slate-300 px-6 py-3 font-semibold text-slate-700 transition hover:border-emerald-500 hover:text-emerald-600"
                         >
                             Cancel
                         </button>
 
                         <button
                             type="submit"
-                            className="rounded-xl bg-emerald-500 px-8 py-3 font-semibold text-white transition-all hover:bg-emerald-600 hover:shadow-lg hover:shadow-emerald-500/20"
+                            className="rounded-xl cursor-pointer bg-emerald-500 px-8 py-3 font-semibold text-white transition-all hover:bg-emerald-600 hover:shadow-lg hover:shadow-emerald-500/20"
                         >
                             Create Lesson
                         </button>

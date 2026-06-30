@@ -54,7 +54,7 @@ const getCourseById = async (req, res) => {
 // -- Instructor --
 
 const createCourse = async (req, res) => {
-  const { title, description, price, level, category, learnings, thumbnail } = req.body;
+  const { title, description, price, level, category, learnings, tutor, thumbnail } = req.body;
   const { id } = req.user;
   if (!title) {
     return res.status(401).json({
@@ -81,6 +81,7 @@ const createCourse = async (req, res) => {
       level,
       category,
       thumbnail,
+      tutor,
       learnings: learningsArray,
       instructor: id,
     });

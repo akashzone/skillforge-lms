@@ -105,9 +105,9 @@ function Navbar() {
         <div className="ml-auto flex items-center gap-3">
           {token ? (
             <>
-              <button className="rounded-xl cursor-pointer border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition-all hover:border-emerald-500 hover:text-emerald-600">
+              {/* <button className="rounded-xl cursor-pointer border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition-all hover:border-emerald-500 hover:text-emerald-600">
                 Profile
-              </button>
+              </button> */}
 
               <button
                 onClick={handleLogout}

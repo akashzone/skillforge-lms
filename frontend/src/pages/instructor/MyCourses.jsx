@@ -76,6 +76,7 @@ const MyCourses = () => {
                             key={course._id}
                             id={course._id}
                             title={course.title}
+                            tutor={course.tutor}
                             price={course.price}
                             category={course.category}
                             thumbnail={course.thumbnail}
