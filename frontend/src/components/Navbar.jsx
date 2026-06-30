@@ -60,6 +60,12 @@ function Navbar() {
             {/* Links */}
             <div className="hidden items-center gap-8 lg:flex text-sm font-medium">
               <Link
+              to="/student/dashboard"
+              className="relative text-slate-600 transition hover:text-emerald-600 after:absolute after:-bottom-2 after:left-0 after:h-0.5 after:w-0 after:bg-emerald-500 after:transition-all hover:after:w-full"
+            >
+              Dashboard
+            </Link>
+              <Link
                 to="/student/courses"
                 className="relative text-slate-600 transition hover:text-emerald-600 after:absolute after:-bottom-2 after:left-0 after:h-0.5 after:w-0 after:bg-emerald-500 after:transition-all hover:after:w-full"
               >

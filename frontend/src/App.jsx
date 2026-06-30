@@ -55,7 +55,7 @@ function App() {
 
           // if created acc on role = "student"
           <Route element={< StudentRoute />}>
-            <Route path="/student" element={<StudentDashboard />} />
+            <Route path="/student/dashboard" element={<StudentDashboard />} />
             <Route path="/student/course/:id" element={<StudentCourseDetail />} />
             <Route path="/student/my-courses" element={<StudentMyCourse />} />
             <Route path="/student/my-course/:id" element={<CourseContent />} />

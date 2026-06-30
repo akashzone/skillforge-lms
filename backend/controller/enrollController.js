@@ -50,9 +50,9 @@ const enrollCourse = async (req, res) => {
 
 const getEnrollCourses = async (req, res) => {
   const { id } = req.user;
-  console.log("Course ID - ", id);
+  console.log("User ID - ", id);
   if (!id) {
-    console.log("lesson ID :", id);
+    // console.log("User ID :", id);
     return res.status(401).json({
       status: false,
       message: "ID not found",

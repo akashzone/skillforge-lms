@@ -34,7 +34,7 @@ const Login = () => {
             console.log("Role:", response.data.user.role);
 
             if (response.data.user.role === "student") {
-                navigate("/student");
+                navigate("/student/dashboard");
             } else {
                 navigate("/instructor");
             }

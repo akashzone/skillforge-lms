@@ -44,9 +44,12 @@ const CourseContent = () => {
         const progressRes = await api.get(`/progress/course/${courseId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
+        console.log("Progress API Response:", progressRes.data);
         if (progressRes.data?.progress) {
-          setCompletedLessons(progressRes.data.progress.lessonsCompleted || []);
-          setProgressPercentage(progressRes.data.progress.progressPercentage || 0);
+          setCompletedLessons(progressRes.data.progress[0].lessonsCompleted || []);
+          setProgressPercentage(progressRes.data.progress[0].progressPercentage || 0);
+          console.log("Completed Lessons State:", progressRes.data.progress[0].lessonsCompleted);
+          console.log("Progress %:", progressRes.data.progress[0].progressPercentage);
         }
       } catch (err) {
         console.error("Error fetching sections or progress", err);
@@ -133,6 +136,15 @@ const CourseContent = () => {
     navigate("/student/my-courses");
   };
 
+
+  // if(progressPercentage === 100){
+  //   return (
+  //     <div>
+  //       <h1>Successfully completed the Course</h1>
+  //     </div>
+  //   )
+  // }
+
   return (
     <div className="min-h-screen flex flex-col bg-white">
       {/* Navbar */}
@@ -181,8 +193,8 @@ const CourseContent = () => {
               <button
                 onClick={() => setActiveTab("content")}
                 className={`flex-1 py-3 font-medium ${activeTab === "content"
-                    ? "border-b-2 border-purple-600 text-purple-600"
-                    : "text-gray-600"
+                  ? "border-b-2 border-purple-600 text-purple-600"
+                  : "text-gray-600"
                   }`}
               >
                 Course Content
@@ -191,8 +203,8 @@ const CourseContent = () => {
               <button
                 onClick={() => setActiveTab("overview")}
                 className={`flex-1 py-3 font-medium ${activeTab === "overview"
-                    ? "border-b-2 border-purple-600 text-purple-600"
-                    : "text-gray-600"
+                  ? "border-b-2 border-purple-600 text-purple-600"
+                  : "text-gray-600"
                   }`}
               >
                 Overview
@@ -220,8 +232,8 @@ const CourseContent = () => {
                             key={lesson._id}
                             onClick={() => setSelectedLesson(lesson)}
                             className={`flex items-center gap-3 cursor-pointer rounded-md px-3 py-2 transition ${selectedLesson?._id === lesson._id
-                                ? "bg-purple-100 text-purple-700 font-medium"
-                                : "hover:bg-gray-100"
+                              ? "bg-purple-100 text-purple-700 font-medium"
+                              : "hover:bg-gray-100"
                               }`}
                           >
                             <input
@@ -287,8 +299,8 @@ const CourseContent = () => {
                         key={lesson._id}
                         onClick={() => setSelectedLesson(lesson)}
                         className={`flex items-center gap-3 cursor-pointer rounded-md px-3 py-2 transition ${selectedLesson?._id === lesson._id
-                            ? "bg-purple-100 text-purple-700 font-medium"
-                            : "hover:bg-gray-100"
+                          ? "bg-purple-100 text-purple-700 font-medium"
+                          : "hover:bg-gray-100"
                           }`}
                       >
                         <input
