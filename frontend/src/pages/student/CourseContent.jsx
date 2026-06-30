@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../api/api";
+import Confetti from "react-confetti";
 
 const CourseContent = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const CourseContent = () => {
   const [activeTab, setActiveTab] = useState("content");
   const [completedLessons, setCompletedLessons] = useState([]);
   const [progressPercentage, setProgressPercentage] = useState(0);
+  const [showCelebration, setShowCelebration] = useState(false);
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -74,6 +76,12 @@ const CourseContent = () => {
       setExpandedSection(firstSection._id);
     }
   }, [lessons, sections]);
+
+  useEffect(() => {
+    if (progressPercentage === 100) {
+      setShowCelebration(true);
+    }
+  }, [progressPercentage]);
 
   const fetchLessons = async (sectionsList) => {
     try {
@@ -146,180 +154,241 @@ const CourseContent = () => {
   // }
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
-      {/* Navbar */}
-      <header className="h-16 bg-gray-900 border-b border-gray-700 px-4 lg:px-6 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <h1
-            onClick={handleHome}
-            className="text-2xl font-bold text-purple-500 cursor-pointer"
-          >
-            SkillForge
-          </h1>
 
-          {course && (
-            <h2 className="hidden lg:block text-lg font-medium text-white truncate">
-              {course.title}
-            </h2>
-          )}
-        </div>
+    <>
+      {showCelebration && (
+        <>
+          <Confetti
+            recycle={false}
+            numberOfPieces={180}
+            gravity={0.18}
+          />
 
-        <button className="px-4 py-2 rounded-md border border-purple-500 text-purple-400 hover:bg-purple-500 hover:text-white transition font-medium text-sm">
-          My Progress: {progressPercentage}%
-        </button>
-      </header>
+          {showCelebration && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+              <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-2xl">
 
-      <div className="flex flex-col lg:flex-row flex-1">
-        {/* LEFT */}
-        <div className="flex-1">
-          {/* Video Player */}
-          <div className="bg-black h-[220px] sm:h-[300px] md:h-[450px] lg:h-[550px]">
-            {selectedLesson ? (
-              <video
-                controls
-                src={selectedLesson.videoUrl}
-                className="block w-full h-full object-contain"
-              />
-            ) : (
-              <div className="flex items-center justify-center h-full text-white">
-                Loading lesson...
+                {/* Success Icon */}
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+                  <svg
+                    className="h-8 w-8 text-green-600"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+
+                <h2 className="mt-6 text-center text-2xl font-bold text-gray-900">
+                  Congratulations!
+                </h2>
+
+                <p className="mt-3 text-center text-gray-600 leading-6">
+                  You have successfully completed this course.
+                  Your progress has been recorded.
+                </p>
+
+                <div className="mt-8 flex gap-3">
+                  <button
+                    onClick={() => setShowCelebration(false)}
+                    className="flex-1 rounded-lg border border-gray-300 py-3 font-medium hover:bg-gray-50"
+                  >
+                    Continue Learning
+                  </button>
+
+                  <button
+                    onClick={() => navigate("/student/my-courses")}
+                    className="flex-1 rounded-lg bg-purple-600 py-3 font-medium text-white hover:bg-purple-700"
+                  >
+                    My Courses
+                  </button>
+                </div>
               </div>
+            </div>
+          )}
+        </>
+      )}
+      <div className="min-h-screen flex flex-col bg-white">
+        {/* Navbar */}
+        <header className="h-16 bg-gray-900 border-b border-gray-700 px-4 lg:px-6 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <h1
+              onClick={handleHome}
+              className="text-2xl font-bold text-purple-500 cursor-pointer"
+            >
+              SkillForge
+            </h1>
+
+            {course && (
+              <h2 className="hidden lg:block text-lg font-medium text-white truncate">
+                {course.title}
+              </h2>
             )}
           </div>
 
-          {/* ---------- MOBILE TABS ---------- */}
-          <div className="lg:hidden border-b">
-            <div className="flex">
-              <button
-                onClick={() => setActiveTab("content")}
-                className={`flex-1 py-3 font-medium ${activeTab === "content"
-                  ? "border-b-2 border-purple-600 text-purple-600"
-                  : "text-gray-600"
-                  }`}
-              >
-                Course Content
-              </button>
+          <button className="px-4 py-2 rounded-md border border-purple-500 text-purple-400 hover:bg-purple-500 hover:text-white transition font-medium text-sm">
+            My Progress: {progressPercentage}%
+          </button>
+        </header>
 
-              <button
-                onClick={() => setActiveTab("overview")}
-                className={`flex-1 py-3 font-medium ${activeTab === "overview"
-                  ? "border-b-2 border-purple-600 text-purple-600"
-                  : "text-gray-600"
-                  }`}
-              >
-                Overview
-              </button>
+        <div className="flex flex-col lg:flex-row flex-1">
+          {/* LEFT */}
+          <div className="flex-1">
+            {/* Video Player */}
+            <div className="bg-black h-[220px] sm:h-[300px] md:h-[450px] lg:h-[550px]">
+              {selectedLesson ? (
+                <video
+                  controls
+                  src={selectedLesson.videoUrl}
+                  className="block w-full h-full object-contain"
+                />
+              ) : (
+                <div className="flex items-center justify-center h-full text-white">
+                  Loading lesson...
+                </div>
+              )}
             </div>
 
-            {/* MOBILE CONTENT TAB */}
-            {activeTab === "content" && (
-              <div className="p-4">
-                {sections.map((section, index) => (
-                  <div key={section._id} className="border-b">
-                    <button
-                      onClick={() => handleSectionClick(section._id)}
-                      className="w-full text-left p-4 hover:bg-gray-100"
-                    >
-                      <h3 className="font-semibold">
-                        Section {index + 1}: {section.title}
-                      </h3>
-                    </button>
-
-                    {expandedSection === section._id && (
-                      <div className="pl-4 pr-2 pb-3 space-y-1">
-                        {lessons[section._id]?.map((lesson) => (
-                          <div
-                            key={lesson._id}
-                            onClick={() => setSelectedLesson(lesson)}
-                            className={`flex items-center gap-3 cursor-pointer rounded-md px-3 py-2 transition ${selectedLesson?._id === lesson._id
-                              ? "bg-purple-100 text-purple-700 font-medium"
-                              : "hover:bg-gray-100"
-                              }`}
-                          >
-                            <input
-                              type="checkbox"
-                              checked={completedLessons.includes(lesson._id)}
-                              onChange={(e) => handleToggleProgress(e, lesson._id)}
-                              className="w-4 h-4 rounded text-purple-600 border-gray-300 focus:ring-purple-500 cursor-pointer accent-purple-600 animate-fade-in"
-                            />
-                            <span className="truncate">{lesson.title}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* OVERVIEW TAB */}
-            {activeTab === "overview" && course && (
-              <div className="p-5">
-                <h1 className="text-2xl font-bold">{course.title}</h1>
-                <p className="mt-2 text-sm text-gray-500">English • {course.level}</p>
-                <p className="mt-5 text-gray-700 leading-7">{course.description}</p>
-              </div>
-            )}
-          </div>
-
-          {/* ---------- DESKTOP OVERVIEW ---------- */}
-          <main className="hidden lg:block p-8">
-            {course && (
-              <>
-                <h1 className="text-3xl font-bold">{course.title}</h1>
-                <p className="mt-2 text-sm text-gray-500">English • {course.level}</p>
-                <p className="mt-6 leading-7">{course.description}</p>
-              </>
-            )}
-          </main>
-        </div>
-
-        {/* ---------- DESKTOP SIDEBAR ---------- */}
-        <aside className="hidden lg:block w-[420px] border-l overflow-y-auto">
-          <div className="sticky top-0 bg-white border-b px-6 py-4">
-            <h2 className="text-xl font-bold">Course Content</h2>
-          </div>
-
-          <div className="p-4">
-            {sections.map((section, index) => (
-              <div key={section._id} className="border-b">
+            {/* ---------- MOBILE TABS ---------- */}
+            <div className="lg:hidden border-b">
+              <div className="flex">
                 <button
-                  onClick={() => handleSectionClick(section._id)}
-                  className="w-full text-left p-4 hover:bg-gray-100"
+                  onClick={() => setActiveTab("content")}
+                  className={`flex-1 py-3 font-medium ${activeTab === "content"
+                    ? "border-b-2 border-purple-600 text-purple-600"
+                    : "text-gray-600"
+                    }`}
                 >
-                  <h3 className="font-semibold">
-                    Section {index + 1}: {section.title}
-                  </h3>
+                  Course Content
                 </button>
 
-                {expandedSection === section._id && (
-                  <div className="pl-4 pr-2 pb-3 space-y-1">
-                    {lessons[section._id]?.map((lesson) => (
-                      <div
-                        key={lesson._id}
-                        onClick={() => setSelectedLesson(lesson)}
-                        className={`flex items-center gap-3 cursor-pointer rounded-md px-3 py-2 transition ${selectedLesson?._id === lesson._id
-                          ? "bg-purple-100 text-purple-700 font-medium"
-                          : "hover:bg-gray-100"
-                          }`}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={completedLessons.includes(lesson._id)}
-                          onChange={(e) => handleToggleProgress(e, lesson._id)}
-                          className="w-4 h-4 rounded text-purple-600 border-gray-300 focus:ring-purple-500 cursor-pointer accent-purple-600"
-                        />
-                        <span className="truncate">{lesson.title}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                <button
+                  onClick={() => setActiveTab("overview")}
+                  className={`flex-1 py-3 font-medium ${activeTab === "overview"
+                    ? "border-b-2 border-purple-600 text-purple-600"
+                    : "text-gray-600"
+                    }`}
+                >
+                  Overview
+                </button>
               </div>
-            ))}
+
+              {/* MOBILE CONTENT TAB */}
+              {activeTab === "content" && (
+                <div className="p-4">
+                  {sections.map((section, index) => (
+                    <div key={section._id} className="border-b">
+                      <button
+                        onClick={() => handleSectionClick(section._id)}
+                        className="w-full text-left p-4 hover:bg-gray-100"
+                      >
+                        <h3 className="font-semibold">
+                          Section {index + 1}: {section.title}
+                        </h3>
+                      </button>
+
+                      {expandedSection === section._id && (
+                        <div className="pl-4 pr-2 pb-3 space-y-1">
+                          {lessons[section._id]?.map((lesson) => (
+                            <div
+                              key={lesson._id}
+                              onClick={() => setSelectedLesson(lesson)}
+                              className={`flex items-center gap-3 cursor-pointer rounded-md px-3 py-2 transition ${selectedLesson?._id === lesson._id
+                                ? "bg-purple-100 text-purple-700 font-medium"
+                                : "hover:bg-gray-100"
+                                }`}
+                            >
+                              <input
+                                type="checkbox"
+                                checked={completedLessons.includes(lesson._id)}
+                                onChange={(e) => handleToggleProgress(e, lesson._id)}
+                                className="w-4 h-4 rounded text-purple-600 border-gray-300 focus:ring-purple-500 cursor-pointer accent-purple-600 animate-fade-in"
+                              />
+                              <span className="truncate">{lesson.title}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* OVERVIEW TAB */}
+              {activeTab === "overview" && course && (
+                <div className="p-5">
+                  <h1 className="text-2xl font-bold">{course.title}</h1>
+                  <p className="mt-2 text-sm text-gray-500">English • {course.level}</p>
+                  <p className="mt-5 text-gray-700 leading-7">{course.description}</p>
+                </div>
+              )}
+            </div>
+
+            {/* ---------- DESKTOP OVERVIEW ---------- */}
+            <main className="hidden lg:block p-8">
+              {course && (
+                <>
+                  <h1 className="text-3xl font-bold">{course.title}</h1>
+                  <p className="mt-2 text-sm text-gray-500">English • {course.level}</p>
+                  <p className="mt-6 leading-7">{course.description}</p>
+                </>
+              )}
+            </main>
           </div>
-        </aside>
+
+          {/* ---------- DESKTOP SIDEBAR ---------- */}
+          <aside className="hidden lg:block w-[420px] border-l overflow-y-auto">
+            <div className="sticky top-0 bg-white border-b px-6 py-4">
+              <h2 className="text-xl font-bold">Course Content</h2>
+            </div>
+
+            <div className="p-4">
+              {sections.map((section, index) => (
+                <div key={section._id} className="border-b">
+                  <button
+                    onClick={() => handleSectionClick(section._id)}
+                    className="w-full text-left p-4 hover:bg-gray-100"
+                  >
+                    <h3 className="font-semibold">
+                      Section {index + 1}: {section.title}
+                    </h3>
+                  </button>
+
+                  {expandedSection === section._id && (
+                    <div className="pl-4 pr-2 pb-3 space-y-1">
+                      {lessons[section._id]?.map((lesson) => (
+                        <div
+                          key={lesson._id}
+                          onClick={() => setSelectedLesson(lesson)}
+                          className={`flex items-center gap-3 cursor-pointer rounded-md px-3 py-2 transition ${selectedLesson?._id === lesson._id
+                            ? "bg-purple-100 text-purple-700 font-medium"
+                            : "hover:bg-gray-100"
+                            }`}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={completedLessons.includes(lesson._id)}
+                            onChange={(e) => handleToggleProgress(e, lesson._id)}
+                            className="w-4 h-4 rounded text-purple-600 border-gray-300 focus:ring-purple-500 cursor-pointer accent-purple-600"
+                          />
+                          <span className="truncate">{lesson.title}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </aside>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

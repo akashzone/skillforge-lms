@@ -78,6 +78,7 @@ const MyCourses = () => {
                             title={course.title}
                             price={course.price}
                             category={course.category}
+                            thumbnail={course.thumbnail}
                             description={course.description}
                             level={course.level}
                             onDelete={handleDelete}

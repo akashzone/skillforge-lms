@@ -63,7 +63,7 @@ const MyCourse = () => {
                   >
                     {/* Thumbnail */}
                     <img
-                      src={`/pic1.jpeg`}
+                      src={course.courseId.thumbnail}
                       alt={course.courseId.title}
                       className="w-full h-52 object-cover"
                     />

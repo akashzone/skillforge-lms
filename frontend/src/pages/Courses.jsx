@@ -59,6 +59,7 @@ const Courses = () => {
               <StudentCourseCard
                 key={course._id}
                 id={course._id}
+                thumbnail={course.thumbnail}
                 title={course.title}
                 price={course.price}
                 category={course.category}

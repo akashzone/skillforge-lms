@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
 const StudentCourseCard = ({
-    title, category, price, id
+    title, category, price, id, thumbnail
 }) => {
     const navigate = useNavigate();
     const handleViewCourse = (courseId) => {
@@ -13,7 +13,7 @@ const StudentCourseCard = ({
             <div className="w-full rounded-xl overflow-hidden bg-white border border-gray-200 shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
                 {/* Image */}
                 <img
-                    src="/pic1.jpeg"
+                    src={thumbnail}
                     alt={title}
                     className="w-full h-44 object-cover"
                 />

@@ -27,7 +27,8 @@ const courseSchema = new mongoose.Schema({
     },
     thumbnail:{
         type: String,
-        default: "https://unsplash.com/photos/a-computer-screen-with-a-logo-on-it-xkBaqlcqeb4"     
+        default: "https://unsplash.com/photos/a-computer-screen-with-a-logo-on-it-xkBaqlcqeb4",
+        required: true     
     },
     instructor:{
         type: mongoose.Schema.Types.ObjectId,

@@ -147,6 +147,7 @@ const InstructorDashboard = () => {
                   id={course._id}
                   title={course.title}
                   price={course.price}
+                  thumbnail={course.thumbnail}
                   category={course.category}
                   description={course.description}
                   level={course.level}
