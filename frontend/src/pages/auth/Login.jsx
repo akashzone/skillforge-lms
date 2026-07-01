@@ -3,6 +3,7 @@ import { useState } from 'react';
 import api from '../../api/api';
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import logo from "../../assets/logo.png";
 
 
 
@@ -45,7 +46,8 @@ const Login = () => {
             <div className="w-full max-w-md overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl">
 
                 {/* Header */}
-                <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-600 px-8 py-10 text-center text-white">
+                <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-600 px-8 py-10 text-center text-white flex flex-col items-center">
+                    <img src={logo} alt="SkillForge Logo" className="h-16 w-16 object-contain rounded-2xl mb-4 bg-white/10 p-2 backdrop-blur-sm" />
                     <h1 className="text-4xl font-black">Welcome Back</h1>
                     <p className="mt-3 text-slate-300">
                         Sign in to continue your learning journey.

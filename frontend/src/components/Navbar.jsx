@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Search } from "lucide-react";
+import logo from "../assets/logo.png";
 
 function Navbar() {
   const { token, user, logout } = useAuth();
@@ -21,9 +22,10 @@ function Navbar() {
         {/* Logo */}
         <Link
           to="/"
-          className="text-3xl font-black tracking-tight text-slate-900 transition-colors hover:text-emerald-600"
+          className="flex items-center gap-3 text-3xl font-black tracking-tight text-slate-900 transition-colors hover:text-emerald-600"
         >
-          SkillForge
+          <img src={logo} alt="SkillForge Logo" className="h-10 w-10 object-contain rounded-lg shadow-sm" />
+          <span>SkillForge</span>
         </Link>
 
         {/* Desktop Student Navbar */}

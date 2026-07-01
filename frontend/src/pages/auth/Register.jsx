@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import api from '../../api/api';
 import { useNavigate } from "react-router-dom";
+import logo from "../../assets/logo.png";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -38,7 +39,8 @@ const Register = () => {
         <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-100 via-white to-emerald-50 px-6 py-12">
             <div className="w-full max-w-lg overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-600 px-8 py-10 text-center text-white">
+                <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-600 px-8 py-10 text-center text-white flex flex-col items-center">
+                    <img src={logo} alt="SkillForge Logo" className="h-16 w-16 object-contain rounded-2xl mb-4 bg-white/10 p-2 backdrop-blur-sm" />
                     <h1 className="text-4xl font-black">Create Account</h1>
                     <p className="mt-3 text-slate-300">
                         Join SkillForge and start your learning journey today.
