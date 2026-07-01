@@ -49,7 +49,7 @@ app.use(
       // Normalize origin string by removing trailing slash if present
       const normalizedOrigin = origin.replace(/\/$/, "");
 
-      if (allowedOrigins.includes(normalizedOrigin)) {
+      if (allowedOrigins.includes(normalizedOrigin) || normalizedOrigin.endsWith(".vercel.app")) {
         return callback(null, true);
       }
 
