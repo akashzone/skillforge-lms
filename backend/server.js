@@ -28,31 +28,30 @@ const path = require("path");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const corsOptions = {
-  origin: process.env.FRONTEND_URL || "http://localhost:5173",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-};
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.FRONTEND_URL, // e.g. https://skillforge-lms-kohl.vercel.app
+];
 
-console.log("FRONTEND_URL:", process.env.FRONTEND_URL);
-const allowedOrigins = ["http://localhost:5173", process.env.FRONTEND_URL];
-
+console.log("Allowed Origins:", allowedOrigins);
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (e.g., Postman)
-      if (!origin) return callback(null, true);
+      // Allow requests with no Origin (Postman, curl, server-to-server)
+      if (!origin) {
+        return callback(null, true);
+      }
 
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
 
-      return callback(new Error("Not allowed by CORS"));
+      return callback(new Error(`CORS blocked for origin: ${origin}`));
     },
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-  }),
+  })
 );
 
 connectDB();
@@ -62,8 +61,8 @@ app.use("/api/courses", CourseRoutes);
 app.use("/api/sections", SectionRoutes);
 app.use("/api/lessons", LessonRoutes);
 app.use("/api/uploads", UploadRoutes);
-app.use("/api/enroll", EnrollRoutes);
-app.use("/api/progress", ProgressRoutes);
+app.use("/api/enroll",EnrollRoutes);
+app.use("/api/progress",ProgressRoutes);
 
 app.get("/api/test", AuthMiddleware, (req, res) => {
   res.json({ message: "API is working!" });
