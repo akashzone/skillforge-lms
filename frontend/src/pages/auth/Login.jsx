@@ -12,11 +12,10 @@ const Login = () => {
         password: '',
     });
     const navigate = useNavigate();
-    const { login,token } = useAuth();
+    const { login, token } = useAuth();
 
     async function handleSubmit(e) {
         e.preventDefault();
-        // console.log(formData);
         const { email, password } = formData;
         if (!email || !password) {
             alert("All fields are required");
@@ -28,10 +27,9 @@ const Login = () => {
         }
         try {
             const { email, password } = formData;
-            console.log("Submitting form with data:", { email, password });
             const response = await api.post("/auth/login", { email, password });
             login(response.data.token, response.data.user);
-            console.log("Role:", response.data.user.role);
+            // console.log("Role:", response.data.user.role);
 
             if (response.data.user.role === "student") {
                 navigate("/student/dashboard");
@@ -43,28 +41,88 @@ const Login = () => {
         }
     }
     return (
-        <div className='card p-4 rounded-lg shadow-md w-full max-w-md mx-auto mt-10'>
-            <h1 className='font-semibold text-center'>Sign In</h1>
-            <form className='flex flex-col gap-4 mt-4 *:bg-gray-100 p-4 rounded-lg shadow-md' onSubmit={handleSubmit}>
+        <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-emerald-50 flex items-center justify-center px-6 py-12">
+            <div className="w-full max-w-md overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl">
 
-                <input className='border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500'
-                    type="email"
-                    placeholder='Email'
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                />
-                <input className='border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500'
-                    type="password"
-                    placeholder='Password'
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                />
-                <button className="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded" type='submit'>
-                    Login
-                </button>
-            </form>
+                {/* Header */}
+                <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-600 px-8 py-10 text-center text-white">
+                    <h1 className="text-4xl font-black">Welcome Back</h1>
+                    <p className="mt-3 text-slate-300">
+                        Sign in to continue your learning journey.
+                    </p>
+                </div>
+
+                {/* Form */}
+                <form
+                    onSubmit={handleSubmit}
+                    className="space-y-6 p-8"
+                >
+                    {/* Email */}
+                    <div>
+                        <label className="mb-2 block text-sm font-semibold text-slate-700">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            placeholder="Enter your email"
+                            value={formData.email}
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    email: e.target.value,
+                                })
+                            }
+                            className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-800 outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-100"
+                        />
+                    </div>
+
+                    {/* Password */}
+                    <div>
+                        <label className="mb-2 block text-sm font-semibold text-slate-700">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            placeholder="Enter your password"
+                            value={formData.password}
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    password: e.target.value,
+                                })
+                            }
+                            className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-800 outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-100"
+                        />
+                    </div>
+
+                    {/* Login Button */}
+                    <button
+                        type="submit"
+                        className="w-full cursor-pointer rounded-xl bg-emerald-500 py-3 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:bg-emerald-600 hover:shadow-emerald-500/30 active:scale-[0.98]"
+                    >
+                        Sign In
+                    </button>
+
+                    {/* Divider */}
+                    <div className="flex items-center gap-3">
+                        <div className="h-px flex-1 bg-slate-200"></div>
+                        <span className="text-sm text-slate-400">OR</span>
+                        <div className="h-px flex-1 bg-slate-200"></div>
+                    </div>
+
+                    {/* Register */}
+                    <p className="text-center text-sm text-slate-500">
+                        Don't have an account?{" "}
+                        <span onClick={() =>navigate("/register")} className="cursor-pointer font-semibold text-emerald-600 hover:text-emerald-700">
+                            Create one
+                        </span>
+                    </p>
+                </form>
+            </div>
         </div>
-    )
+    );
 }
 
 export default Login

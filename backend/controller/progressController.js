@@ -15,7 +15,6 @@ const createProgress = async (req, res) => {
       });
     }
 
-
     const lessonInfo = await Lesson.findById(lessonId);
     if (!lessonInfo) {
       return res.status(404).json({
@@ -24,10 +23,11 @@ const createProgress = async (req, res) => {
       });
     }
 
-
     const fetchSection = await Section.findById(lessonInfo.section);
     if (!fetchSection) {
-      return res.status(404).json({ status: false, message: "Section not found" });
+      return res
+        .status(404)
+        .json({ status: false, message: "Section not found" });
     }
     const courseId = fetchSection.course;
 
@@ -41,7 +41,9 @@ const createProgress = async (req, res) => {
       });
     }
 
-    const alreadyExist = progress.lessonsCompleted.map(id => id.toString()).includes(lessonId.toString());
+    const alreadyExist = progress.lessonsCompleted
+      .map((id) => id.toString())
+      .includes(lessonId.toString());
     if (alreadyExist) {
       return res.status(400).json({
         success: true,
@@ -57,10 +59,10 @@ const createProgress = async (req, res) => {
     });
 
     const totalLessonsCompleted = progress.lessonsCompleted.length + 1;
-    const progressPercentage = totalLessons > 0 
-      ? Math.round((totalLessonsCompleted / totalLessons) * 100) 
-      : 0;
-
+    const progressPercentage =
+      totalLessons > 0
+        ? Math.round((totalLessonsCompleted / totalLessons) * 100)
+        : 0;
 
     const updatedProgress = await Progress.findByIdAndUpdate(
       progress._id,
@@ -68,7 +70,7 @@ const createProgress = async (req, res) => {
         $push: { lessonsCompleted: lessonId },
         $set: { progressPercentage },
       },
-      { new: true }
+      { new: true },
     );
 
     return res.status(200).json({
@@ -76,7 +78,6 @@ const createProgress = async (req, res) => {
       progress: updatedProgress,
       message: "Lesson progress updated successfully.",
     });
-
   } catch (error) {
     console.error("Error creating progress:", error);
     return res.status(500).json({
@@ -86,18 +87,29 @@ const createProgress = async (req, res) => {
   }
 };
 
-const getProgress = async (req,res) =>{
-  const { courseId } = req.params;
-  const fetchProgress = await Progress.find({
-    courseId
-  })
-  console.log("Response : ",fetchProgress);
-  return res.status(200).json({
-      success: true,
-      progress: fetchProgress,
-      message: "Lesson progress updated successfully.",
-    });
-}
+const getProgress = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const { id } = req.user;
 
+    console.log("User:", id);
+    console.log("Course:", courseId);
+
+    const progress = await Progress.findOne({
+      courseId,
+      userId: id,
+    });
+
+    return res.status(200).json({
+      success: true,
+      progress,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
 
 module.exports = { createProgress, getProgress };

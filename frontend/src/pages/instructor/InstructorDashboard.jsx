@@ -72,26 +72,6 @@ const InstructorDashboard = () => {
               Published & Draft Courses
             </p>
           </div>
-
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <p className="text-sm text-slate-500">Total Students</p>
-
-            <h2 className="mt-3 text-4xl font-black text-slate-900">0</h2>
-
-            <p className="mt-2 text-sm text-slate-400">
-              Enrolled Across Courses
-            </p>
-          </div>
-
-          {/* <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <p className="text-sm text-slate-500">Revenue</p>
-
-            <h2 className="mt-3 text-4xl font-black text-slate-900">₹0</h2>
-
-            {/* <p className="mt-2 text-sm text-slate-400">
-              Total Earnings
-            </p> 
-           </div> */}
         </div>
 
         {/* Quick Actions */}

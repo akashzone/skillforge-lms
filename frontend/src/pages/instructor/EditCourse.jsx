@@ -13,7 +13,8 @@ const EditCourse = () => {
         price: 999,
         category: "",
         tutor: "",
-        level: ""
+        level: "",
+        thumbnail: ""
     })
     const [loading, setLoading] = useState(true);
     const { token } = useAuth();
@@ -36,7 +37,8 @@ const EditCourse = () => {
                 price: res.data.courses.price,
                 category: res.data.courses.category,
                 level: res.data.courses.level,
-                tutor: res.data.tutor
+                tutor: res.data.tutor,
+                thumbnail : res.data.thumbnail
             })
             setCourse(res.data.courses);
         } catch (err) {
@@ -145,6 +147,24 @@ const EditCourse = () => {
                                     })
                                 }
                                 placeholder="Enter course tutor"
+                                className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
+                            />
+                        </div>
+                        <div>
+                            <label className="mb-2 block text-sm font-semibold text-slate-700">
+                                Course Image
+                            </label>
+
+                            <input
+                                type="text"
+                                value={formData.thumbnail}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        thumbnail: e.target.value,
+                                    })
+                                }
+                                placeholder="Enter course thumbnail"
                                 className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-800 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
                             />
                         </div>

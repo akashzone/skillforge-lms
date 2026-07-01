@@ -7,6 +7,7 @@ import StudentCourseCard from "../components/StudentCourseCard";
 
 const HomePage = () => {
   const [courses, setCourses] = useState([]);
+  const [search, setSearch] = useState("");
   const { token } = useAuth();
 
   useEffect(() => {
@@ -23,6 +24,11 @@ const HomePage = () => {
 
     fetchCourses();
   }, []);
+
+  const filteredCourses = courses.filter((course) =>
+    course.title.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Hero */}
@@ -46,8 +52,10 @@ const HomePage = () => {
             <div className="mt-10 flex max-w-xl overflow-hidden rounded-2xl bg-white shadow-xl">
               <input
                 type="text"
-                placeholder="What do you want to learn today?"
-                className="flex-1 px-6 py-4 text-slate-700 placeholder:text-slate-400 outline-none"
+                placeholder="Search courses..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className= "rounded-lg px-8 py-4 w-full"
               />
 
               <button className="bg-emerald-500 px-6 transition hover:bg-emerald-600">
@@ -55,7 +63,7 @@ const HomePage = () => {
               </button>
             </div>
 
-            <button className="mt-8 rounded-xl bg-emerald-500 px-8 py-4 font-semibold text-white transition hover:bg-emerald-600 hover:shadow-lg hover:shadow-emerald-500/20">
+            <button onClick={() => navigate("/student/courses")} className="mt-8  cursor-pointer rounded-xl bg-emerald-500 px-8 py-4 font-semibold text-white transition hover:bg-emerald-600 hover:shadow-lg hover:shadow-emerald-500/20">
               Explore Courses
             </button>
           </div>
@@ -102,8 +110,8 @@ const HomePage = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
-          {courses.map((course) => (
-            <>
+          {filteredCourses.map((course) => (
+            <div key={course._id}>
               <StudentCourseCard
                 key={course._id}
                 id={course._id}
@@ -112,52 +120,11 @@ const HomePage = () => {
                 price={course.price}
                 category={course.category}
               />
-            </>
-            // <div
-            //   key={course._id}
-            //   onClick={() => navigate(`/course/${course._id}`)}
-            //   className="cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:-translate-y-2 hover:shadow-xl"
-            // >
-            //   <img
-            //     src={`/pic1.jpeg`}
-            //     alt={course.title}
-            //     className="h-48 w-full object-cover"
-            //   />
-
-            //   <div className="p-6">
-            //     <h3 className="line-clamp-2 text-lg font-bold text-slate-900">
-            //       {course.title}
-            //     </h3>
-
-            //     <p className="mt-2 text-sm text-slate-500">
-            //       {`Haris Ali Khan`}
-            //     </p>
-
-            //     <p className="mt-4 line-clamp-3 text-slate-600">
-            //       {course.description}
-            //     </p>
-
-            //     <div className="mt-6 flex items-center justify-between">
-            //       <span className="text-2xl font-bold text-emerald-600">
-            //         ₹{course.price}
-            //       </span>
-
-            //       <button
-            //         onClick={(e) => {
-            //           e.stopPropagation();
-            //           navigate(`/course/${course._id}`);
-            //         }}
-            //         className="rounded-xl bg-emerald-500 px-4 py-2 font-medium text-white transition hover:bg-emerald-600"
-            //       >
-            //         View Course
-            //       </button>
-            //     </div>
-            //   </div>
-            // </div>
+            </div>
           ))}
         </div>
 
-        {courses.length === 0 && (
+        {filteredCourses.length === 0 && (
           <div className="mt-10 text-center text-slate-500">
             No courses available.
           </div>
@@ -205,7 +172,7 @@ const HomePage = () => {
             SkillForge.
           </p>
 
-          <button className="mt-10 rounded-xl bg-emerald-500 px-8 py-4 font-semibold text-white transition hover:bg-emerald-600 hover:shadow-lg hover:shadow-emerald-500/20">
+          <button onClick={() => navigate("/student/courses")} className="mt-10 rounded-xl bg-emerald-500 px-8 py-4 font-semibold text-white transition hover:bg-emerald-600 hover:shadow-lg hover:shadow-emerald-500/20">
             Get Started
           </button>
         </div>

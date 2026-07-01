@@ -107,7 +107,7 @@ const StudentCourseDetail = () => {
     checkEnrollment();
   }, [courseId]);
 
-  const handleGotoCourse = (id)=>{
+  const handleGotoCourse = (id) => {
     navigate(`/student/my-course/${id}`);
   }
   if (!course) {
@@ -121,149 +121,138 @@ const StudentCourseDetail = () => {
 
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-slate-100">
       {/* Hero */}
-      <div className="bg-[#1c1d1f] text-white pb-20">
-        <div className="max-w-7xl mx-auto px-6 relative">
-          <div className="grid lg:grid-cols-3 gap-12">
-            {/* LEFT */}
-            <div className="lg:col-span-2 pt-14">
-              <p className="text-purple-400 font-medium mb-3">
-                Development &gt; {course.category}
-              </p>
+      <section className="bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-700 text-white">
+        <div className="mx-auto max-w-7xl px-6 py-16">
+          <div className="grid gap-12 lg:grid-cols-3">
+            {/* Left */}
+            <div className="lg:col-span-2">
+              <span className="inline-flex rounded-full bg-emerald-500/20 px-4 py-1 text-sm font-semibold text-emerald-300">
+                {course.category}
+              </span>
 
-              <h1 className="text-5xl font-bold leading-tight">
+              <h1 className="mt-5 text-5xl font-black leading-tight">
                 {course.title}
               </h1>
 
-              <p className="mt-5 text-xl text-gray-300">
+              <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
                 {course.description}
               </p>
 
-              {/* Rating */}
-              <div className="flex items-center gap-3 mt-6">
-                <span className="text-yellow-400 font-bold">
-                  ★★★★★
-                </span>
+              <div className="mt-8 flex flex-wrap items-center gap-6 text-sm text-slate-300">
+                <div className="flex items-center gap-2">
+                  <span className="text-amber-400 text-lg">★★★★★</span>
+                  <span>{course.level}</span>
+                </div>
 
-                <span className="text-gray-300">
-                  Beginner
-                </span>
+                <div className="h-4 w-px bg-slate-600"></div>
 
-                <span className="text-gray-400">•</span>
+                <span>{course.category}</span>
 
-                <span className="text-gray-300">
-                  {course.category}
-                </span>
-              </div>
+                <div className="h-4 w-px bg-slate-600"></div>
 
-              {/* Instructor */}
-              <div className="mt-6 text-gray-300">
-                Created by{" "}
-                <span className="underline text-purple-300">
-                  Piyush Garg
-                </span>
-              </div>
-
-              {/* Meta */}
-              <div className="flex gap-6 mt-5 text-gray-400">
                 <span>
-                  Last updated{" "}
+                  Updated{" "}
                   {new Date(course.createdAt).toLocaleDateString()}
                 </span>
 
-                <span>Lng: English</span>
+                <div className="h-4 w-px bg-slate-600"></div>
+
+                <span>English</span>
               </div>
+
+              <p className="mt-6 text-slate-300">
+                Created by{" "}
+                <span className="font-semibold text-emerald-300">
+                  {course.tutor ? course.tutor : "Piyush Garg"}
+                </span>
+              </p>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Content */}
-      <div className="max-w-7xl mx-auto px-6 relative">
-        <div className="grid lg:grid-cols-3 gap-12">
-          {/* LEFT CONTENT */}
-          <div className="lg:col-span-2">
-            {/* Learn */}
-            <div className="border mt-10 p-8 rounded-xl">
-              <h2 className="text-3xl font-bold mb-8">
-                What you'll learn
+      {/* Main Content */}
+      <section className="mx-auto -mt-12 max-w-7xl px-6 pb-16">
+        <div className="grid gap-8 lg:grid-cols-3">
+          {/* Left Side */}
+          <div className="space-y-8 lg:col-span-2">
+            {/* Learnings */}
+            <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+              <h2 className="mb-8 text-3xl font-bold text-slate-900">
+                What You'll Learn
               </h2>
 
-              <div className="grid md:grid-cols-2 gap-5">
+              <div className="grid gap-5 md:grid-cols-2">
                 {course.learnings?.map((item, index) => (
                   <div
                     key={index}
-                    className="flex gap-3"
+                    className="flex items-start gap-3"
                   >
-                    <span className="text-green-600">
+                    <div className="mt-1 flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-sm font-bold text-emerald-600">
                       ✓
-                    </span>
+                    </div>
 
-                    <span>{item}</span>
+                    <p className="leading-7 text-slate-700">
+                      {item}
+                    </p>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Course Content */}
-            <div className="mt-10 rounded-xl bg-white shadow-lg">
-              <div className="border-b px-6 py-5">
-                <h2 className="text-2xl font-bold">
-                  Course Content
-                </h2>
+            <div className="rounded-3xl border border-slate-200 bg-white shadow-sm">
+              <div className="flex items-center justify-between border-b border-slate-200 px-8 py-6">
+                <div>
+                  <h2 className="text-3xl font-bold text-slate-900">
+                    Course Content
+                  </h2>
 
-                <p className="mt-1 text-sm text-gray-500">
-                  {sections.length} Sections
-                </p>
+                  <p className="mt-1 text-slate-500">
+                    {sections.length} Sections
+                  </p>
+                </div>
               </div>
 
-              <div className="space-y-5 p-6">
+              <div className="space-y-6 p-8">
                 {sections.length === 0 ? (
-                  <div className="rounded-lg border-2 border-dashed border-gray-300 py-10 text-center text-gray-500">
+                  <div className="rounded-2xl border-2 border-dashed border-slate-300 py-14 text-center text-slate-500">
                     No sections available.
                   </div>
                 ) : (
                   sections.map((section) => (
                     <div
                       key={section._id}
-                      className="rounded-xl border bg-white"
+                      className="overflow-hidden rounded-2xl border border-slate-200"
                     >
-                      <div className="border-b px-6 py-4">
-                        <h3 className="text-lg font-semibold">
+                      <div className="bg-slate-50 px-6 py-5">
+                        <h3 className="text-xl font-bold text-slate-900">
                           {section.title}
                         </h3>
                       </div>
 
-                      <div className="space-y-2 p-5">
+                      <div className="space-y-3 p-5">
                         {(lessons[section._id] || []).length === 0 ? (
-                          <p className="text-gray-500">
+                          <p className="text-slate-500">
                             No lessons available.
                           </p>
                         ) : (
                           lessons[section._id].map((lesson, index) => (
                             <div
                               key={lesson._id}
-                              className="flex items-center justify-between rounded-lg border border-gray-200 px-4 py-3 hover:bg-gray-50 transition"
+                              className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-5 py-4 transition hover:border-emerald-300 hover:bg-emerald-50"
                             >
-                              <div className="flex items-center gap-3">
-                                <span className="font-semibold text-purple-600">
-                                  {index + 1}.
-                                </span>
+                              <div className="flex items-center gap-4">
+                                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 font-bold text-emerald-600">
+                                  {index + 1}
+                                </div>
 
-                                <span className="font-medium">
+                                <span className="font-semibold text-slate-800">
                                   {lesson.title}
                                 </span>
                               </div>
-
-                              {/* {lesson.videoUrl && (
-                                <button
-                                  onClick={() => handlePreview(lesson)}
-                                  className="rounded-md bg-purple-600 px-4 py-2 text-sm font-medium text-white hover:bg-purple-700 transition"
-                                >
-                                  Watch
-                                </button>
-                              )} */}
                             </div>
                           ))
                         )}
@@ -274,81 +263,127 @@ const StudentCourseDetail = () => {
               </div>
             </div>
 
-            {/* Video Player */}
+            {/* Video */}
             {selectedLesson && (
-              <div className="mt-10 rounded-xl bg-white shadow-lg p-6">
-                <h2 className="text-2xl font-bold mb-5">
+              <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+                <h2 className="mb-6 text-3xl font-bold text-slate-900">
                   {selectedLesson.title}
                 </h2>
 
                 <video
                   controls
                   src={selectedLesson.videoUrl}
-                  className="w-full rounded-lg"
+                  className="w-full rounded-2xl"
                 />
               </div>
             )}
           </div>
 
-          {/* RIGHT CARD */}
-          <div>
-            <div className="-mt-80 top-10">
-              <div className="bg-white border shadow-2xl rounded-xl overflow-hidden">
-                <img
-                  src="/pic1.jpeg"
-                  alt=""
-                  className="w-full h-56 object-cover"
-                />
+          {/* Right Card */}
+          {/* RIGHT SIDEBAR */}
+          <div className="relative">
+            <div className="sticky top-24">
+              <div className="-mt-52 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
 
+                {/* Thumbnail */}
+                <div className="relative">
+                  <img
+                    src={course.thumbnail || "/pic1.jpeg"}
+                    alt={course.title}
+                    className="h-60 w-full object-cover"
+                  />
+
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                    <button className="flex h-20 w-20 items-center justify-center rounded-full bg-white/95 shadow-lg transition hover:scale-105">
+                      <svg
+                        className="ml-1 h-8 w-8 fill-slate-700"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-sm font-semibold text-white">
+                    Preview this course
+                  </p>
+                </div>
+
+                {/* Card Body */}
                 <div className="p-6">
-                  <h2 className="text-4xl font-bold">
-                    ₹{course.price}
-                  </h2>
 
-                  {
-                    isEnrolled ? (
-                      <button
-                        onClick={() => handleGotoCourse(id)}
-                        className="mt-6 w-full cursor-pointer  bg-green-600 text-white py-3 font-bold rounded"
-                      >
-                        Go to Course
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => handleEnroll(id)}
-                        className="mt-6 w-full cursor-pointer bg-[#a435f0] hover:bg-purple-700 text-white py-3 font-bold rounded"
-                      >
-                        Enroll Now
-                      </button>
-                    )
-                  }
+                  {/* Price */}
+                  <div className="mb-5">
+                    <h2 className="text-4xl font-black text-slate-900">
+                      ₹{course.price}
+                    </h2>
 
-                  <button className="mt-3 w-full border py-3 font-semibold rounded">
-                    Add to Wishlist
-                  </button>
+                    <p className="mt-1 text-sm text-slate-500">
+                      Lifetime access
+                    </p>
+                  </div>
 
-                  <p className="text-center mt-5 text-sm text-gray-500">
+                  {/* Button */}
+                  {isEnrolled ? (
+                    <button
+                      onClick={() => handleGotoCourse(id)}
+                      className="w-full cursor-pointer rounded-xl bg-emerald-500 py-4 text-lg font-semibold text-white transition hover:bg-emerald-600"
+                    >
+                      Continue Learning
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleEnroll(id)}
+                      className="w-full cursor-pointer rounded-xl bg-emerald-500 py-4 text-lg font-semibold text-white transition hover:bg-emerald-600"
+                    >
+                      Enroll Now
+                    </button>
+                  )}
+
+                  <p className="mt-4 text-center text-sm text-slate-500">
                     30-Day Money-Back Guarantee
                   </p>
 
-                  <hr className="my-6" />
+                  <div className="my-6 border-t border-slate-200"></div>
 
-                  <h3 className="font-bold mb-4">
-                    This course includes:
+                  {/* Includes */}
+                  <h3 className="mb-4 text-lg font-bold text-slate-900">
+                    This course includes
                   </h3>
 
-                  <div className="space-y-3 text-sm">
-                    <p>✓ Full Lifetime Access</p>
-                    <p>✓ Access on Mobile & TV</p>
-                    <p>✓ Source Code</p>
-                    <p>✓ Certificate of Completion</p>
+                  <div className="space-y-4 text-sm text-slate-700">
+
+                    <div className="flex items-center gap-3">
+                      <span> On-demand video lessons</span>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <span>Downloadable resources</span>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <span>Source code included</span>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <span>Access on mobile and TV</span>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <span>Full lifetime access</span>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <span>Certificate of completion</span>
+                    </div>
+
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };

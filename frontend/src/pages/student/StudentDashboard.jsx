@@ -18,7 +18,7 @@ const StudentDashboard = () => {
           },
         }
       )
-      console.log("Response :", res.data.enrolledCourses);
+      console.log("Response from GET - /api/enroll:", res.data.enrolledCourses);
       setEnrolledCourses(res.data.enrolledCourses); // its a array...
     }
     fetchEnrolledCourses();
@@ -40,19 +40,21 @@ const StudentDashboard = () => {
           )
         )
       )
+      console.log("Response from GET - /api/progress/course/:courseId:", res);
       const progressMap = {};
+
       res.forEach((response, index) => {
         const courseId = enrolledCourses[index].courseId._id;
 
-        if (response.data.progress.length === 0) {
-          progressMap[courseId] = 0;
-          return;
-        }
+        const progress = response.data.progress;
 
-        const progress = response.data.progress[0];
-        progressMap[courseId] = progress.progressPercentage;
+        if (!progress) {
+          progressMap[courseId] = 0;
+        } else {
+          progressMap[courseId] = progress.progressPercentage;
+        }
       });
-      console.log("Progress: ", progressMap);
+
       setCourseProgress(progressMap);
     }
     fetchCourseProgress();
@@ -72,15 +74,6 @@ const StudentDashboard = () => {
             Continue your learning journey and complete your courses.
           </p>
         </div>
-
-        {/* <div className="mb-10">
-          <div className="w-full md:w-72 rounded-2xl bg-white shadow-md p-6">
-            <p className="text-slate-500 text-sm">Enrolled Courses</p>
-            <h2 className="text-4xl font-bold text-emerald-600 mt-2">
-              {enrolledCourses.length}
-            </h2>
-          </div>
-        </div> */}
 
         <div className="mb-6">
           <h2 className="text-2xl font-semibold text-slate-800">
@@ -105,11 +98,20 @@ const StudentDashboard = () => {
                 className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col group cursor-pointer"
               >
                 <div className="w-full aspect-video bg-slate-200 overflow-hidden">
-                  <img
-                    src={course.courseId.thumbnail}
-                    alt={course.courseId.title}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
+                  {
+                    course.courseId.thumbnail ? (
+                      <img
+                        src={course.courseId.thumbnail}
+                        alt={course.courseId.title}
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      />)
+                      : (
+                        <div className="w-full h-full flex items-center justify-center bg-slate-300 text-slate-500">
+                          No Thumbnail
+                        </div>
+                      )
+
+                  }
                 </div>
 
                 <div className="flex-1 p-4 flex flex-col justify-between">
@@ -150,7 +152,7 @@ const StudentDashboard = () => {
                           e.stopPropagation();
                           handleContinueLearning(course.courseId._id);
                         }}
-                        className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 transition flex items-center gap-0.5"
+                        className="text-xs cursor-pointer font-semibold text-emerald-600 hover:text-emerald-700 transition flex items-center gap-0.5"
                       >
                         Continue →
                       </button>

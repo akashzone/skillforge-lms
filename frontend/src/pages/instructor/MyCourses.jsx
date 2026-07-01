@@ -48,7 +48,7 @@ const MyCourses = () => {
             </div>
         );
     }
-    return (<div className="min-h-screen bg-gray-50 p-6">
+    return (<div className="min-h-screen bg-gray-50 mt-8 p-6">
         <div className="mx-auto max-w-7xl">
             <div className="mb-8 flex items-center justify-between">
                 <h1 className="text-3xl font-bold text-gray-800">
