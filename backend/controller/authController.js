@@ -16,19 +16,25 @@ const registerUser = async (req, res) => {
   }
   email = email.toLowerCase();
 
-  const existingUser = await User.findOne({ email });
-
-  if (existingUser) {
-    return res.status(400).json({ message: "Email already in use" });
-  }
-
-  if (!["student", "instructor", "admin"].includes(role)) {
-    return res
-      .status(400)
-      .json({ message: "Invalid role, must be student, instructor, or admin" });
-  }
-
   try {
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      return res.status(400).json({ message: "Email already in use" });
+    }
+
+    const existingUsername = await User.findOne({ username });
+
+    if (existingUsername) {
+      return res.status(400).json({ message: "Username already in use" });
+    }
+
+    if (!["student", "instructor", "admin"].includes(role)) {
+      return res
+        .status(400)
+        .json({ message: "Invalid role, must be student, instructor, or admin" });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({
       username,
@@ -43,6 +49,10 @@ const registerUser = async (req, res) => {
     });
   } catch (error) {
     console.error("Error registering user:", error);
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyValue)[0];
+      return res.status(400).json({ message: `${field.charAt(0).toUpperCase() + field.slice(1)} already in use` });
+    }
     res.status(500).json({ message: "Server error" });
   }
 };
