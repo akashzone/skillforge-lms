@@ -34,7 +34,26 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
-app.use(cors(corsOptions));
+console.log("FRONTEND_URL:", process.env.FRONTEND_URL);
+const allowedOrigins = ["http://localhost:5173", process.env.FRONTEND_URL];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (e.g., Postman)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
 
 connectDB();
 
@@ -43,8 +62,8 @@ app.use("/api/courses", CourseRoutes);
 app.use("/api/sections", SectionRoutes);
 app.use("/api/lessons", LessonRoutes);
 app.use("/api/uploads", UploadRoutes);
-app.use("/api/enroll",EnrollRoutes);
-app.use("/api/progress",ProgressRoutes);
+app.use("/api/enroll", EnrollRoutes);
+app.use("/api/progress", ProgressRoutes);
 
 app.get("/api/test", AuthMiddleware, (req, res) => {
   res.json({ message: "API is working!" });
