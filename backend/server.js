@@ -28,10 +28,14 @@ const path = require("path");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const rawFrontendUrl = process.env.FRONTEND_URL || "";
+const frontendUrls = rawFrontendUrl.split(",").map(url => url.trim().replace(/\/$/, ""));
+
 const allowedOrigins = [
   "http://localhost:5173",
-  process.env.FRONTEND_URL, // e.g. https://skillforge-lms-kohl.vercel.app
-];
+  "http://localhost:3000",
+  ...frontendUrls
+].filter(Boolean);
 
 console.log("Allowed Origins:", allowedOrigins);
 app.use(
@@ -42,7 +46,10 @@ app.use(
         return callback(null, true);
       }
 
-      if (allowedOrigins.includes(origin)) {
+      // Normalize origin string by removing trailing slash if present
+      const normalizedOrigin = origin.replace(/\/$/, "");
+
+      if (allowedOrigins.includes(normalizedOrigin)) {
         return callback(null, true);
       }
 

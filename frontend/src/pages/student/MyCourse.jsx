@@ -9,8 +9,10 @@ const MyCourse = () => {
   const { token } = useAuth();
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   useEffect(() => {
-    fetchEnrolledCourses();
-  }, []);
+    if (token) {
+      fetchEnrolledCourses();
+    }
+  }, [token]);
 
   const fetchEnrolledCourses = async () => {
     try {

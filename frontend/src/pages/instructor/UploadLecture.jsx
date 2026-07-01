@@ -11,6 +11,28 @@ const UploadLecture = () => {
     const [video, setVideo] = useState(null);
     const { token } = useAuth();
 
+    React.useEffect(() => {
+        const fetchLessonDetails = async () => {
+            try {
+                const res = await api.get(`/lessons/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                if (res.data && res.data.lesson) {
+                    setTitle(res.data.lesson.title || "");
+                    setDescription(res.data.lesson.description || "");
+                }
+            } catch (err) {
+                console.error("Error fetching lesson details:", err);
+            }
+        };
+
+        if (token && id) {
+            fetchLessonDetails();
+        }
+    }, [token, id]);
+
     const handleUpload = async (e, req, res) => {
         e.preventDefault();
 
@@ -145,6 +167,7 @@ const UploadLecture = () => {
                     <div className="flex justify-end gap-4 border-t border-slate-200 pt-6">
                         <button
                             type="button"
+                            onClick={() => navigate(-1)}
                             className="rounded-xl border border-slate-300 px-6 py-3 font-semibold text-slate-700 transition hover:border-emerald-500 hover:text-emerald-600"
                         >
                             Cancel

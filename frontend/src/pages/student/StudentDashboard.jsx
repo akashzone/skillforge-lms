@@ -10,55 +10,65 @@ const StudentDashboard = () => {
   const [courseProgress, setCourseProgress] = useState([])
   useEffect(() => {
     const fetchEnrolledCourses = async () => {
-      const res = await api.get(
-        "/enroll",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      // console.log("Response from GET - /api/enroll:", res.data.enrolledCourses);
-      setEnrolledCourses(res.data.enrolledCourses); // its a array...
+      try {
+        const res = await api.get(
+          "/enroll",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        // console.log("Response from GET - /api/enroll:", res.data.enrolledCourses);
+        setEnrolledCourses(res.data.enrolledCourses); // its a array...
+      } catch (err) {
+        console.error("Error fetching enrolled courses:", err);
+      }
     }
-    fetchEnrolledCourses();
-  }, [])
+    if (token) {
+      fetchEnrolledCourses();
+    }
+  }, [token])
 
   useEffect(() => {
-    if (enrolledCourses.length === 0) return;
+    if (enrolledCourses.length === 0 || !token) return;
     const fetchCourseProgress = async () => {
-      // console.log("TOken :",token)
-      const res = await Promise.all(
-        enrolledCourses.map((course) =>
-          api.get(
-            `/progress/course/${course.courseId._id}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
+      try {
+        // console.log("TOken :",token)
+        const res = await Promise.all(
+          enrolledCourses.map((course) =>
+            api.get(
+              `/progress/course/${course.courseId._id}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            )
           )
         )
-      )
-      console.log("Response from GET - /api/progress/course/:courseId:", res);
-      const progressMap = {};
+        console.log("Response from GET - /api/progress/course/:courseId:", res);
+        const progressMap = {};
 
-      res.forEach((response, index) => {
-        const courseId = enrolledCourses[index].courseId._id;
+        res.forEach((response, index) => {
+          const courseId = enrolledCourses[index].courseId._id;
 
-        const progress = response.data.progress;
+          const progress = response.data.progress;
 
-        if (!progress) {
-          progressMap[courseId] = 0;
-        } else {
-          progressMap[courseId] = progress.progressPercentage;
-        }
-      });
+          if (!progress) {
+            progressMap[courseId] = 0;
+          } else {
+            progressMap[courseId] = progress.progressPercentage;
+          }
+        });
 
-      setCourseProgress(progressMap);
+        setCourseProgress(progressMap);
+      } catch (err) {
+        console.error("Error fetching course progress:", err);
+      }
     }
     fetchCourseProgress();
-  }, [enrolledCourses]);
+  }, [enrolledCourses, token]);
 
   const handleContinueLearning = (courseId) => {
     navigate(`/student/my-course/${courseId}`);

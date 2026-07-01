@@ -20,8 +20,10 @@ const EditCourse = () => {
     const { token } = useAuth();
     const { id } = useParams();
     useEffect(() => {
-        fetchCourse();
-    }, [token])
+        if (token && id) {
+            fetchCourse();
+        }
+    }, [token, id])
     const fetchCourse = async () => {
         try {
             const res = await api.get(`/courses/instructor/my-courses/${id}`,
@@ -37,8 +39,8 @@ const EditCourse = () => {
                 price: res.data.courses.price,
                 category: res.data.courses.category,
                 level: res.data.courses.level,
-                tutor: res.data.tutor,
-                thumbnail : res.data.thumbnail
+                tutor: res.data.courses.tutor || "",
+                thumbnail : res.data.courses.thumbnail || ""
             })
             setCourse(res.data.courses);
         } catch (err) {

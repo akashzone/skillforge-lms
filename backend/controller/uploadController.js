@@ -30,12 +30,16 @@ const uploadVideo = async (req, res) => {
         const result = await streamUpload();
 
         // Find and update lesson if lessonId is provided
-        const { lessonId } = req.body;
+        const { lessonId, title, description } = req.body;
         if (lessonId) {
-            const lessonInfo = await Lesson.findByIdAndUpdate(lessonId, {
+            const updateData = {
                 videoUrl: result.secure_url,
                 duration: result.duration ? Math.round(result.duration) : undefined
-            });
+            };
+            if (title) updateData.title = title;
+            if (description) updateData.description = description;
+
+            const lessonInfo = await Lesson.findByIdAndUpdate(lessonId, updateData);
         }
 
         res.json({

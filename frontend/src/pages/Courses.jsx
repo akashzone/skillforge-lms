@@ -9,18 +9,24 @@ const Courses = () => {
 
   useEffect(() => {
     const fetchCourses = async () => {
-      const result = await api.get("/courses", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      try {
+        const result = await api.get("/courses", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-      console.log(result.data.courses);
-      setCourses(result.data.courses);
+        console.log(result.data.courses);
+        setCourses(result.data.courses);
+      } catch (error) {
+        console.error("Error fetching courses catalog:", error);
+      }
     };
 
-    fetchCourses();
-  }, []);
+    if (token) {
+      fetchCourses();
+    }
+  }, [token]);
 
   return (
     <div className="min-h-screen">

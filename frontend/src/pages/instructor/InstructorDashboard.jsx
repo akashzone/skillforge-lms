@@ -28,7 +28,7 @@ const InstructorDashboard = () => {
       }
     }
     if (token) fetchCourses();
-  }, []);
+  }, [token]);
 
   return (
     <div className="min-h-screen bg-slate-50">

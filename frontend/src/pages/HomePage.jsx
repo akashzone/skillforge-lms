@@ -12,18 +12,22 @@ const HomePage = () => {
 
   useEffect(() => {
     const fetchCourses = async () => {
-      const result = await api.get("/courses", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      try {
+        const result = await api.get("/courses", {
+          headers: token ? {
+            Authorization: `Bearer ${token}`,
+          } : undefined,
+        });
 
-      // console.log(result.data.courses);
-      setCourses(result.data.courses);
+        // console.log(result.data.courses);
+        setCourses(result.data.courses);
+      } catch (error) {
+        console.error("Error fetching courses on homepage:", error);
+      }
     };
 
     fetchCourses();
-  }, []);
+  }, [token]);
 
   const filteredCourses = courses.filter((course) =>
     course.title.toLowerCase().includes(search.toLowerCase())
