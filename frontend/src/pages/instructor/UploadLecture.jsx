@@ -39,7 +39,7 @@ const UploadLecture = () => {
                     },
                 }
             );
-            console.log("Success:", result.data);
+            // console.log("Success:", result.data);
             navigate(-1);
         } catch (error) {
             console.error("Upload error response:", error.response?.data || error.message);
@@ -107,11 +107,11 @@ const UploadLecture = () => {
                                 onChange={(e) => {
                                     if (e.target.files && e.target.files.length > 0) {
                                         const selectedFile = e.target.files[0];
-                                        console.log(
-                                            "SUCCESS! Binary file selected:",
-                                            selectedFile.name,
-                                            selectedFile.size
-                                        );
+                                        // console.log(
+                                        //     "SUCCESS! Binary file selected:",
+                                        //     selectedFile.name,
+                                        //     selectedFile.size
+                                        // );
                                         setVideo(selectedFile);
                                     }
                                 }}

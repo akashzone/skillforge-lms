@@ -46,7 +46,7 @@ const CourseContent = () => {
         const progressRes = await api.get(`/progress/course/${courseId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log("Progress API Response:", progressRes.data);
+        // console.log("Progress API Response:", progressRes.data);
         const progress = progressRes.data.progress;
 
         if (progress) {

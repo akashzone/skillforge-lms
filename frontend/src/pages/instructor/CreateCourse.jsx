@@ -21,7 +21,7 @@ const CreateCourse = () => {
         e.preventDefault();
         const { title, description, price, level, learnings, category, tutor, thumbnail } = formData;
         const trimmedTitle = title.trim();
-        console.log("Tutor :", tutor)
+        // console.log("Tutor :", tutor)
 
         if (!price || !trimmedTitle || !level || !category || !description || !thumbnail) {
             alert("All fields are required");

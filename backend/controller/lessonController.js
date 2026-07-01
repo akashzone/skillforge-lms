@@ -4,11 +4,7 @@ const Course = require("../models/Course");
 
 const createLesson = async (req, res) => {
   const { title, description, section } = req.body;
-  //   console.log("Title :", title);
   if (!title || !description || !section) {
-    console.log("title :",title);
-    console.log("desc :",description);
-    console.log("section :",section)
     return res.status(401).json({
       success: false,
       message: "All fields are required",
@@ -24,7 +20,6 @@ const createLesson = async (req, res) => {
       });
     }
 
-    // console.log("Section Info :",sectionInfo.course);
     const courseId = sectionInfo.course;
     if (!courseId) {
       return res.status(404).json({
@@ -54,7 +49,6 @@ const createLesson = async (req, res) => {
     });
 
     await newLesson.save();
-    console.log("New lesson created :", newLesson);
     res.status(201).json({
       lesson: newLesson,
       success: true,
@@ -69,7 +63,6 @@ const createLesson = async (req, res) => {
 const getLessonById = async (req, res) => {
   const { id } = req.params;
   if (!id) {
-    console.log("lesson ID :", id);
     return res.status(401).json({
       status: false,
       message: "ID not found",
@@ -78,7 +71,7 @@ const getLessonById = async (req, res) => {
 
   try {
     const getLesson = await Lesson.findById(id);
-    console.log("LessonInfo :", getLesson);
+    // console.log("LessonInfo :", getLesson);
     res.status(201).json({
       lesson: getLesson,
       success: true,
@@ -93,7 +86,7 @@ const getLessonById = async (req, res) => {
 const getLessons = async (req, res) => {
   const { id } = req.params;
   if (!id) {
-    console.log("section ID :", id);
+    // console.log("section ID :", id);
     return res.status(401).json({
       status: false,
       message: "ID not found",
@@ -171,7 +164,7 @@ const updateLessonById = async (req, res) => {
     const updatedLesson = await Lesson.findByIdAndUpdate(id, data, {
       new: true,
     });
-    console.log("Lesson is successfully updated in DB! Data - ", updatedLesson);
+    // console.log("Lesson is successfully updated in DB! Data - ", updatedLesson);
     res.status(200).json({
       success: true,
       newLesson: updatedLesson,
@@ -233,7 +226,7 @@ const deleteById = async (req,res) => {
     }
 
     const deleteLesson = await Lesson.findByIdAndDelete(id);
-    console.log("Deleted Lesson :", deleteLesson);
+    // console.log("Deleted Lesson :", deleteLesson);
     res.status(200).json({
       success: true,
       removedLesson: deleteLesson,

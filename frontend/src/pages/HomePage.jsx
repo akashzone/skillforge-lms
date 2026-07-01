@@ -18,7 +18,7 @@ const HomePage = () => {
         },
       });
 
-      console.log(result.data.courses);
+      // console.log(result.data.courses);
       setCourses(result.data.courses);
     };
 

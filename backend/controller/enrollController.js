@@ -2,8 +2,6 @@ const Enroll = require("../models/Enroll");
 
 const enrollCourse = async (req, res) => {
   try {
-    console.log("Enroll controller working.");
-
     const { courseId } = req.body;
     const userId = req.user.id;
 
@@ -30,9 +28,6 @@ const enrollCourse = async (req, res) => {
       userId,
       courseId,
     });
-
-    console.log("Enrolled successfully.");
-
     return res.status(201).json({
       status: true,
       message: "Enrollment successful",
@@ -50,9 +45,7 @@ const enrollCourse = async (req, res) => {
 
 const getEnrollCourses = async (req, res) => {
   const { id } = req.user;
-  console.log("User ID - ", id);
   if (!id) {
-    // console.log("User ID :", id);
     return res.status(401).json({
       status: false,
       message: "ID not found",
@@ -63,7 +56,6 @@ const getEnrollCourses = async (req, res) => {
     const getEnrolledCourse = await Enroll.find({ userId: id }).populate(
       "courseId",
     );
-    console.log("Enrolled Courses :", getEnrolledCourse);
     res.status(201).json({
       enrolledCourses: getEnrolledCourse,
       success: true,
@@ -80,8 +72,6 @@ const checkEnrollmentStatus = async (req, res) => {
   const { courseId } = req.params;
 
   if (!id || !courseId) {
-    console.log("user ID :", id);
-    console.log("course ID:", courseId);
     return res.status(401).json({
       status: false,
       message: "ID not found",

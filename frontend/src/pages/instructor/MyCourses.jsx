@@ -14,7 +14,7 @@ const MyCourses = () => {
                         Authorization: `Bearer ${token}`,
                     },
         });
-        console.log("Response :", res);
+        // console.log("Response :", res);
         setCourses(
             courses.filter(course => course._id !== id)
         );
@@ -27,7 +27,7 @@ const MyCourses = () => {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                console.log("Response :", res.data.courses)
+                // console.log("Response :", res.data.courses)
                 setCourses(res.data.courses);
             } catch (error) {
                 console.error(error);

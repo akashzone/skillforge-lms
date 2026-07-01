@@ -54,7 +54,7 @@ const StudentCourseDetail = () => {
       const lessonMap = {};
 
       for (const section of sectionsList) {
-        console.log("Section Id:", section._id)
+        // console.log("Section Id:", section._id)
         const res = await api.get(`/sections/student/${section._id}/lessons`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -62,7 +62,7 @@ const StudentCourseDetail = () => {
         lessonMap[section._id] = res.data.lessons;
       }
       setLessons(lessonMap);
-      console.log("Lessons :", lessonMap);
+      // console.log("Lessons :", lessonMap);
 
     } catch (err) {
       console.log(err);
@@ -84,7 +84,7 @@ const StudentCourseDetail = () => {
         }
       );
 
-      console.log(result.data);
+      // console.log(result.data);
 
       setIsEnrolled(true);
 

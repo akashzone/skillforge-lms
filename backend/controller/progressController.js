@@ -92,8 +92,8 @@ const getProgress = async (req, res) => {
     const { courseId } = req.params;
     const { id } = req.user;
 
-    console.log("User:", id);
-    console.log("Course:", courseId);
+    // console.log("User:", id);
+    // console.log("Course:", courseId);
 
     const progress = await Progress.findOne({
       courseId,

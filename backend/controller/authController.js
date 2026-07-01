@@ -61,8 +61,6 @@ const loginUser = async (req, res) => {
   }
   try {
     const userData = await User.findOne({ email: email.toLowerCase() });
-    // console.log("Found user:", userData);
-    // console.log("User role:",userData.role);
 
     if (!userData) {
       return res.status(400).json({ message: "Invalid email or password" });
@@ -74,7 +72,6 @@ const loginUser = async (req, res) => {
     }
     
     const token = generateToken(userData._id,userData.role);
-    console.log("Token :",token);
     if(!token){
       return res.status(400).json({ message: "Empty token" });
     }

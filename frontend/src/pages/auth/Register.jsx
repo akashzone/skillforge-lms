@@ -25,9 +25,9 @@ const Register = () => {
         }
         try {
             const { username, email, password, role } = formData;
-            console.log("Submitting form with data:", { username, email, password, role });
+            // console.log("Submitting form with data:", { username, email, password, role });
             const response = await api.post("/auth/register", { username, email, password, role });
-            console.log(response.data);
+            // console.log(response.data);
         } catch (error) {
             console.log(error.response.data);
         }

@@ -30,7 +30,7 @@ const EditCourse = () => {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-            console.log("Response :", res.data.courses)
+            // console.log("Response :", res.data.courses);
             setFormData({
                 title: res.data.courses.title,
                 description: res.data.courses.description,
@@ -60,7 +60,7 @@ const EditCourse = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Token :", token)
+        // console.log("Token :", token)
         try {
             const updateCourse = await api.put(`/courses/${id}`,
                 formData,
@@ -70,10 +70,10 @@ const EditCourse = () => {
                     },
                 }
             )
-            console.log("Response :", updateCourse);
-            console.log(" Course updated route Working !!")
+            // console.log("Response :", updateCourse);
+            // console.log(" Course updated route Working !!")
             navigate("/instructor/my-courses");
-            console.log("Submitted!")
+            // console.log("Submitted!")
         } catch (error) {
             console.error(error);
         }

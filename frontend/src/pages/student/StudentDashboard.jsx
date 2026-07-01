@@ -18,7 +18,7 @@ const StudentDashboard = () => {
           },
         }
       )
-      console.log("Response from GET - /api/enroll:", res.data.enrolledCourses);
+      // console.log("Response from GET - /api/enroll:", res.data.enrolledCourses);
       setEnrolledCourses(res.data.enrolledCourses); // its a array...
     }
     fetchEnrolledCourses();

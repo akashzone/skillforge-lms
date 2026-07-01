@@ -22,8 +22,8 @@ const MyCourse = () => {
           },
         }
       )
-      console.log("Successfully fetched enrolled courses..");
-      console.log("Response :", res.data);
+      // console.log("Successfully fetched enrolled courses..");
+      // console.log("Response :", res.data);
       setEnrolledCourses(res.data.enrolledCourses);
     } catch (err) {
       console.log("Error message :", err);
