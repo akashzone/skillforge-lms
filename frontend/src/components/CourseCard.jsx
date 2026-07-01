@@ -53,7 +53,7 @@ const CourseCard = ({ id, title, price, category, thumbnail, onDelete, tutor, sh
       <div className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
         {/* Thumbnail */}
         <div className="relative h-56 overflow-hidden bg-slate-900">
-          {thumbnail ? (
+          {thumbnail && thumbnail !== "Hiii" && (thumbnail.startsWith("http") || thumbnail.startsWith("/")) ? (
             <img
               src={thumbnail}
               alt={title}
@@ -61,17 +61,20 @@ const CourseCard = ({ id, title, price, category, thumbnail, onDelete, tutor, sh
               // Fix: If the image URL fails, hide the broken image element or use a fallback image
               onError={(e) => {
                 e.target.style.display = 'none';
-                // Alternately, set a fallback image source:
-                // e.target.src = 'https://your-placeholder-url.com/default.png';
+                const sibling = e.target.nextSibling;
+                if (sibling) sibling.style.display = 'flex';
               }}
             />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-600">
-              <span className="text-6xl font-black text-white">
-                {title.charAt(0).toUpperCase()}
-              </span>
-            </div>
-          )}
+          ) : null}
+
+          <div 
+            className="hidden h-full w-full items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-600"
+            style={(!thumbnail || thumbnail === "Hiii" || (!thumbnail.startsWith("http") && !thumbnail.startsWith("/"))) ? { display: "flex" } : {}}
+          >
+            <span className="text-6xl font-black text-white">
+              {title ? title.charAt(0).toUpperCase() : "C"}
+            </span>
+          </div>
 
         </div>
 

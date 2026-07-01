@@ -100,7 +100,7 @@ const createCourse = async (req, res) => {
 
 const getInstructorCourses = async (req, res) => {
   try {
-    const allCourses = await Course.find();
+    const allCourses = await Course.find({ instructor: req.user.id });
     if (!allCourses) {
       return res.status(401).json({
         status: false,

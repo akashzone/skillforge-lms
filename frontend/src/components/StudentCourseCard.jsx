@@ -13,7 +13,7 @@ const StudentCourseCard = ({
             <div className="group flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
                 {/* Thumbnail */}
                 <div className="relative h-56 overflow-hidden bg-slate-900">
-                    {thumbnail && thumbnail !== "Hiii" ? (
+                    {thumbnail && thumbnail !== "Hiii" && (thumbnail.startsWith("http") || thumbnail.startsWith("/")) ? (
                         <img
                             src={thumbnail}
                             alt={title}
@@ -28,7 +28,7 @@ const StudentCourseCard = ({
 
                     <div 
                         className="hidden h-full w-full items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-600"
-                        style={(!thumbnail || thumbnail === "Hiii") ? { display: "flex" } : {}}
+                        style={(!thumbnail || thumbnail === "Hiii" || (!thumbnail.startsWith("http") && !thumbnail.startsWith("/"))) ? { display: "flex" } : {}}
                     >
                         <span className="text-6xl font-black text-white">
                             {title ? title.charAt(0).toUpperCase() : "C"}
