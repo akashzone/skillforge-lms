@@ -120,6 +120,7 @@ const HomePage = () => {
               <StudentCourseCard
                 key={course._id}
                 id={course._id}
+                tutor={course.tutor}
                 thumbnail={course.thumbnail}
                 title={course.title}
                 price={course.price}

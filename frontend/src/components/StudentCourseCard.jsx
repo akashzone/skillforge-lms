@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
 const StudentCourseCard = ({
-    title, category, price, id, thumbnail,instructor
+    title, category, price, id, thumbnail,tutor
 }) => {
     const navigate = useNavigate();
     const handleViewCourse = (courseId) => {
@@ -13,7 +13,7 @@ const StudentCourseCard = ({
             <div className="group flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
                 {/* Thumbnail */}
                 <div className="relative h-56 overflow-hidden bg-slate-900">
-                    {thumbnail && thumbnail !== "Hiii" && (thumbnail.startsWith("http") || thumbnail.startsWith("/")) ? (
+                    {thumbnail && (thumbnail.startsWith("http") || thumbnail.startsWith("/")) ? (
                         <img
                             src={thumbnail}
                             alt={title}
@@ -48,9 +48,9 @@ const StudentCourseCard = ({
                 <div className="flex flex-1 flex-col p-6">
                     {/* Instructor */}
                     {
-                        instructor ? <p className="mb-2 text-sm font-medium text-slate-500">
+                        tutor ? <p className="mb-2 text-sm font-medium text-slate-500">
                            By {
-                                instructor
+                                tutor
                             }
                     </p> : <p className="mb-2 text-sm font-medium text-slate-500">
                         By Instructor

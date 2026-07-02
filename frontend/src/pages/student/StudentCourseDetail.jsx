@@ -17,7 +17,12 @@ const StudentCourseDetail = () => {
   const handlePreview = (lesson) => {
     setSelectedLesson(lesson);
   };
-
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // or "auto"
+    });
+  }, []);
   useEffect(() => {
     const fetchCourse = async () => {
       const res = await api.get(`/courses/${id}`, {
@@ -112,8 +117,16 @@ const StudentCourseDetail = () => {
   }
   if (!course) {
     return (
-      <div className="text-center py-20 text-xl">
-        Loading...
+      <div className="animate-pulse max-w-7xl mx-auto p-8">
+        <div className="h-10 w-2/3 bg-gray-300 rounded mb-6"></div>
+
+        <div className="h-64 w-full bg-gray-300 rounded mb-8"></div>
+
+        <div className="space-y-4">
+          <div className="h-5 w-full bg-gray-300 rounded"></div>
+          <div className="h-5 w-5/6 bg-gray-300 rounded"></div>
+          <div className="h-5 w-4/6 bg-gray-300 rounded"></div>
+        </div>
       </div>
     );
   }

@@ -45,25 +45,34 @@ const enrollCourse = async (req, res) => {
 
 const getEnrollCourses = async (req, res) => {
   const { id } = req.user;
+
   if (!id) {
     return res.status(401).json({
-      status: false,
+      success: false,
       message: "ID not found",
     });
   }
 
   try {
-    const getEnrolledCourse = await Enroll.find({ userId: id }).populate(
-      "courseId",
+    const enrolledCourses = await Enroll.find({ userId: id }).populate("courseId");
+
+    // Remove enrollments whose course has been deleted
+    const validEnrollments = enrolledCourses.filter(
+      (enrollment) => enrollment.courseId !== null
     );
-    res.status(201).json({
-      enrolledCourses: getEnrolledCourse,
+
+    return res.status(200).json({
+      enrolledCourses: validEnrollments,
       success: true,
-      message: "Enrolled Courses fetched successfully.",
+      message: "Enrolled courses fetched successfully.",
     });
   } catch (error) {
-    console.error("Error in fetching Enrolled course from DB:", error);
-    res.status(500).json({ message: "Server error" });
+    console.error("Error fetching enrolled courses:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
   }
 };
 

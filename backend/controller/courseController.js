@@ -1,10 +1,12 @@
 const Course = require("../models/Course.js");
 const Enroll = require("../models/Enroll.js");
-
+const Section = require("../models/Section.js");
+const Lesson = require("../models/Lesson.js");
+const Progress = require("../models/Progress.js");
 
 // -- Student --
 
-const getCourses = async (req,res) => {
+const getCourses = async (req, res) => {
   try {
     const allCourses = await Course.find();
     if (!allCourses) {
@@ -23,7 +25,6 @@ const getCourses = async (req,res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-
 
 const getCourseById = async (req, res) => {
   if (!req.params.id) {
@@ -55,7 +56,16 @@ const getCourseById = async (req, res) => {
 // -- Instructor --
 
 const createCourse = async (req, res) => {
-  const { title, description, price, level, category, learnings, tutor, thumbnail } = req.body;
+  const {
+    title,
+    description,
+    price,
+    level,
+    category,
+    learnings,
+    tutor,
+    thumbnail,
+  } = req.body;
   const { id } = req.user;
   if (!title) {
     return res.status(401).json({
@@ -207,6 +217,10 @@ const deleteCourseById = async (req, res) => {
         message: "Course cannot be accessed by another instructor",
       });
     }
+    await Progress.deleteMany({ courseId: id });
+    await Enroll.deleteMany({ courseId: id });
+    await Lesson.deleteMany({ courseId: id });
+    await Section.deleteMany({ courseId: id });
     const deleteCourse = await Course.findByIdAndDelete(id);
     res.status(201).json({
       deleteCourse,

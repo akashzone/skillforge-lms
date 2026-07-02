@@ -62,17 +62,27 @@ const MyCourse = () => {
           ) : (
             <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
               {enrolledCourses.map((course) => (
+                console.log("Enrolled Course :", course),
                 <div
                   key={course._id}
                   className="group flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
                 >
                   {/* Thumbnail */}
                   <div className="relative h-56 w-full overflow-hidden bg-slate-900">
-                    <img
-                      src={course.courseId.thumbnail}
-                      alt={course.courseId.title}
-                      className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                    />
+                    {course.courseId?.thumbnail &&
+                      (course.courseId.thumbnail.startsWith("http") ||
+                        course.courseId.thumbnail.startsWith("/")) && (
+                        <img
+                          src={course.courseId.thumbnail}
+                          alt={course.courseId.title}
+                          className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                          onError={(e) => {
+                            e.target.style.display = "none";
+                            const fallbackEl = e.target.nextSibling;
+                            if (fallbackEl) fallbackEl.style.display = "flex";
+                          }}
+                        />
+                      )}
 
                     {/* Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
