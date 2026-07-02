@@ -9,6 +9,7 @@ const HomePage = () => {
   const [courses, setCourses] = useState([]);
   const [search, setSearch] = useState("");
   const { token } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -59,7 +60,7 @@ const HomePage = () => {
                 placeholder="Search courses..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className= "rounded-lg px-8 py-4 w-full"
+                className= "px-8 py-4 w-full *:focus:outline-none"
               />
 
               <button className="bg-emerald-500 px-6 transition hover:bg-emerald-600">
